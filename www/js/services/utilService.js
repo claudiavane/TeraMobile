@@ -10,9 +10,20 @@ angular.module('starter')
         name: 'Delete'
       }];
 
+    var languages = [{
+        id: 'es',
+        name: 'Spanish'
+      }, {
+        id: 'en',
+        name: 'English'
+      }];
+
     return {
         getStatusActive: function(){
             return status.id = 'A';
+       },
+        getLanguages: function(){
+            return languages;
        }
     };
     

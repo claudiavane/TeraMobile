@@ -87,6 +87,8 @@ angular.module('starter')
       /**
        * Once state loaded, get put map on scope.
        */
+       console.log("$rootScope.user "+ $rootScope.user.userId);
+
       $scope.$on("$stateChangeSuccess", function() {
         var drawnItems;
         var zoom;
@@ -109,10 +111,10 @@ angular.module('starter')
               draw: {}
           }
         };
-        $scope.goTo();
+        $scope.goLoadMap();
       });
 
-      $scope.goTo = function() {
+      $scope.goLoadMap = function() {
         var j=0;
         drawnItems = new L.FeatureGroup();
         
@@ -349,6 +351,8 @@ angular.module('starter')
 
     $scope.messageTypes = MessageType.all();
     $scope.priorities = Priority.all();
+    $scope.messageType = MessageType.get(0); // default
+    $scope.priority = Priority.get(2);
     $scope.operators = [];
     Operator.all().then(function(result){
       utilMessages.validityResponse(result);
@@ -358,25 +362,25 @@ angular.module('starter')
         $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
       };      
     });
-
-    var messageTypeDefault = MessageType.get(0);
-    var priorityDefault = Priority.get(2); 
     
     $scope.openModal = function() {
-      $scope.circleMessage = new CircleMessage();
-      $scope.circleMessage.messageType = messageTypeDefault;
-      $scope.circleMessage.priority = priorityDefault;
-      
+      $scope.circleMessage = new CircleMessage();      
       $scope.modal.show();
-    };
-
+    }
     $scope.closeModal = function() {
       if (layerCircle) {
         drawnItems.removeLayer(layerCircle);
       };
       $scope.modal.hide();
-    };
-
+    }
+    $scope.isSelectedPriority = function(item) {
+      if(item.id == $scope.priority.id) return true;
+      else return false;
+    }
+    $scope.isSelectedMessageType = function(item) {
+      if(item.id == $scope.messageType.id) return true;
+      else return false;
+    }
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
         this.message = "";
@@ -390,7 +394,6 @@ angular.module('starter')
         this.orgId = "";
         this.messageType;
         this.zoom = "";
-        this.priority;
     };
 
     $scope.respPreview;
@@ -399,64 +402,45 @@ angular.module('starter')
         $rootScope.show('Preview...');
 
         $scope.circleMessage.userId = 12;
-        $scope.circleMessage.subdivisionId = 1;
+        $scope.circleMessage.subdivisionId = $rootScope.subdivision.id;
         $scope.circleMessage.orgId = 1;
         $scope.circleMessage.lat = layerCircle.getLatLng().lat;
         $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
         $scope.circleMessage.ratio = layerCircle.getRadius(); 
         $scope.circleMessage.zoom = zoom;
+        $scope.circleMessage.messageType.id = $scope.messageType.id;
+        $scope.circleMessage.priority.id = $scope.priority.id;
 
         for (var i = 0; i < $scope.operators.length; i++) {
           if ($scope.operators[i].checked) {
             $scope.circleMessage.operatorsId.push($scope.operators[i].id);
           }
         };
-
-        for (var i = 0; i < $scope.messageTypes.length; i++) {
-          if ($scope.messageTypes[i].name === $scope.circleMessage.messageType.name) {
-              $scope.circleMessage.messageType.id = $scope.messageTypes[i].id;
-          };
-        };
-
-        for (var i = 0; i < $scope.priorities.length; i++) {
-          if ($scope.priorities[i].name === $scope.circleMessage.priority.name) {
-              $scope.circleMessage.priority.id = $scope.priorities[i].id;
-          };
-        };
         
-        console.log("previeww ");        
         AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           utilMessages.validityResponse(result);
           $scope.respPreview = result.response;
 
-
-
           $rootScope.hide();
           $scope.closeModal();
           $scope.openModalSendSms();
-
-        });
-           
-    };
-
+        });           
+    }
     $ionicModal.fromTemplateUrl('templates/confirmSendMessage.html', {
         scope: $scope,
         animation: 'slide-in-up'
         }).then(function(modal) {
             $scope.modalConfirm = modal;
     });
-
     $scope.openModalSendSms = function() {
       $scope.modalConfirm.show();
-    };
-
+    }
     $scope.closeModalSendSms = function() {
       if (layerCircle) {
         drawnItems.removeLayer(layerCircle);
       };
       $scope.modalConfirm.hide();
-    };
-
+    }
     $scope.smsSend = function() {
         $rootScope.show('Sending...');
         AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
@@ -467,12 +451,7 @@ angular.module('starter')
           if (result.responseCode === 'OK') {
             $rootScope.notify("Success", "The send request was done");  
           };          
-
         });
     };
-
-
-
-    
 
 }]);

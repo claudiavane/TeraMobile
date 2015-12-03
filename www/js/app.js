@@ -21,6 +21,8 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     }
 
     $rootScope.operatorIds = [];
+    $rootScope.user;
+    $rootScope.subdivision;
 
   });
 })

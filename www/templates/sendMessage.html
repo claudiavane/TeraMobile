@@ -17,8 +17,8 @@
 
         <label class="item item-input item-select" >
           <span class="input-label">Message Type</span>
-          <select ng-model="circleMessage.messageType.name" >
-            <option ng-repeat="item in messageTypes" value="{{item.name}}" >
+          <select ng-model="messageType.id" >
+            <option ng-repeat="item in messageTypes" value="{{item.id}}" ng-selected="{{isSelectedMessageType(item)}}">
                {{item.name}}
             </option>
           </select>
@@ -26,9 +26,9 @@
 
         <label class="item item-input item-select">
           <span class="input-label">Priority</span>
-          <select ng-model="circleMessage.priority.name">
-            <option ng-repeat="i in priorities" value="{{i.name}}" >
-               {{i.name}}
+          <select ng-model="priority.id">
+            <option ng-repeat="item in priorities" value="{{item.id}}" ng-selected="{{isSelectedPriority(item)}}">
+               {{item.name}}
             </option>
           </select>
         </label>

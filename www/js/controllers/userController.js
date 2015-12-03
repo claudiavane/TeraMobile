@@ -25,6 +25,8 @@ angular.module('starter')
 
               if (result.responseCode === 'OK') {
                   // fix session data
+                  $rootScope.user = result.response[0];
+                  $rootScope.subdivision = User.getSubdivisionDefault();
                   $state.go('app.mainMap');
               };          
           });
