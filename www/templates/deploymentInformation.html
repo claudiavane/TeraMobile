@@ -1,57 +1,43 @@
 <ion-view view-title="Deployment Info">
   <ion-content class="padding">
-    
+    <form name="messageForm" ng-submit="smsSend()">
       <div class="list">
 
         <div class="item item-divider item-icon-left">
           <i class="icon ion-email"></i>
-          Message Detail
+          General Information
         </div>
 
-        <label class="item item-input">        
-          <textarea rows="4" placeholder="Write a message" ng-model="circleMessage.message" ng-minlength="1" ng-maxlength="160" required></textarea>
-        </label>
-
-        <label class="item item-input item-select" >
-          <span class="input-label">Message Type</span>
-          <select ng-model="messageType.id" >
-            <option ng-repeat="item in messageTypes" value="{{item.id}}" ng-selected="{{isSelectedMessageType(item)}}">
-               {{item.name}}
-            </option>
-          </select>
-        </label>
-
-        <label class="item item-input item-select">
-          <span class="input-label">Priority</span>
-          <select ng-model="priority.id">
-            <option ng-repeat="item in priorities" value="{{item.id}}" ng-selected="{{isSelectedPriority(item)}}">
-               {{item.name}}
-            </option>
-          </select>
-        </label>
-
-        <label class="item item-input"> 
-          <span class="input-label">Date message sent</span>       
-          <ionic-datepicker input-obj="datepickerObject">
-            <button class="button button-clear button-dark"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-          </ionic-datepicker>
-        </label>
+        <div class="item" >
+            <h2>{{keeperInfo.DESCRIPTION}}</h2>
+            <p>{{keeperInfo.COUNTRY}}</p>
+            <p>{{keeperInfo.MODULE}}</p>
+            <p>{{keeperInfo.SUBMODULES}}</p>
+        </div>
 
         <div class="item item-divider item-icon-left">
-          <i class="icon ion-android-wifi"></i>
-          Operators
+          DataBase Server
         </div>
-  
-        <ion-checkbox ng-repeat="item in operators"
-                      ng-model="item.checked" 
-                      ng-checked="item.checked" 
-                      class="checkbox-assertive" >
-          {{ item.name }}
-        </ion-checkbox>
-        
+
+        <div class="item" >
+            <h2>{{keeperInfo.DESCRIPTION}}</h2>
+            <p>{{keeperInfo.COUNTRY}}</p>
+            <p>{{keeperInfo.MODULE}}</p>
+            <p>{{keeperInfo.SUBMODULES}}</p>
+        </div>
+
+        <div class="item item-divider item-icon-left">
+          Application Server
+        </div>
+
+        <div class="item" ng-repeat="item in respPreview" >
+            <span class="right; badge badge-dark">{{item.quantity}}</span><span class="left">{{item.operator_name}}</span>​
+        </div>        
       </div>
       <div class="padding">
-        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Preview</button>
+        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Send</button>
       </div>
+    </form>
+
   </ion-content>
 </ion-view>

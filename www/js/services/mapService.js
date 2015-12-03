@@ -1,5 +1,5 @@
-var pathOrg = 'http://localhost:8080/org';
-var pathKeeper = 'http://localhost:8080/keeper';
+var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
+var pathKeeper = 'http://demosys.salamancasolutions.com:8534/keeper';
 
 angular.module('starter')
 
@@ -58,13 +58,26 @@ angular.module('starter')
 })
 
 .factory('Keeper', function($http){
-   return {
-      getKeepers: function(){
+    var keepers;
+    var keeper;
+    var items;
+    return {
+      all: function(){
           return $http.get(pathKeeper+"/search/").then(function(resp){
-               return resp.data;
+              keepers = resp.data; 
+              return keepers;             
           }, function(error){
                console.log("Request Failed: " + error.data);
           });
+      },
+      getKeeper: function(kepperId){
+        items = keepers.response;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].ID === parseInt(kepperId)) {
+            return items[i];             
+          }
+        }
+        return null;
       }
    }
 })
@@ -85,7 +98,6 @@ angular.module('starter')
 .factory('AlertMessage', function($http){
    return {
       previewSmsCircle: function(circleMessage){
-
           return $http.get(pathOrg + "/previewsms/circle/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,
@@ -106,7 +118,6 @@ angular.module('starter')
           });
       },
       sendSmsCircle: function(circleMessage){
-
           console.log("message: " + circleMessage.message);
           console.log("lat: " + circleMessage.lat);
           console.log("lng: " + circleMessage.lng);
@@ -123,7 +134,6 @@ angular.module('starter')
           console.log("zoom: " + circleMessage.zoom);
           console.log("endDeliveryDateTime: " + circleMessage.endDeliveryDateTime);
           
-
           return $http.get(pathOrg + "/sendsms/circle/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,

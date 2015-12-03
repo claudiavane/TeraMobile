@@ -1,58 +1,12 @@
 angular.module('starter')
 
-.controller("ControlsDrawController", [ "$scope", "leafletData", function($scope, leafletData) {
-      /*angular.extend($scope, {
-          london: {
-              lat: 51.505,
-              lng: -0.09,
-              zoom: 4
-          },
-          controls: {
-              draw: {}
-          },
-          layers: {
-              baselayers: {
-                  mapbox_light: {
-                      name: 'Mapbox Light',
-                      url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                      type: 'xyz',
-                      layerOptions: {
-                          apikey: 'pk.eyJ1IjoiYnVmYW51dm9scyIsImEiOiJLSURpX0pnIn0.2_9NrLz1U9bpwMQBhVk97Q',
-                          mapid: 'bufanuvols.lia22g09'
-                      },
-                      layerParams: {
-                          showOnSelector: false
-                      }
-                  }
-              },
-              overlays: {
-                  draw: {
-                      name: 'draw',
-                      type: 'group',
-                      visible: true,
-                      layerParams: {
-                          showOnSelector: false
-                      }
-                  }
-              }
-          }
-     });
+.controller("DeploymentInfoController", function($scope, $stateParams, Keeper) {
+    console.log("DeploymentInfoController...");
+    $scope.keeperInfo = Keeper.getKeeper($stateParams.id);
 
-     leafletData.getMap().then(function(map) {
-         leafletData.getLayers().then(function(baselayers) {
-            var drawnItems = baselayers.overlays.draw;
-            map.on('draw:created', function (e) {
-              var layer = e.layer;
-              drawnItems.addLayer(layer);
-              console.log(JSON.stringify(layer.toGeoJSON()));
-            });
-         });
-     });*/
- }])
+    console.log("keeper " + $scope.keeperInfo.DATABASE_SCHEMA);
+})
 
-.controller("DeploymentInfoController", [ "$scope", "leafletData", function($scope, leafletData) {
-      console.log("DeploymentInfoController..");
- }])
 
 .controller('MapController',
   [ '$scope',
@@ -190,7 +144,7 @@ angular.module('starter')
             }
         };
 
-        Keeper.getKeepers().then(function(result){
+        Keeper.all().then(function(result){
             utilMessages.validityResponse(result);
             var keepers = result.response;
             
@@ -206,49 +160,49 @@ angular.module('starter')
                     var statusExtraScreenServer='';
 
                     if (keepers[i].APPSERVER_WORKING === 0) {
-                      statusAppServer = '<p><span class="left">Application server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
+                      statusAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
                     }else{
-                      statusAppServer = '<p><span class="left">Application server: </span>​<span class="right">'+ isWorking + '</span></p>';
+                      statusAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
                     };
                     if (keepers[i].DATABASE_WORKING === 0) {
-                      statusDBServer = '<p><span class="left">Database server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
+                      statusDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
                     }else{
-                      statusDBServer = '<p><span class="left">Database server: </span>​<span class="right">'+ isWorking + '</span></p>';
+                      statusDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
                     };
                     if (keepers[i].SCREEN_WORKING === 0) {
-                      statusScreenServer = '<p><span class="left">Screen server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
+                      statusScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
                     }else{
-                      statusScreenServer = '<p><span class="left">Screen server: </span>​<span class="right">'+ isWorking + '</span></p>';
+                      statusScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
                     };
 
                     if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
                       if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) {
-                        statusExtraAppServer = '<p><span class="left; ">Application Extra server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
+                        statusExtraAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application Extra server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
                       }else{
-                        statusExtraAppServer = '<p><span class="left">Application Extra server: </span>​<span class="right">'+ isWorking + '</span></p>';
+                        statusExtraAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application Extra server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
                       };  
                     }
 
                     if (keepers[i].EXTRA_TELCO_DATABASE_WORKING) {
                       if (keepers[i].EXTRA_TELCO_DATABASE_WORKING === 0) {
-                        statusExtraDBServer = '<p><span class="left">Database Extra server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
+                        statusExtraDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database Extra server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
                       }else{
-                         statusExtraDBServer = '<p><span class="left">Database Extra server: </span>​<span class="right">'+ isWorking + '</span></p>';
+                         statusExtraDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database Extra server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
                       };  
                     }
 
                     if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
                       if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) {
-                        statusExtraScreenServer = '<p><span class="left">Screen Extra server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
+                        statusExtraScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen Extra server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
                       }else{
-                        statusExtraScreenServer = '<p><span class="left">Screen Extra server: </span>​<span class="right">'+ isWorking + '</span></p>';
+                        statusExtraScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen Extra server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
                       };
                     }
 
-                    var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span class="right">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
+                    var queuedMessage = '<p style="font-size: 14px;><span class="left">Queued Messages: </span>​<span style="float:right;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content">' +
-                        '<h4 id="firstHeading" >'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<h4 id="firstHeading" style="color: #4682B4;">'+ keepers[i].DESCRIPTION +'</h4>'+
                         '<div id="bodyContent">'+ 
                         statusAppServer +
                         statusDBServer +
@@ -257,7 +211,7 @@ angular.module('starter')
                         statusExtraDBServer +
                         statusExtraScreenServer +
                         queuedMessage +
-                        '<a href="#/app/deploymentInformation">'+
+                        '<a href="#/app/deploymentInformation/'+ keepers[i].ID +'">'+
                         'More detail' +
                         '</a>'+                                                  
                         '</div>'+

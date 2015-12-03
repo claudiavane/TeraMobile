@@ -1,4 +1,4 @@
-var pathOrg = 'http:localhost:8080/org';
+var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
 
 angular.module('starter')
 
@@ -10,7 +10,8 @@ angular.module('starter')
     return {
         login: function(user){
           return $http.get(pathOrg + "/user/login/", {params:{"username": user.username, "password": user.password}}).then(function(resp){
-              result = resp.data
+              result = resp.data;
+              console.log("result.responseCode: " + result.responseCode);
               return result;
           }, function(error){
               console.log("Request Failed: " + error.data);
