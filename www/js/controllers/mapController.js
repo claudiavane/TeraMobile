@@ -79,6 +79,31 @@ angular.module('starter')
         $scope.goLoadMap();
       });
 
+      $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
+        scope: $scope,
+        animation: 'slide-in-left'
+        }).then(function(modal) {
+            $scope.modalDeploymentinfo = modal;
+      });
+      $scope.openModalDeploymentInfo = function(delpoyItemId) {
+        console.log("se abrio la modal de deploy " + delpoyItemId);
+        $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
+        Keeper.getDisk(delpoyItemId).then(function(result){
+          $scope.disk = result.response;
+        });
+
+        Keeper.getMemory(delpoyItemId).then(function(result){
+          $scope.memory = result.response;
+        });
+        $scope.modalDeploymentinfo.show();
+      }
+      $scope.closeModalDeploymentInfo = function() {
+        $scope.modalDeploymentinfo.hide();
+      }
+      $scope.$on('$destroy', function() {
+        $scope.modalDeploymentinfo.remove();
+      });
+
       $scope.goLoadMap = function() {
         var j=0;
         drawnItems = new L.FeatureGroup();
@@ -166,12 +191,12 @@ angular.module('starter')
                     var singleDeploy='';
                     var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
 
-                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
-                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
+                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></p>';
+                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 16px;"></i></p>';
+                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></p>';
+                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 16px;"></i></p>';
+                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></p>';
+                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 16px;"></i></p>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -202,7 +227,7 @@ angular.module('starter')
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
-                        '<h4 id="firstHeading" style="color: #4682B4;">'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<h4 id="firstHeading" style="color: #4682B4;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
                         '<div id="bodyContent" >'+ 
                         ngoDeploy +
                         statusAppServer +
@@ -213,9 +238,9 @@ angular.module('starter')
                         statusExtraDBServer +
                         statusExtraScreenServer +
                         queuedMessage +
-                        '<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
-                        'More detail' +
-                        '</button>'+                                                  
+                        //'<div style="text-align: right;"><button class="button button-clear button-positive icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
+                        //keepers[i].DESCRIPTION +
+                        //'</button></div>'+                                                  
                         '</div>'+
                         '</div>'
                         ;
@@ -293,20 +318,21 @@ angular.module('starter')
                     }
                 };        
             });
-        };     
+        }
+        leafletData.getMap().then(function(map) {
+            leafletData.getLayers().then(function(baselayers) {
+                drawnItems = baselayers.overlays.draw;
+                map.on('draw:created', function (e) {
+                  layerCircle = e.layer;
+                  drawnItems.addLayer(layerCircle);
+                  
+                  $scope.openModal();
+                });
+            });
+        });    
     };
 
-    leafletData.getMap().then(function(map) {
-        leafletData.getLayers().then(function(baselayers) {
-            drawnItems = baselayers.overlays.draw;
-            map.on('draw:created', function (e) {
-              layerCircle = e.layer;
-              drawnItems.addLayer(layerCircle);
-              
-              $scope.openModal();
-            });
-        });
-    }); 
+     
 
     $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
         scope: $scope,
@@ -372,6 +398,7 @@ angular.module('starter')
         };
     
     $scope.openModal = function() {
+      console.log("se abrio la modal de envio..");
       $scope.circleMessage = new CircleMessage();
       loadData();
       $scope.modal.show();
@@ -492,27 +519,6 @@ angular.module('starter')
             $rootScope.notify("Success", "The send request was done");  
           };          
         });
-    }
-    $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
-        scope: $scope,
-        animation: 'slide-in-left'
-        }).then(function(modal) {
-            $scope.modalDeploymentinfo = modal;
-    });
-    $scope.openModalDeploymentInfo = function(delpoyItemId) {
-      console.log("se abrio la modal " + delpoyItemId);
-      $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
-      Keeper.getDisk(delpoyItemId).then(function(result){
-        $scope.disk = result.response;
-      });
-
-      Keeper.getMemory(delpoyItemId).then(function(result){
-        $scope.memory = result.response;
-      });
-      $scope.modalDeploymentinfo.show();
-    }
-    $scope.closeModalDeploymentInfo = function() {
-      $scope.modalDeploymentinfo.hide();
     }
 
 }]);
