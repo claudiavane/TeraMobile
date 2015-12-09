@@ -52,6 +52,7 @@ angular.module('starter')
 
 .controller('MapController',
   [ '$scope',
+    '$rootScope',
     '$cordovaGeolocation',
     '$stateParams',
     '$ionicModal',
@@ -65,6 +66,7 @@ angular.module('starter')
     'Operator',
     function(
       $scope,
+      $rootScope,
       $cordovaGeolocation,
       $stateParams,
       $ionicModal,
@@ -82,9 +84,10 @@ angular.module('starter')
        * Once state loaded, get put map on scope.
        */
       $scope.$on("$stateChangeSuccess", function() {
-        var drawnItems = new L.FeatureGroup();
-        $scope.zoom;
-
+        var drawnItems;
+        var zoom;
+        var layerCircle;
+        
         $scope.map = {
           defaults: {
             tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -111,7 +114,7 @@ angular.module('starter')
        */
       $scope.goTo = function() {
         var j=0;
-        var drawnItems = new L.FeatureGroup();
+        drawnItems = new L.FeatureGroup();
         
         $scope.map.center = {
             lat : 0.0,
@@ -265,14 +268,14 @@ angular.module('starter')
             $scope.map.layers.overlays.CLARO.visible = newValue >= 5;
             $scope.map.layers.overlays.MOVISTAR.visible = newValue >= 5;
             $scope.map.layers.overlays.INIT.visible = true;
-            $scope.zoom = newValue;
+            zoom = newValue;
 
             $scope.loadCellsite();
         });
 
         $scope.loadCellsite = function() {
             var status = 'A';
-            var zoom = 7;
+            //var zoom = 7;
             var userId = 12;
             Cellsite.getCellsites(status, zoom, userId).then(function(result){
                 $scope.cellsites = result;
@@ -316,20 +319,16 @@ angular.module('starter')
                     j++;
                 }        
             });
-        };
-     
+        };     
     };
 
     leafletData.getMap().then(function(map) {
         leafletData.getLayers().then(function(baselayers) {
-            var drawnItems = baselayers.overlays.draw;
+            drawnItems = baselayers.overlays.draw;
             map.on('draw:created', function (e) {
-              var layer = e.layer;
-              drawnItems.addLayer(layer);
-              console.log(JSON.stringify(layer.toGeoJSON()));
-
+              layerCircle = e.layer;
+              drawnItems.addLayer(layerCircle);
               
-
               $scope.openModal();
             });
         });
@@ -359,16 +358,18 @@ angular.module('starter')
     
     $scope.openModal = function() {
       $scope.circleMessage = new CircleMessage();
-      $scope.circleMessage.userId = 12;
-      $scope.circleMessage.subdivisionId = 1;
-      $scope.circleMessage.orgId = 1;
       $scope.circleMessage.messageType = messageTypeDefault;
       $scope.circleMessage.priority = priorityDefault;
-      $scope.circleMessage.lat = -9.4921875;
-      $scope.circleMessage.lng = 2.10889865;  
-      $scope.circleMessage.ratio = 150; 
-      $scope.circleMessage.zoom = $scope.zoom;
+      
       $scope.modal.show();
+    };
+
+    $scope.closeModal = function() {
+      if (layerCircle != undefined) {
+        drawnItems.removeLayer(layerCircle);
+      };
+      console.log("cerrando modal..");
+      $scope.modal.hide();
     };
 
     var CircleMessage = function() {
@@ -387,7 +388,17 @@ angular.module('starter')
         this.priority;
     };
 
-    $scope.smsPreview = function() {        
+    $scope.smsPreview = function() {
+        $rootScope.show('Preview...');
+
+        $scope.circleMessage.userId = 12;
+        $scope.circleMessage.subdivisionId = 1;
+        $scope.circleMessage.orgId = 1;
+        $scope.circleMessage.lat = layerCircle.getLatLng().lat;
+        $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
+        $scope.circleMessage.ratio = layerCircle.getRadius(); 
+        $scope.circleMessage.zoom = zoom;
+
         for (var i = 0; i < $scope.operators.length; i++) {
           if ($scope.operators[i].checked) {
             $scope.circleMessage.operatorsId.push($scope.operators[i].id);
@@ -406,10 +417,12 @@ angular.module('starter')
           };
         };
         
-        
         /*AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           $scope.resp = result;
+          $rootScope.hide();
         });*/
+
+        //$scope.closeModal();
            
     };
 

@@ -1,3 +1,6 @@
+var pathOrg = 'http://192.168.51.61:8080/org';
+var pathKeeper = 'http://192.168.51.61:8080/keeper';
+
 angular.module('starter')
 
 .factory('MessageType', function() {
@@ -59,7 +62,7 @@ angular.module('starter')
    var keepers = [];
    return {
       getKeepers: function(){
-          return $http.get("http://192.168.51.61:8080/keeper/search/").then(function(resp){
+          return $http.get(pathKeeper+"/search/").then(function(resp){
                result = resp.data;
                if (result.responseCode === 'OK'){
                   keepers = result.response;
@@ -77,7 +80,7 @@ angular.module('starter')
    var cellsites = [];
    return {
        getCellsites: function(status, zoom, userId){
-          return $http.get("http://192.168.51.61:8080/org/cellsite/searchCellsiteZoom/", {params:{"status": status, "zoom":zoom,"userId":userId}}).then(function(resp){
+          return $http.get(pathOrg + "/cellsite/searchCellsiteZoom/", {params:{"status": status, "zoom":zoom,"userId":userId}}).then(function(resp){
                result = resp.data;
                if (result.responseCode === 'OK'){
                   cellsites = result.response;
@@ -95,7 +98,7 @@ angular.module('starter')
    var response = [];
    return {
       previewSmsCircle: function(circleMessage){
-          return $http.get("http://192.168.51.61:8080/keeper/search/", 
+          return $http.get(pathOrg + "/previewsms/range/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,
             "longitude": circleMessage.lng,
@@ -117,8 +120,20 @@ angular.module('starter')
                // handle error
           });
       },
-      sendSmsCircle: function(){
-          return $http.get("http://192.168.51.61:8080/org/cellsite/searchCellsiteZoom/", {params:{"status": status, "zoom":zoom,"userId":userId}}).then(function(resp){
+      sendSmsCircle: function(circleMessage){
+          return $http.get(pathOrg + "/previewsms/circle/", 
+            {params:{"message": circleMessage.message, 
+            "latitude": circleMessage.lat,
+            "longitude": circleMessage.lng,
+            "ratio": circleMessage.ratio,
+            "delivery_datetime": "",
+            "user_id": circleMessage.userId,
+            "subdivision_id": circleMessage.subdivisionId,
+            "operation_vector": circleMessage.operatorsId,
+            "org_id": circleMessage.orgId,
+            "message_type": circleMessage.messageType,
+            "zoom": circleMessage.zoom
+          }}).then(function(resp){
                result = resp.data;
                if (result.responseCode === 'OK'){
                   response = result.response;
