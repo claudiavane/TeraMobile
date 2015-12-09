@@ -1,7 +1,7 @@
 angular.module('starter')
 
 .controller("ControlsDrawController", [ "$scope", "leafletData", function($scope, leafletData) {
-      angular.extend($scope, {
+      /*angular.extend($scope, {
           london: {
               lat: 51.505,
               lng: -0.09,
@@ -47,7 +47,7 @@ angular.module('starter')
               console.log(JSON.stringify(layer.toGeoJSON()));
             });
          });
-     });
+     });*/
  }])
 
 .controller('MapController',
