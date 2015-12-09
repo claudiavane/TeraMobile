@@ -184,7 +184,12 @@ angular.module('starter')
         };
 
         Keeper.getKeepers().then(function(result){
-            $scope.keepers = result;
+            if (result.responseCode !== 'OK'){
+              $rootScope.notify(result.responseCode, responseMessage);
+            }
+
+            $scope.keepers = result.response;
+            
             var isWorking = 'is Working';
             var isNotWorking = 'is not Working';
 
@@ -278,7 +283,13 @@ angular.module('starter')
             //var zoom = 7;
             var userId = 12;
             Cellsite.getCellsites(status, zoom, userId).then(function(result){
-                $scope.cellsites = result;
+                if (result.responseCode !== 'OK'){
+                  //console.log("message " + result.responseMessage);
+                  $rootScope.notify(result.responseCode, "Este es un error raro..");
+                }
+
+                $scope.cellsites = result.response;
+
                 for (var i = 0; i < $scope.cellsites.length; i++) {
 
                     var lat = parseFloat($scope.cellsites[i].latitude);

@@ -58,36 +58,25 @@ angular.module('starter')
 })
 
 .factory('Keeper', function($http){
-   var result;
-   var keepers = [];
    return {
       getKeepers: function(){
           return $http.get(pathKeeper+"/search/").then(function(resp){
-               result = resp.data;
-               if (result.responseCode === 'OK'){
-                  keepers = result.response;
-               }               
-               return keepers;
+               return resp.data;
           }, function(error){
-               // handle error
+               console.log("Request Failed: " + error.data);
           });
       }
    }
 })
 
 .factory('Cellsite', function($http){
-   var result;
-   var cellsites = [];
+   
    return {
        getCellsites: function(status, zoom, userId){
           return $http.get(pathOrg + "/cellsite/searchCellsiteZoom/", {params:{"status": status, "zoom":zoom,"userId":userId}}).then(function(resp){
-               result = resp.data;
-               if (result.responseCode === 'OK'){
-                  cellsites = result.response;
-               }               
-               return cellsites;
+               return resp.data;
           }, function(error){
-               // handle error
+              console.log("Request Failed: " + error.data);
           });
        }
    }
@@ -117,7 +106,7 @@ angular.module('starter')
                }               
                return response;
           }, function(error){
-               // handle error
+               console.log("Request Failed: " + error.data);
           });
       },
       sendSmsCircle: function(circleMessage){
@@ -140,43 +129,22 @@ angular.module('starter')
                }               
                return response;
           }, function(error){
-               // handle error
+               console.log("Request Failed: " + error.data);
           });
       }
    }
 })
 
-.factory('SmsSendCircle', function($http){
-   var result;
-   var keepers = [];
-   return {
-      getKeepers: function(){
-          return $http.get("http://192.168.51.61:8080/keeper/search/").then(function(resp){
-               result = resp.data;
-               if (result.responseCode === 'OK'){
-                  keepers = result.response;
-               }               
-               return keepers;
-          }, function(error){
-               // handle error
-          });
-      }
-   }
-})
 
 .factory('Operator', function($http){
    var result;
-   var operators = [];
    return {
       all: function(){
-          return $http.get("http://192.168.51.61:8080/org/operation/search/").then(function(resp){
+          return $http.get(pathOrg + "/operation/search/").then(function(resp){
                result = resp.data;
-               if (result.responseCode === 'OK'){
-                  operators = result.response;
-               }               
-               return operators;
+               return result;
           }, function(error){
-               // handle error
+               console.log("Request Failed: " + error.data);
           });
       }
    }
