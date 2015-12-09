@@ -56,8 +56,6 @@ angular.module('starter')
     '$stateParams',
     '$ionicModal',
     '$ionicPopup',
-    'LocationsService',
-    'InstructionsService',
     'Keeper',
     'Cellsite',
     'leafletData',
@@ -71,8 +69,6 @@ angular.module('starter')
       $stateParams,
       $ionicModal,
       $ionicPopup,
-      LocationsService,
-      InstructionsService,
       Keeper,
       Cellsite,
       leafletData,
@@ -417,13 +413,11 @@ angular.module('starter')
            
     };
 
-        //LocationsService.savedLocations.push($scope.newLocation);
         //$scope.modal.hide();
         //$scope.goTo(LocationsService.savedLocations.length - 1);
     //};
 
     $scope.smsSend = function() {
-        //LocationsService.savedLocations.push($scope.newLocation);
         //$scope.modal.hide();
         //$scope.goTo(LocationsService.savedLocations.length - 1);
     };

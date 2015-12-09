@@ -34,11 +34,11 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'igTruncate
     templateUrl: 'templates/menu.html'
   })
 
-  .state('app.search', {
-    url: '/search',
+  .state('app.outgoing', {
+    url: '/outgoing',
     views: {
       'menuContent': {
-        templateUrl: 'templates/search.html'
+        templateUrl: 'templates/outgoing.html'
       }
     }
   })
