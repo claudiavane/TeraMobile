@@ -282,6 +282,7 @@ angular.module('starter')
             var status = 'A';
             //var zoom = 7;
             var userId = 12;
+            
             Cellsite.getCellsites(status, zoom, userId).then(function(result){
                 if (result.responseCode !== 'OK'){
                   //console.log("message " + result.responseMessage);
