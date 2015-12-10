@@ -27,6 +27,13 @@ angular.module('starter')
         });
     };
 
+    $rootScope.info = function (title, text) {
+        var alertPopup = $ionicPopup.show({
+            title: title ? title : '',
+            template: text
+        });
+    };
+
     $rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
             template: '<i class="icon ion-looping"></i><br>' + text,

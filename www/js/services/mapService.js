@@ -86,6 +86,26 @@ angular.module('starter')
    return {
       previewSmsCircle: function(circleMessage){
 
+          return $http.get(pathOrg + "/previewsms/circle/", 
+            {params:{"message": circleMessage.message, 
+            "latitude": circleMessage.lat,
+            "longitude": circleMessage.lng,
+            "ratio": circleMessage.ratio,
+            "deliveryDatetime": circleMessage.deliveryDatetime,
+            "userId": circleMessage.userId,
+            "subdivisionId": circleMessage.subdivisionId,
+            "operations": circleMessage.operatorsId,
+            "orgId": circleMessage.orgId,
+            "messageType": circleMessage.messageType.id,
+            "zoom": circleMessage.zoom
+          }}).then(function(resp){                            
+               return resp.data;
+          }, function(error){
+               console.log("Request Failed: " + error.data);
+          });
+      },
+      sendSmsCircle: function(circleMessage){
+
           console.log("message: " + circleMessage.message);
           console.log("lat: " + circleMessage.lat);
           console.log("lng: " + circleMessage.lng);
@@ -96,49 +116,29 @@ angular.module('starter')
           console.log("orgId: " + circleMessage.orgId);
           console.log("messageType: " + circleMessage.messageType.id);
           console.log("zoom: " + circleMessage.zoom);
+          console.log("priority.id: " + circleMessage.priority.id);
 
           for (var i = 0; i < circleMessage.operatorsId.length; i++) {
             console.log("op " + circleMessage.operatorsId[i]);
           };
 
-          return $http.get(pathOrg + "/previewsms/circle/", 
+
+          return $http.get(pathOrg + "/sendsms/circle/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,
             "longitude": circleMessage.lng,
             "ratio": circleMessage.ratio,
-            "delivery_datetime": circleMessage.deliveryDatetime,
-            "user_id": circleMessage.userId,
-            "subdivision_id": circleMessage.subdivisionId,
+            "deliveryDatetime": circleMessage.deliveryDatetime,
+            "priority": circleMessage.priority.id,
+            "userId": circleMessage.userId,
+            "subdivisionId": circleMessage.subdivisionId,
             "operations": circleMessage.operatorsId,
-            "org_id": circleMessage.orgId,
-            "message_type": circleMessage.messageType.id,
-            "zoom": circleMessage.zoom
-          }}).then(function(resp){
-                            
+            "orgId": circleMessage.orgId,
+            "messageType": circleMessage.messageType.id,
+            "zoom": circleMessage.zoom,
+            "endDeliveryDateTime": ""
+          }}).then(function(resp){                            
                return resp.data;
-          }, function(error){
-               console.log("Request Failed: " + error.data);
-          });
-      },
-      sendSmsCircle: function(circleMessage){
-          return $http.get(pathOrg + "/previewsms/circle/", 
-            {params:{"message": circleMessage.message, 
-            "latitude": circleMessage.lat,
-            "longitude": circleMessage.lng,
-            "ratio": circleMessage.ratio,
-            "delivery_datetime": "",
-            "user_id": circleMessage.userId,
-            "subdivision_id": circleMessage.subdivisionId,
-            "operation_vector": circleMessage.operatorsId,
-            "org_id": circleMessage.orgId,
-            "message_type": circleMessage.messageType,
-            "zoom": circleMessage.zoom
-          }}).then(function(resp){
-               result = resp.data;
-               if (result.responseCode === 'OK'){
-                  response = result.response;
-               }               
-               return response;
           }, function(error){
                console.log("Request Failed: " + error.data);
           });

@@ -392,6 +392,8 @@ angular.module('starter')
         this.priority;
     };
 
+    $scope.respPreview;
+
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
 
@@ -421,24 +423,51 @@ angular.module('starter')
           };
         };
         
+        console.log("previeww ");        
         AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           utilMessages.validityResponse(result);
-          $scope.resp = result;
+          $scope.respPreview = result.response;
+
+
 
           $rootScope.hide();
-        });
+          $scope.closeModal();
+          $scope.openModalSendSms();
 
-        //$scope.closeModal();
+        });
            
     };
 
-        //$scope.modal.hide();
-        //$scope.goTo(LocationsService.savedLocations.length - 1);
-    //};
+    $ionicModal.fromTemplateUrl('templates/confirmSendMessage.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modalConfirm = modal;
+    });
+
+    $scope.openModalSendSms = function() {
+      $scope.modalConfirm.show();
+    };
+
+    $scope.closeModalSendSms = function() {
+      if (layerCircle) {
+        drawnItems.removeLayer(layerCircle);
+      };
+      $scope.modalConfirm.hide();
+    };
 
     $scope.smsSend = function() {
-        //$scope.modal.hide();
-        //$scope.goTo(LocationsService.savedLocations.length - 1);
+        $rootScope.show('Sending...');
+        AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
+          utilMessages.validityResponse(result);
+          
+          $rootScope.hide();
+          $scope.closeModalSendSms();
+          if (result.responseCode === 'OK') {
+            $rootScope.notify("Success", "The send request was done");  
+          };          
+
+        });
     };
 
 

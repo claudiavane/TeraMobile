@@ -1,0 +1,35 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-assertive">
+
+    <h1 class="title">Confirm Send Alert Message</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModalSendSms()">Cancel</button>
+    </div>
+
+  </ion-header-bar>
+
+  <ion-content class="padding">
+
+    <form name="messageForm" ng-submit="smsSend()">
+
+      <div class="list list-inset">
+      	<div class="item" ng-repeat="item in respPreview" >
+	      {{item.operator_name}}
+	      <span class="item-note">
+		       {{item.quantity}}
+		  </span>
+	    </div>
+        
+        
+      </div>
+      <div class="padding">
+        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Send</button>
+
+      </div>
+
+    </form>
+
+  </ion-content>
+
+</ion-modal-view>

@@ -31,7 +31,9 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     .state('app', {
     url: '/app',
     abstract: true,
-    templateUrl: 'templates/menu.html'
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
+    
   })
 
   .state('app.outgoing', {
