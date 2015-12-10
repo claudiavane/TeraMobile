@@ -1,0 +1,33 @@
+<ion-view view-title="Settings" >
+
+  <ion-content class="padding">
+
+    <form name="messageForm" ng-submit="smsPreview()">
+
+      <div class="list">
+
+        <label class="item item-input item-select" >
+          <span class="input-label">Subdivision</span>
+          <select ng-model="circleMessage.messageType.name" >
+            <option ng-repeat="item in messageTypes" value="{{item.name}}" >
+               {{item.name}}
+            </option>
+          </select>
+        </label>
+
+        <label class="item item-input item-select">
+          <span class="input-label">Language</span>
+          <select ng-model="circleMessage.priority.name">
+            <option ng-repeat="i in priorities" value="{{i.name}}" >
+               {{i.name}}
+            </option>
+          </select>
+        </label>        
+      </div>
+      <div class="padding">
+        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Preview</button>
+      </div>
+    </form>
+  </ion-content>
+
+</ion-view>

@@ -144,7 +144,8 @@ angular.module('starter')
               },
             edit: {
               featureGroup: drawnItems,
-              edit: false
+              edit: false,
+              remove: false
             }
         };
               

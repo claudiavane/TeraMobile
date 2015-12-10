@@ -55,25 +55,32 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       }
     })
 
-  .state('app.playlists', {
-    url: '/playlists',
+  .state('app.mainMap', {
+    url: '/mainMap',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlists.html',
+        templateUrl: 'templates/mainMap.html',
         controller: 'MapController'          
       }
     }
   })
 
-  .state('app.single', {
-    url: '/playlists/:playlistId',
+  .state('app.settings', {
+    url: '/settings',
     views: {
       'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
+        templateUrl: 'templates/settings.html',
+        controller: 'SettingsController'
       }
     }
   })
+
+  .state('login', {
+    url: '/login',
+    templateUrl: 'templates/login.html',
+    controller: 'LoginController'      
+  })
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/login');
 });
