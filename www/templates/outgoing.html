@@ -1,5 +1,26 @@
 <ion-view view-title="Outgoing">
-  <ion-content>
-    <h1>Outgoing</h1>
-  </ion-content>
+	<ion-content>
+		<div class="item item-input-inset" >
+			<label class="item-input-wrapper">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" ng-model="searchQuery"></input>
+			</label>&nbsp;
+			<select ng-model="selectedItem.value" ng-change="updateOutgoingRequestList()">
+	           <option ng-selected="{{isSelected(each)}}" ng-repeat="each in filterUnits" value="{{each.value}}" >
+	              {{each.label}}
+	           </option>
+	        </select>
+		</div>
+		<list>
+			<a class="item" href="#" ng-repeat="item in items | filter:searchQuery">				
+				<span class="badge badge-assertive">{{item.total_sent}}</span>				
+				<h3>{{item.username}}: {{item.campaignTypeDescription}}</h3>				
+				<p>{{item.text_message}}</p>				
+				<p style="font-size: 17px; ">
+					<i class="icon {{getImage(item.ca_status)}}" style="color: {{getColor(item.ca_status)}};"></i>
+					<span style="font-size:11px;vertical-align:middle;padding-bottom:5px;">{{item.stringRequestedDate}}</span>
+				</p>
+			</a>
+		</list>
+	</ion-content>
 </ion-view>
