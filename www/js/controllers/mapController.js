@@ -64,6 +64,8 @@ angular.module('starter')
     'MessageType',
     'AlertMessage',
     'Operator',
+    'utilMessages',
+    'utilConstants',
     function(
       $scope,
       $rootScope,
@@ -77,7 +79,9 @@ angular.module('starter')
       Priority,
       MessageType,
       AlertMessage,
-      Operator
+      Operator,
+      utilMessages,
+      utilConstants
       ) {
 
       /**
@@ -108,10 +112,6 @@ angular.module('starter')
         $scope.goTo();
       });
 
-      /**
-       * Center map on specific saved location
-       * @param locationKey
-       */
       $scope.goTo = function() {
         var j=0;
         drawnItems = new L.FeatureGroup();
@@ -184,89 +184,87 @@ angular.module('starter')
         };
 
         Keeper.getKeepers().then(function(result){
-            if (result.responseCode !== 'OK'){
-              $rootScope.notify(result.responseCode, responseMessage);
-            }
-
-            $scope.keepers = result.response;
+            utilMessages.validityResponse(result);
+            var keepers = result.response;
             
             var isWorking = 'is Working';
             var isNotWorking = 'is not Working';
+            if(keepers){
+                for (var i = 0; i < keepers.length; i++) {
+                    var statusAppServer='';
+                    var statusDBServer='';
+                    var statusScreenServer='';
+                    var statusExtraAppServer='';
+                    var statusExtraDBServer='';
+                    var statusExtraScreenServer='';
 
-            for (var i = 0; i < $scope.keepers.length; i++) {
-                var statusAppServer='';
-                var statusDBServer='';
-                var statusScreenServer='';
-                var statusExtraAppServer='';
-                var statusExtraDBServer='';
-                var statusExtraScreenServer='';
+                    if (keepers[i].APPSERVER_WORKING === 0) {
+                      statusAppServer = '<p>App server: '+ isNotWorking + '</p>';
+                    }else{
+                      statusAppServer = '<p>App server: '+ isWorking + '</p>';
+                    };
+                    if (keepers[i].DATABASE_WORKING === 0) {
+                      statusDBServer = '<p>DB server: '+ isNotWorking + '</p>';
+                    }else{
+                      statusDBServer = '<p>DB server: '+ isWorking + '</p>';
+                    };
+                    if (keepers[i].SCREEN_WORKING === 0) {
+                      statusScreenServer = '<p>Screen server: '+ isNotWorking + '</p>';
+                    }else{
+                      statusScreenServer = '<p>Screen server: '+ isWorking + '</p>';
+                    };
 
-                if ($scope.keepers[i].APPSERVER_WORKING === 0) {
-                  statusAppServer = '<p>App server: '+ isNotWorking + '</p>';
-                }else{
-                  statusAppServer = '<p>App server: '+ isWorking + '</p>';
-                };
-                if ($scope.keepers[i].DATABASE_WORKING === 0) {
-                  statusDBServer = '<p>DB server: '+ isNotWorking + '</p>';
-                }else{
-                  statusDBServer = '<p>DB server: '+ isWorking + '</p>';
-                };
-                if ($scope.keepers[i].SCREEN_WORKING === 0) {
-                  statusScreenServer = '<p>Screen server: '+ isNotWorking + '</p>';
-                }else{
-                  statusScreenServer = '<p>Screen server: '+ isWorking + '</p>';
-                };
+                    if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
+                      if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) {
+                        statusExtraAppServer = '<p>App Extra server: '+ isNotWorking + '</p>';
+                      }else{
+                        statusExtraAppServer = '<p>App Extra server: '+ isWorking + '</p>';
+                      };  
+                    }
 
-                if ($scope.keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
-                  if ($scope.keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) {
-                    statusExtraAppServer = '<p>App Extra server: '+ isNotWorking + '</p>';
-                  }else{
-                    statusExtraAppServer = '<p>App Extra server: '+ isWorking + '</p>';
-                  };  
+                    if (keepers[i].EXTRA_TELCO_DATABASE_WORKING) {
+                      if (keepers[i].EXTRA_TELCO_DATABASE_WORKING === 0) {
+                        statusExtraDBServer = '<p>DB Extra server: '+ isNotWorking + '</p>';
+                      }else{
+                         statusExtraDBServer = '<p>DB Extra server: '+ isWorking + '</p>';
+                      };  
+                    }
+
+                    if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
+                      if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) {
+                        statusExtraScreenServer = '<p>Screen Extra server: '+ isNotWorking + '</p>';
+                      }else{
+                        statusExtraScreenServer = '<p>Screen Extra server: '+ isWorking + '</p>';
+                      };
+                    }
+
+                    var queuedMessage = '<p>Queued Messages: '+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</p>';
+                    
+                    var message = '<div id="content">' +
+                        '<h4 id="firstHeading" >'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<div id="bodyContent">'+ 
+                        statusAppServer +
+                        statusDBServer +
+                        statusScreenServer +
+                        statusExtraAppServer +
+                        statusExtraDBServer +
+                        statusExtraScreenServer +
+                        queuedMessage +                                                  
+                        '</div>'+
+                        '</div>'
+                        ;
+
+                    $scope.map.markers[j] = {
+                        layer: 'INIT',
+                        lat: keepers[i].LATITUDE,
+                        lng: keepers[i].LONGITUDE,
+                        message: message,
+                        focus: false,
+                        draggable: false
+                    };
+                    j++;
                 }
-
-                if ($scope.keepers[i].EXTRA_TELCO_DATABASE_WORKING) {
-                  if ($scope.keepers[i].EXTRA_TELCO_DATABASE_WORKING === 0) {
-                    statusExtraDBServer = '<p>DB Extra server: '+ isNotWorking + '</p>';
-                  }else{
-                     statusExtraDBServer = '<p>DB Extra server: '+ isWorking + '</p>';
-                  };  
-                }
-
-                if ($scope.keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
-                  if ($scope.keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) {
-                    statusExtraScreenServer = '<p>Screen Extra server: '+ isNotWorking + '</p>';
-                  }else{
-                    statusExtraScreenServer = '<p>Screen Extra server: '+ isWorking + '</p>';
-                  };
-                }
-
-                var queuedMessage = '<p>Queued Messages: '+ $scope.keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</p>';
-                
-                var message = '<div id="content">' +
-                    '<h4 id="firstHeading" >'+ $scope.keepers[i].DESCRIPTION +'</h4>'+
-                    '<div id="bodyContent">'+ 
-                    statusAppServer +
-                    statusDBServer +
-                    statusScreenServer +
-                    statusExtraAppServer +
-                    statusExtraDBServer +
-                    statusExtraScreenServer +
-                    queuedMessage +                                                  
-                    '</div>'+
-                    '</div>'
-                    ;
-
-                $scope.map.markers[j] = {
-                    layer: 'INIT',
-                    lat: $scope.keepers[i].LATITUDE,
-                    lng: $scope.keepers[i].LONGITUDE,
-                    message: message,
-                    focus: false,
-                    draggable: false
-                };
-                j++;
-            }          
+            };          
         });
    
         $scope.$watch('map.center.zoom', function(newValue){
@@ -279,57 +277,52 @@ angular.module('starter')
         });
 
         $scope.loadCellsite = function() {
-            var status = 'A';
-            //var zoom = 7;
             var userId = 12;
-            
-            Cellsite.getCellsites(status, zoom, userId).then(function(result){
-                if (result.responseCode !== 'OK'){
-                  //console.log("message " + result.responseMessage);
-                  $rootScope.notify(result.responseCode, "Este es un error raro..");
-                }
 
-                $scope.cellsites = result.response;
+            Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, userId).then(function(result){
+                utilMessages.validityResponse(result);
+                var cellsites = result.response;
+                if (cellsites) {
+                    for (var i = 0; i < cellsites.length; i++) {
 
-                for (var i = 0; i < $scope.cellsites.length; i++) {
+                        var lat = parseFloat(cellsites[i].latitude);
+                        var lng = parseFloat(cellsites[i].longitude);
+              
+                        var message = '<div id="content">' +
+                            '<h4 id="firstHeading" >'+ cellsites[i].name +'</h4>'+
+                            '<div id="bodyContent">'+                               
+                            '</div>'+
+                            '</div>';
 
-                    var lat = parseFloat($scope.cellsites[i].latitude);
-                    var lng = parseFloat($scope.cellsites[i].longitude);
-          
-                    var message = '<div id="content">' +
-                        '<h4 id="firstHeading" >'+ $scope.cellsites[i].name +'</h4>'+
-                        '<div id="bodyContent">'+                               
-                        '</div>'+
-                        '</div>';
+                        var iconMarker = [];
+                        if (cellsites[i].operatorId === 1) {
+                          iconMarker[i] = {
+                            iconUrl: 'img/movistar.png',
+                            iconSize: [25, 38]
+                          };
+                          layerMarker = cellsites[i].operatorName;                
+                        }
 
-                    var iconMarker = [];
-                    if ($scope.cellsites[i].operatorId === 1) {
-                      iconMarker[i] = {
-                        iconUrl: 'img/movistar.png',
-                        iconSize: [25, 38]
-                      };
-                      layerMarker = $scope.cellsites[i].operatorName;                
+                        if(cellsites[i].operatorId === 2){
+                          iconMarker[i] = {
+                            iconUrl: 'img/claro.png',
+                            iconSize: [25, 38]
+                          };
+                          layerMarker = cellsites[i].operatorName;                  
+                        }
+
+                        $scope.map.markers[j] = {
+                            layer: cellsites[i].operatorName,
+                            lat: lat,
+                            lng: lng,
+                            message: message,
+                            focus: false,
+                            draggable: false,
+                            icon: iconMarker[i]
+                        };
+                        j++;
                     }
-
-                    if($scope.cellsites[i].operatorId === 2){
-                      iconMarker[i] = {
-                        iconUrl: 'img/claro.png',
-                        iconSize: [25, 38]
-                      };
-                      layerMarker = $scope.cellsites[i].operatorName;                  
-                    }
-
-                    $scope.map.markers[j] = {
-                        layer: $scope.cellsites[i].operatorName,
-                        lat: lat,
-                        lng: lng,
-                        message: message,
-                        focus: false,
-                        draggable: false,
-                        icon: iconMarker[i]
-                    };
-                    j++;
-                }        
+                };        
             });
         };     
     };
@@ -356,9 +349,9 @@ angular.module('starter')
     $scope.messageTypes = MessageType.all();
     $scope.priorities = Priority.all();
     $scope.operators = [];
-
     Operator.all().then(function(result){
-      var ops = result;
+      utilMessages.validityResponse(result);
+      var ops = result.response;
       for (var i = 0; i < ops.length; i++) {
         var item = ops[i];
         $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
@@ -377,10 +370,9 @@ angular.module('starter')
     };
 
     $scope.closeModal = function() {
-      if (layerCircle != undefined) {
+      if (layerCircle) {
         drawnItems.removeLayer(layerCircle);
       };
-      console.log("cerrando modal..");
       $scope.modal.hide();
     };
 
@@ -429,10 +421,12 @@ angular.module('starter')
           };
         };
         
-        /*AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
+        AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
+          utilMessages.validityResponse(result);
           $scope.resp = result;
+
           $rootScope.hide();
-        });*/
+        });
 
         //$scope.closeModal();
            

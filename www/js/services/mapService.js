@@ -83,28 +83,39 @@ angular.module('starter')
 })
 
 .factory('AlertMessage', function($http){
-   var result;
-   var response = [];
    return {
       previewSmsCircle: function(circleMessage){
-          return $http.get(pathOrg + "/previewsms/range/", 
+
+          console.log("message: " + circleMessage.message);
+          console.log("lat: " + circleMessage.lat);
+          console.log("lng: " + circleMessage.lng);
+          console.log("ratio: " + circleMessage.ratio);
+          console.log("deliveryDatetime: " + circleMessage.deliveryDatetime);
+          console.log("user_id: " + circleMessage.userId);
+          console.log("subdivisionId: " + circleMessage.subdivisionId);
+          console.log("orgId: " + circleMessage.orgId);
+          console.log("messageType: " + circleMessage.messageType.id);
+          console.log("zoom: " + circleMessage.zoom);
+
+          for (var i = 0; i < circleMessage.operatorsId.length; i++) {
+            console.log("op " + circleMessage.operatorsId[i]);
+          };
+
+          return $http.get(pathOrg + "/previewsms/circle/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,
             "longitude": circleMessage.lng,
             "ratio": circleMessage.ratio,
-            "delivery_datetime": "",
+            "delivery_datetime": circleMessage.deliveryDatetime,
             "user_id": circleMessage.userId,
             "subdivision_id": circleMessage.subdivisionId,
-            "operation_vector": circleMessage.operatorsId,
+            "operations": circleMessage.operatorsId,
             "org_id": circleMessage.orgId,
-            "message_type": circleMessage.messageType,
+            "message_type": circleMessage.messageType.id,
             "zoom": circleMessage.zoom
           }}).then(function(resp){
-               result = resp.data;
-               if (result.responseCode === 'OK'){
-                  response = result.response;
-               }               
-               return response;
+                            
+               return resp.data;
           }, function(error){
                console.log("Request Failed: " + error.data);
           });
@@ -141,8 +152,7 @@ angular.module('starter')
    return {
       all: function(){
           return $http.get(pathOrg + "/operation/search/").then(function(resp){
-               result = resp.data;
-               return result;
+               return resp.data;
           }, function(error){
                console.log("Request Failed: " + error.data);
           });

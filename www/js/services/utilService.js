@@ -1,5 +1,23 @@
 angular.module('starter')
 
+.factory('utilConstants', function() {
+
+    var status = [{
+        id: 'A',
+        name: 'Active'
+      }, {
+        id: 'D',
+        name: 'Delete'
+      }];
+
+    return {
+        getStatusActive: function(){
+            return status.id = 'A';
+       }
+    };
+    
+})
+
 .factory('utilMessages', function($rootScope, $ionicPopup, $ionicLoading) {
 
     $rootScope.notify = function (title, text) {
@@ -23,6 +41,11 @@ angular.module('starter')
         $ionicLoading.hide();
     };
 
-    return {};
+    return {
+        validityResponse: function(result){
+            if (result.responseCode !== 'OK'){
+                $rootScope.notify(result.responseCode, result.responseMessage);
+            }
+       }};
     
 });
