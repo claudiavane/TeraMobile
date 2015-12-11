@@ -1,4 +1,4 @@
-var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
+var pathOrg = 'http:localhost:8080/org';
 
 angular.module('starter')
 

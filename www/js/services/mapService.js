@@ -1,5 +1,5 @@
-var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
-var pathKeeper = 'http://demosys.salamancasolutions.com:8534/keeper';
+var pathOrg = 'http://localhost:8080/org';
+var pathKeeper = 'http://localhost:8080/keeper';
 
 angular.module('starter')
 
