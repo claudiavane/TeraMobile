@@ -16,7 +16,7 @@ angular.module('starter')
               console.log("Request Failed: " + error.data);
           });
        },
-       getSubdivisions: function(user){
+       getSubdivisions: function(){
             userInfo = result.response;
             var item;
             var subdivision = {id: null, name: ''};

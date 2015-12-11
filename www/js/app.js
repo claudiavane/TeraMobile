@@ -40,7 +40,8 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     url: '/outgoing',
     views: {
       'menuContent': {
-        templateUrl: 'templates/outgoing.html'
+        templateUrl: 'templates/outgoing.html',
+        controller: 'OutgoingController'
       }
     }
   })
