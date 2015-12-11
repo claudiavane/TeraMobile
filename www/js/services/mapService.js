@@ -96,8 +96,9 @@ angular.module('starter')
             "subdivisionId": circleMessage.subdivisionId,
             "operations": circleMessage.operatorsId,
             "orgId": circleMessage.orgId,
-            "messageType": circleMessage.messageType.id,
-            "zoom": circleMessage.zoom
+            "messageType": circleMessage.messageType,
+            "zoom": circleMessage.zoom,
+            "userLanguageCode": "ES"
           }}).then(function(resp){                            
                return resp.data;
           }, function(error){
@@ -111,17 +112,17 @@ angular.module('starter')
           console.log("lng: " + circleMessage.lng);
           console.log("ratio: " + circleMessage.ratio);
           console.log("deliveryDatetime: " + circleMessage.deliveryDatetime);
+          console.log("priority.id: " + circleMessage.priority);
           console.log("user_id: " + circleMessage.userId);
           console.log("subdivisionId: " + circleMessage.subdivisionId);
-          console.log("orgId: " + circleMessage.orgId);
-          console.log("messageType: " + circleMessage.messageType.id);
-          console.log("zoom: " + circleMessage.zoom);
-          console.log("priority.id: " + circleMessage.priority.id);
-
           for (var i = 0; i < circleMessage.operatorsId.length; i++) {
-            console.log("op " + circleMessage.operatorsId[i]);
+            console.log("op i" + circleMessage.operatorsId[i]);
           };
-
+          console.log("orgId: " + circleMessage.orgId);
+          console.log("messageType: " + circleMessage.messageType);
+          console.log("zoom: " + circleMessage.zoom);
+          console.log("endDeliveryDateTime: " + circleMessage.endDeliveryDateTime);
+          
 
           return $http.get(pathOrg + "/sendsms/circle/", 
             {params:{"message": circleMessage.message, 
@@ -129,14 +130,15 @@ angular.module('starter')
             "longitude": circleMessage.lng,
             "ratio": circleMessage.ratio,
             "deliveryDatetime": circleMessage.deliveryDatetime,
-            "priority": circleMessage.priority.id,
+            "priority": circleMessage.priority,
             "userId": circleMessage.userId,
             "subdivisionId": circleMessage.subdivisionId,
             "operations": circleMessage.operatorsId,
             "orgId": circleMessage.orgId,
-            "messageType": circleMessage.messageType.id,
+            "messageType": circleMessage.messageType,
             "zoom": circleMessage.zoom,
-            "endDeliveryDateTime": ""
+            "endDeliveryDateTime": null,
+            "userLanguageCode": "ES"
           }}).then(function(resp){                            
                return resp.data;
           }, function(error){

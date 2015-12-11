@@ -1,18 +1,6 @@
-<ion-modal-view>
-  <ion-header-bar class="bar-assertive">
-
-    <h1 class="title">Send Alert Message</h1>
-
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeModal()">Cancel</button>
-    </div>
-
-  </ion-header-bar>
-
+<ion-view view-title="Deployment Info">
   <ion-content class="padding">
-
-    <form name="messageForm" ng-submit="smsPreview()">
-
+    
       <div class="list">
 
         <div class="item item-divider item-icon-left">
@@ -60,28 +48,10 @@
                       class="checkbox-assertive" >
           {{ item.name }}
         </ion-checkbox>
-
-        <!--<li class="item item-checkbox">
-           <label class="checkbox checkbox-assertive">
-             <input type="checkbox" ng-model="filter.leaseSaleType" ng-selected="selected">
-           </label>
-           Claro
-        </li>
-        <li class="item item-checkbox">
-           <label class="checkbox checkbox-assertive">
-             <input type="checkbox" ng-model="filter.leaseAntiType">
-           </label>
-           Movistar
-        </li>-->
         
       </div>
       <div class="padding">
         <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Preview</button>
-
       </div>
-
-    </form>
-
   </ion-content>
-
-</ion-modal-view>
+</ion-view>

@@ -50,6 +50,10 @@ angular.module('starter')
      });*/
  }])
 
+.controller("DeploymentInfoController", [ "$scope", "leafletData", function($scope, leafletData) {
+      console.log("DeploymentInfoController..");
+ }])
+
 .controller('MapController',
   [ '$scope',
     '$rootScope',
@@ -202,46 +206,46 @@ angular.module('starter')
                     var statusExtraScreenServer='';
 
                     if (keepers[i].APPSERVER_WORKING === 0) {
-                      statusAppServer = '<p>App server: '+ isNotWorking + '</p>';
+                      statusAppServer = '<p><span class="left">Application server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
                     }else{
-                      statusAppServer = '<p>App server: '+ isWorking + '</p>';
+                      statusAppServer = '<p><span class="left">Application server: </span>​<span class="right">'+ isWorking + '</span></p>';
                     };
                     if (keepers[i].DATABASE_WORKING === 0) {
-                      statusDBServer = '<p>DB server: '+ isNotWorking + '</p>';
+                      statusDBServer = '<p><span class="left">Database server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
                     }else{
-                      statusDBServer = '<p>DB server: '+ isWorking + '</p>';
+                      statusDBServer = '<p><span class="left">Database server: </span>​<span class="right">'+ isWorking + '</span></p>';
                     };
                     if (keepers[i].SCREEN_WORKING === 0) {
-                      statusScreenServer = '<p>Screen server: '+ isNotWorking + '</p>';
+                      statusScreenServer = '<p><span class="left">Screen server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
                     }else{
-                      statusScreenServer = '<p>Screen server: '+ isWorking + '</p>';
+                      statusScreenServer = '<p><span class="left">Screen server: </span>​<span class="right">'+ isWorking + '</span></p>';
                     };
 
                     if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
                       if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) {
-                        statusExtraAppServer = '<p>App Extra server: '+ isNotWorking + '</p>';
+                        statusExtraAppServer = '<p><span class="left; ">Application Extra server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
                       }else{
-                        statusExtraAppServer = '<p>App Extra server: '+ isWorking + '</p>';
+                        statusExtraAppServer = '<p><span class="left">Application Extra server: </span>​<span class="right">'+ isWorking + '</span></p>';
                       };  
                     }
 
                     if (keepers[i].EXTRA_TELCO_DATABASE_WORKING) {
                       if (keepers[i].EXTRA_TELCO_DATABASE_WORKING === 0) {
-                        statusExtraDBServer = '<p>DB Extra server: '+ isNotWorking + '</p>';
+                        statusExtraDBServer = '<p><span class="left">Database Extra server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
                       }else{
-                         statusExtraDBServer = '<p>DB Extra server: '+ isWorking + '</p>';
+                         statusExtraDBServer = '<p><span class="left">Database Extra server: </span>​<span class="right">'+ isWorking + '</span></p>';
                       };  
                     }
 
                     if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
                       if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) {
-                        statusExtraScreenServer = '<p>Screen Extra server: '+ isNotWorking + '</p>';
+                        statusExtraScreenServer = '<p><span class="left">Screen Extra server: </span>​<span class="right">'+ isNotWorking + '</span></p>';
                       }else{
-                        statusExtraScreenServer = '<p>Screen Extra server: '+ isWorking + '</p>';
+                        statusExtraScreenServer = '<p><span class="left">Screen Extra server: </span>​<span class="right">'+ isWorking + '</span></p>';
                       };
                     }
 
-                    var queuedMessage = '<p>Queued Messages: '+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</p>';
+                    var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span class="right">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content">' +
                         '<h4 id="firstHeading" >'+ keepers[i].DESCRIPTION +'</h4>'+
@@ -252,7 +256,10 @@ angular.module('starter')
                         statusExtraAppServer +
                         statusExtraDBServer +
                         statusExtraScreenServer +
-                        queuedMessage +                                                  
+                        queuedMessage +
+                        '<a href="#/app/deploymentInformation">'+
+                        'More detail' +
+                        '</a>'+                                                  
                         '</div>'+
                         '</div>'
                         ;
@@ -362,6 +369,39 @@ angular.module('starter')
         $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
       };      
     });
+
+    $scope.datepickerObject = {
+      titleLabel: 'Date Message Send',  //Optional
+      todayLabel: 'Today',  //Optional
+      closeLabel: 'Close',  //Optional
+      setLabel: 'Save',  //Optional
+      setButtonType : 'button-small button-energized',  //Optional
+      todayButtonType : 'button-small button-dark',  //Optional
+      closeButtonType : 'button-small button-stable',  //Optional
+      inputDate: new Date(),  //Optional
+      mondayFirst: true,  //Optional
+      //disabledDates: disabledDates, //Optional
+      //weekDaysList: weekDaysList, //Optional
+      //monthList: monthList, //Optional
+      templateType: 'popup', //Optional
+      showTodayButton: 'true', //Optional
+      modalHeaderColor: 'bar-dark', //Optional
+      modalFooterColor: 'bar-dark', //Optional
+      from: new Date(2012, 8, 2), //Optional
+      to: new Date(2018, 8, 25),  //Optional
+      callback: function (val) {  //Mandatory
+        datePickerCallback(val);
+      },
+      dateFormat: 'dd-MM-yyyy', //Optional
+      closeOnSelect: false, //Optional
+    };
+    $scope.datePicker = new Date();
+    var datePickerCallback = function (val) {
+      if (typeof(val) !== 'undefined') {
+        console.log('Selected date is : ', val);
+        $scope.datePicker = val;
+      }
+    };
     
     $scope.openModal = function() {
       $scope.circleMessage = new CircleMessage();      
@@ -397,20 +437,27 @@ angular.module('starter')
     };
 
     $scope.respPreview;
-
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
-
+        
         $scope.circleMessage.userId = 12;
         $scope.circleMessage.subdivisionId = $rootScope.subdivision.id;
         $scope.circleMessage.orgId = 1;
         $scope.circleMessage.lat = layerCircle.getLatLng().lat;
         $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
-        $scope.circleMessage.ratio = layerCircle.getRadius(); 
+        $scope.circleMessage.ratio = layerCircle.getRadius()/1000; 
         $scope.circleMessage.zoom = zoom;
-        $scope.circleMessage.messageType.id = $scope.messageType.id;
-        $scope.circleMessage.priority.id = $scope.priority.id;
-
+        $scope.circleMessage.messageType = $scope.messageType.id;
+        $scope.circleMessage.priority = $scope.priority.id;
+        
+        var dateString = $scope.datePicker.getFullYear()+
+                      ($scope.datePicker.getMonth()+1).toString()+
+                      $scope.datePicker.getDate().toString()+
+                      $scope.datePicker.getHours().toString()+
+                      $scope.datePicker.getMinutes().toString()+
+                      $scope.datePicker.getSeconds().toString();
+                
+        $scope.circleMessage.deliveryDatetime = dateString;
         for (var i = 0; i < $scope.operators.length; i++) {
           if ($scope.operators[i].checked) {
             $scope.circleMessage.operatorsId.push($scope.operators[i].id);
@@ -422,7 +469,7 @@ angular.module('starter')
           $scope.respPreview = result.response;
 
           $rootScope.hide();
-          $scope.closeModal();
+          //$scope.closeModal();
           $scope.openModalSendSms();
         });           
     }

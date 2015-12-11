@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource'])
+angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker'])
 
 .run(function($ionicPlatform, $rootScope, utilMessages) {
   $ionicPlatform.ready(function() {
@@ -74,6 +74,16 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       'menuContent': {
         templateUrl: 'templates/settings.html',
         controller: 'SettingsController'
+      }
+    }
+  })
+
+  .state('app.deploymentInformation', {
+    url: '/deploymentInformation',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/deploymentInformation.html',
+        controller: 'DeploymentInfoController'
       }
     }
   })
