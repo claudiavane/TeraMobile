@@ -48,6 +48,16 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     }
   })
 
+  .state('app.incoming', {
+    url: '/incoming',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/incoming.html',
+        controller: 'IncomingController'
+      }
+    }
+  })
+
   .state('app.browse', {
       url: '/browse',
       views: {
@@ -77,6 +87,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       }
     }
   })
+
 
   .state('app.deploymentInformation', {
     url: '/deploymentInformation/:id',

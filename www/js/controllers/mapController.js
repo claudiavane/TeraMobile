@@ -209,7 +209,7 @@ angular.module('starter')
                         statusExtraDBServer +
                         statusExtraScreenServer +
                         queuedMessage +
-                        '<a href="#/app/deploymentInformation/'+ keepers[i].ID +'">'+
+                        '<a class="button button-small button-balanced icon-right ion-chevron-right" href="#/app/deploymentInformation/'+ keepers[i].ID +'">'+
                         'More detail' +
                         '</a>'+                                                  
                         '</div>'+
@@ -222,7 +222,11 @@ angular.module('starter')
                         lng: keepers[i].LONGITUDE,
                         message: message,
                         focus: false,
-                        draggable: false
+                        draggable: false,
+                        icon: {
+                            iconUrl: 'img/marker32.png',
+                            iconSize: [30, 38]
+                        }
                     };
                     j++;
                 }
@@ -257,17 +261,17 @@ angular.module('starter')
 
                         var iconMarker = [];
                         if (cellsites[i].operatorId === 1) {
-                          iconMarker[i] = {
-                            iconUrl: 'img/movistar.png',
-                            iconSize: [25, 38]
+                           iconMarker[i] = {
+                            type: 'div',
+                            html: '<i class="ion-ios-location" style="color:#20cc38;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                
                         }
 
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
-                            iconUrl: 'img/claro.png',
-                            iconSize: [25, 38]
+                            type: 'div',
+                            html: '<i class="ion-ios-location" style="color:#bc160e;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }
