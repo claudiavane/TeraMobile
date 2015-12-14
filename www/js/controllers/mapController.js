@@ -271,7 +271,7 @@ angular.module('starter')
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
                             type: 'div',
-                            html: '<i class="ion-ios-location" style="color:#bc160e;"></i>',
+                            html: '<i class="ion-ios-location" style="color:#000099;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }

@@ -9,7 +9,7 @@ angular.module('starter')
     
     return {
         login: function(user){
-          return $http.get(pathOrg + "/user/login/", {params:{"username": user.username, "password": user.password}}).then(function(resp){
+          return $http.get(pathOrg + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
               result = resp.data;
               console.log("result.responseCode: " + result.responseCode);
               return result;

@@ -31,3 +31,44 @@ body {
   font-size: 24px;
   color : rgb(88,88,88);
 }
+
+.background-intro {
+  background-color: #A80000;
+  background-size: cover;
+  background-position: center; }
+
+.logo {
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  background: #cfb20c;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #cfb20c 0%, #f8d50e 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cfb20c), color-stop(100%, #f8d50e));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #cfb20c 0%, #f8d50e 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #cfb20c 0%, #f8d50e 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #cfb20c 0%, #f8d50e 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #cfb20c 0%, #f8d50e 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cfb20c', endColorstr='#f8d50e',GradientType=0 );
+  /* IE6-9 */ }
+  .logo span {
+    font-size: 40px;
+    color: #212121;
+    position: absolute;
+    top: 40%;
+    left: 40%; }
+
+
+.tagline {
+  text-align: center;
+  color: #FFF;
+  margin-bottom: 50px; }    

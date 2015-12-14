@@ -6,7 +6,7 @@ angular.module('starter')
         $scope.user = {
             username: "ssimon",
             password: "ssimon",
-            languageCode: "ES"
+            languageCode: "es"
         };
 
        $scope.login = function (user) {
@@ -26,7 +26,7 @@ angular.module('starter')
               if (result.responseCode === 'OK') {
                   // fix session data
                   $rootScope.user = result.response[0];
-                  
+
                   console.log("$rootScope.user.user_id " + $rootScope.user.user_id);
                   $rootScope.subdivision = User.getSubdivisionDefault();
                   $state.go('app.mainMap');
