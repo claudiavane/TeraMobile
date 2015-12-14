@@ -45,8 +45,6 @@ angular.module('starter')
       /**
        * Once state loaded, get put map on scope.
        */
-       console.log("$rootScope.user "+ $rootScope.user.userId);
-
       $scope.$on("$stateChangeSuccess", function() {
         var drawnItems;
         var zoom;
@@ -241,9 +239,8 @@ angular.module('starter')
         });
 
         $scope.loadCellsite = function() {
-            var userId = 12;
-
-            Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, userId).then(function(result){
+            
+            Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, $rootScope.user.user_id).then(function(result){
                 utilMessages.validityResponse(result);
                 var cellsites = result.response;
                 if (cellsites) {
@@ -394,30 +391,38 @@ angular.module('starter')
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
         
-        $scope.circleMessage.userId = 12;
+        $scope.circleMessage.userId = $rootScope.user.user_id;
         $scope.circleMessage.subdivisionId = $rootScope.subdivision.id;
-        $scope.circleMessage.orgId = 1;
+        $scope.circleMessage.orgId = $rootScope.user.org_id;
         $scope.circleMessage.lat = layerCircle.getLatLng().lat;
         $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
         $scope.circleMessage.ratio = layerCircle.getRadius()/1000; 
         $scope.circleMessage.zoom = zoom;
         $scope.circleMessage.messageType = $scope.messageType.id;
         $scope.circleMessage.priority = $scope.priority.id;
-        
+
         var dateString = $scope.datePicker.getFullYear()+
                       ($scope.datePicker.getMonth()+1).toString()+
                       $scope.datePicker.getDate().toString()+
                       $scope.datePicker.getHours().toString()+
                       $scope.datePicker.getMinutes().toString()+
                       $scope.datePicker.getSeconds().toString();
-                
+
+        $scope.dateToString = $scope.datePicker.getFullYear()+ '-'+
+                             ($scope.datePicker.getMonth()+1).toString() +'-'+
+                             $scope.datePicker.getDate().toString() +' '+
+                             $scope.datePicker.getHours().toString() +':'+
+                             $scope.datePicker.getMinutes().toString() +':'+
+                             $scope.datePicker.getSeconds().toString();
+
         $scope.circleMessage.deliveryDatetime = dateString;
+        $scope.circleMessage.operatorsId = [];
         for (var i = 0; i < $scope.operators.length; i++) {
           if ($scope.operators[i].checked) {
             $scope.circleMessage.operatorsId.push($scope.operators[i].id);
           }
         };
-        
+
         AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           utilMessages.validityResponse(result);
           $scope.respPreview = result.response;
@@ -427,6 +432,7 @@ angular.module('starter')
           $scope.openModalSendSms();
         });           
     }
+
     $ionicModal.fromTemplateUrl('templates/confirmSendMessage.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -434,6 +440,7 @@ angular.module('starter')
             $scope.modalConfirm = modal;
     });
     $scope.openModalSendSms = function() {
+
       $scope.modalConfirm.show();
     }
     $scope.closeModalSendSms = function() {

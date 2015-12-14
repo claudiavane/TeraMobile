@@ -1,22 +1,24 @@
-<ion-view view-title="Deployment Info">
+<ion-view view-title="Deployment Information">
   <ion-content class="padding">
     <form name="messageForm" ng-submit="smsSend()">
       <div class="list">
-
+        
         <div class="item item-divider item-icon-left">
-          <i class="icon ion-email"></i>
+          <i class="icon ion-information-circled custom-icon-list"></i>
           General Information
         </div>
 
         <div class="item" >
-            <h2>{{keeperInfo.DESCRIPTION}}</h2>
+            <h3>{{keeperInfo.DESCRIPTION}}</h3>
             <p>{{keeperInfo.COUNTRY}}</p>
             <p>{{keeperInfo.MODULE}}</p>
             <p>{{keeperInfo.SUBMODULES}}</p>
+            <p>{{keeperInfo.ENTITY}}</p>
         </div>
 
         <div class="item item-divider item-icon-left">
-          DataBase Server
+          <i class="icon ion-archive custom-icon-list"></i>
+          Disk information
         </div>
 
         <div class="item" >
@@ -27,16 +29,20 @@
         </div>
 
         <div class="item item-divider item-icon-left">
-          Application Server
+          <i class="icon ion-ios-timer custom-icon-list"></i>
+          Memory information
         </div>
 
-        <div class="item" ng-repeat="item in respPreview" >
-            <span class="right; badge badge-dark">{{item.quantity}}</span><span class="left">{{item.operator_name}}</span>​
-        </div>        
+        <div class="item" >
+            <h2>{{keeperInfo.DESCRIPTION}}</h2>
+            <p>{{keeperInfo.COUNTRY}}</p>
+            <p>{{keeperInfo.MODULE}}</p>
+            <p>{{keeperInfo.SUBMODULES}}</p>
+        </div>
+
+
       </div>
-      <div class="padding">
-        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Send</button>
-      </div>
+      
     </form>
 
   </ion-content>

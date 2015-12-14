@@ -1,4 +1,4 @@
-var pathOrg = 'http://192.168.51.51:8080/org';
+var pathOrg = 'http://localhost:8080/org';
 angular.module('starter')
 
 .factory('OutgoingRequest', function($http){

@@ -26,3 +26,8 @@ body {
 .left{
     float:left;
 }
+
+.custom-icon-list:before{
+  font-size: 24px;
+  color : rgb(88,88,88);
+}

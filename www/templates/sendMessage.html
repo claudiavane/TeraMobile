@@ -11,12 +11,12 @@
 
   <ion-content class="padding">
 
-    <form name="messageForm" ng-submit="smsPreview()">
+    <form name="messageForm" >
 
       <div class="list">
 
         <div class="item item-divider item-icon-left">
-          <i class="icon ion-email"></i>
+          <i class="icon ion-email custom-icon-list"></i>
           Message Detail
         </div>
 
@@ -43,14 +43,16 @@
         </label>
 
         <label class="item item-input"> 
-          <span class="input-label">Date message sent</span>       
-          <ionic-datepicker input-obj="datepickerObject">
-            <button class="button button-clear button-dark"> {{datepickerObject.inputDate | date:'dd - MMMM - yyyy'}}</button>
-          </ionic-datepicker>
+          <span class="input-label left">Date message sent</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <ionic-datepicker input-obj="datepickerObject" >
+              <!--<button class="button button-clear button-dark" > {{datepickerObject.inputDate | date:'dd-MMMM-yyyy'}}</button>-->
+              <button style="float:right;" class="button button-icon icon ion-android-calendar"></button>
+            </ionic-datepicker>
+          
         </label>
 
         <div class="item item-divider item-icon-left">
-          <i class="icon ion-android-wifi"></i>
+          <i class="icon ion-android-wifi custom-icon-list"></i>
           Operators
         </div>
   
@@ -58,26 +60,10 @@
                       ng-model="item.checked" 
                       ng-checked="item.checked" 
                       class="checkbox-assertive" >
-          {{ item.name }}
+          {{item.name}}
         </ion-checkbox>
 
-        <!--<li class="item item-checkbox">
-           <label class="checkbox checkbox-assertive">
-             <input type="checkbox" ng-model="filter.leaseSaleType" ng-selected="selected">
-           </label>
-           Claro
-        </li>
-        <li class="item item-checkbox">
-           <label class="checkbox checkbox-assertive">
-             <input type="checkbox" ng-model="filter.leaseAntiType">
-           </label>
-           Movistar
-        </li>-->
-        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Preview</button>
-      </div>
-      <div>
-        
-
+        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid" ng-click="smsPreview()">Preview</button>
       </div>
 
     </form>

@@ -11,7 +11,7 @@
     <form name="messageForm" ng-submit="smsSend()">
       <div class="list">
         <div class="item item-divider item-icon-left">
-          <i class="icon ion-email"></i>
+          <i class="icon ion-email custom-icon-list"></i>
           Message Detail
         </div>
 
@@ -19,20 +19,19 @@
             <h2>{{circleMessage.message}}</h2>
             <p>{{messageType.name}}</p>
             <p>{{priority.name}}</p>
-            <p>{{circleMessage.deliveryDatetime}}</p>
+            <p>{{dateToString}}</p>
         </div>
 
         <div class="item item-divider item-icon-left">
-          <span class="right">Total</span><span class="left"><i class="icon ion-android-wifi"></i>Operators</span>
+          <span class="right">Total</span><span class="left"><i class="icon ion-android-wifi custom-icon-list"></i>Operators</span>
         </div>
 
         <div class="item" ng-repeat="item in respPreview" >
             <span class="right; badge badge-dark">{{item.quantity}}</span><span class="left">{{item.operator_name}}</span>​
-        </div>        
+        </div>
+        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Send</button>        
       </div>
-      <div class="padding">
-        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Send</button>
-      </div>
+      
     </form>
 
   </ion-content>
