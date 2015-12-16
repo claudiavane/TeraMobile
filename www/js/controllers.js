@@ -3,7 +3,11 @@ angular.module('starter.controllers', [])
 .controller('AppCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
 
   console.log("AppCtrl.. ");
-  $scope.username = User.username();
+
+  //$scope.username = User.username();
+  //console.log("user.username" + $scope.username);
+  $scope.user = User.user();
+  console.log("AppCtrl user.user " + $scope.user.username);
   
   $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
     var alertPopup = $ionicPopup.alert({
@@ -21,8 +25,8 @@ angular.module('starter.controllers', [])
     });
   });
 
-  $scope.setCurrentUsername = function(name) {
-    $scope.username = name;
+  $scope.setCurrentUser = function(user) {
+    $scope.user = user;
   };
 })
 
@@ -39,8 +43,6 @@ angular.module('starter.controllers', [])
       $state.go('login', {}, {reload: true});
 
     };
-
-
 
 })
 ;
