@@ -89,17 +89,6 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     }
   })
 
-
-  .state('app.deploymentInformation', {
-    url: '/deploymentInformation/:id',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/deploymentInformation.html',
-        controller: 'DeploymentInfoController'
-      }
-    }
-  })
-
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',

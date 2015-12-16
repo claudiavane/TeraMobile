@@ -21,13 +21,17 @@
         </div>
 
         <label class="item item-input">        
-          <textarea rows="4" placeholder="Write a message" ng-model="circleMessage.message" ng-minlength="1" ng-maxlength="160" required></textarea>
+          <textarea rows="4" placeholder="Write a message" ng-model="circleMessage.message" ng-minlength="1" ng-maxlength="160" required name="message"></textarea>
         </label>
+        <div role="alert">
+          <span class="error" ng-show="messageForm.message.$error.maxlength">
+            The message is too long</span>
+        </div>
 
         <label class="item item-input item-select" >
           <span class="input-label">Message Type</span>
-          <select ng-model="messageType.id" >
-            <option ng-repeat="item in messageTypes" value="{{item.id}}" ng-selected="{{isSelectedMessageType(item)}}">
+          <select ng-model="messageType.id">
+            <option ng-repeat="item in messageTypes" value="{{item.id}}" ng-selected="isSelectedMessageType(item)">
                {{item.name}}
             </option>
           </select>

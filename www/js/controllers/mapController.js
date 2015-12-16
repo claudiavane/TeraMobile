@@ -4,7 +4,14 @@ angular.module('starter')
     console.log("DeploymentInfoController...");
     $scope.keeperInfo = Keeper.getKeeper($stateParams.id);
 
-    console.log("keeper " + $scope.keeperInfo.DATABASE_SCHEMA);
+    Keeper.getDisk($stateParams.id).then(function(result){
+      $scope.disk = result.response;
+    });
+
+    Keeper.getMemory($stateParams.id).then(function(result){
+      $scope.memory = result.response;
+    });
+    
 })
 
 
@@ -45,11 +52,13 @@ angular.module('starter')
       /**
        * Once state loaded, get put map on scope.
        */
+      console.log("MapController...");
+
       $scope.$on("$stateChangeSuccess", function() {
         var drawnItems;
         var zoom;
         var layerCircle;
-        
+
         $scope.map = {
           defaults: {
             tileLayer: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
@@ -146,8 +155,6 @@ angular.module('starter')
             utilMessages.validityResponse(result);
             var keepers = result.response;
             
-            var isWorking = 'is Working';
-            var isNotWorking = 'is not Working';
             if(keepers){
                 for (var i = 0; i < keepers.length; i++) {
                     var statusAppServer='';
@@ -156,62 +163,59 @@ angular.module('starter')
                     var statusExtraAppServer='';
                     var statusExtraDBServer='';
                     var statusExtraScreenServer='';
+                    var singleDeploy='';
+                    var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
 
-                    if (keepers[i].APPSERVER_WORKING === 0) {
-                      statusAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                    }else{
-                      statusAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    };
-                    if (keepers[i].DATABASE_WORKING === 0) {
-                      statusDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                    }else{
-                      statusDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    };
-                    if (keepers[i].SCREEN_WORKING === 0) {
-                      statusScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
-                    }else{
-                      statusScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    };
+                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
+                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
+                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
+                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
+                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
+                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
 
-                    if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
-                      if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) {
-                        statusExtraAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application Extra server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
-                      }else{
-                        statusExtraAppServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Application Extra server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                      };  
-                    }
-
-                    if (keepers[i].EXTRA_TELCO_DATABASE_WORKING) {
-                      if (keepers[i].EXTRA_TELCO_DATABASE_WORKING === 0) {
-                        statusExtraDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database Extra server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                      }else{
-                         statusExtraDBServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Database Extra server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                      };  
-                    }
-
-                    if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
-                      if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) {
-                        statusExtraScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen Extra server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                      }else{
-                        statusExtraScreenServer = '<p style="font-size: 14px;"><span class="left" style="padding-right:5px;">Screen Extra server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                      };
-                    }
-
-                    var queuedMessage = '<p style="font-size: 14px;><span class="left">Queued Messages: </span>​<span style="float:right;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
+                    if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
+                    else statusAppServer = appServerOk;
                     
-                    var message = '<div id="content">' +
+                    if (keepers[i].DATABASE_WORKING === 0) statusDBServer = dbServerNOk;
+                    else statusDBServer = dbServerOk;
+                    
+                    if (keepers[i].SCREEN_WORKING === 0) statusScreenServer = screenNOk;
+                    else statusScreenServer = screenOk;
+                    
+                    if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
+                      singleDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].EXTRA_NAME+' </span>​</p>';
+                      
+                      if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) statusExtraAppServer = appServerNOk;
+                      else statusExtraAppServer = appServerOk;
+                                 
+                      if (keepers[i].EXTRA_TELCO_DATABASE_WORKING) {
+                        if (keepers[i].EXTRA_TELCO_DATABASE_WORKING === 0) statusExtraDBServer = dbServerNOk;
+                        else statusExtraDBServer = dbServerOk;                        
+                      }
+
+                      if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
+                        if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) statusExtraScreenServer = screenNOk;
+                        else statusExtraScreenServer = screenOk;                        
+                      }
+                    }
+
+                    var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
+                    
+                    var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
                         '<h4 id="firstHeading" style="color: #4682B4;">'+ keepers[i].DESCRIPTION +'</h4>'+
-                        '<div id="bodyContent">'+ 
+                        '<div id="bodyContent" >'+ 
+                        ngoDeploy +
                         statusAppServer +
                         statusDBServer +
                         statusScreenServer +
+                        singleDeploy+
                         statusExtraAppServer +
                         statusExtraDBServer +
                         statusExtraScreenServer +
                         queuedMessage +
-                        '<a class="button button-small button-balanced icon-right ion-chevron-right" href="#/app/deploymentInformation/'+ keepers[i].ID +'">'+
+                        '<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
                         'More detail' +
-                        '</a>'+                                                  
+                        '</button>'+                                                  
                         '</div>'+
                         '</div>'
                         ;
@@ -311,55 +315,65 @@ angular.module('starter')
             $scope.modal = modal;
     });
 
-    $scope.messageTypes = MessageType.all();
-    $scope.priorities = Priority.all();
-    $scope.messageType = MessageType.get(0); // default
-    $scope.priority = Priority.get(2);
-    $scope.operators = [];
-    Operator.all().then(function(result){
-      utilMessages.validityResponse(result);
-      var ops = result.response;
-      for (var i = 0; i < ops.length; i++) {
-        var item = ops[i];
-        $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
-      };      
-    });
-
-    $scope.datepickerObject = {
-      titleLabel: 'Date Message Send',  //Optional
-      todayLabel: 'Today',  //Optional
-      closeLabel: 'Close',  //Optional
-      setLabel: 'Save',  //Optional
-      setButtonType : 'button-small button-energized',  //Optional
-      todayButtonType : 'button-small button-dark',  //Optional
-      closeButtonType : 'button-small button-stable',  //Optional
-      inputDate: new Date(),  //Optional
-      mondayFirst: true,  //Optional
-      //disabledDates: disabledDates, //Optional
-      //weekDaysList: weekDaysList, //Optional
-      //monthList: monthList, //Optional
-      templateType: 'popup', //Optional
-      showTodayButton: 'true', //Optional
-      modalHeaderColor: 'bar-dark', //Optional
-      modalFooterColor: 'bar-dark', //Optional
-      from: new Date(2012, 8, 2), //Optional
-      to: new Date(2018, 8, 25),  //Optional
-      callback: function (val) {  //Mandatory
-        datePickerCallback(val);
-      },
-      dateFormat: 'dd-MM-yyyy', //Optional
-      closeOnSelect: false, //Optional
-    };
-    $scope.datePicker = new Date();
+    $scope.datePicker;
     var datePickerCallback = function (val) {
       if (typeof(val) !== 'undefined') {
         console.log('Selected date is : ', val);
         $scope.datePicker = val;
       }
     };
+
+    var loadData = function() {
+        $scope.messageTypes = [];
+        $scope.priorities = [];
+        $scope.messageTypes = MessageType.all();
+        
+        for (var i = 0; i < $scope.messageTypes.length; i++) {
+          console.log("$scope.messageTypes[i].id " + $scope.messageTypes[i].id);
+        };
+        
+        $scope.priorities = Priority.all();
+        $scope.messageType = {id: 2, name: 'Campaign'};
+        $scope.priority = Priority.get(2);
+        $scope.operators = [];
+        Operator.all().then(function(result){
+          utilMessages.validityResponse(result);
+          var ops = result.response;
+          for (var i = 0; i < ops.length; i++) {
+            var item = ops[i];
+            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
+          };      
+        });
+    }
+    $scope.datepickerObject = {
+          titleLabel: 'Date Message Send',  //Optional
+          todayLabel: 'Today',  //Optional
+          closeLabel: 'Close',  //Optional
+          setLabel: 'Save',  //Optional
+          setButtonType : 'button-small button-energized',  //Optional
+          todayButtonType : 'button-small button-dark',  //Optional
+          closeButtonType : 'button-small button-stable',  //Optional
+          inputDate: new Date(),  //Optional
+          mondayFirst: true,  //Optional
+          //disabledDates: disabledDates, //Optional
+          //weekDaysList: weekDaysList, //Optional
+          //monthList: monthList, //Optional
+          templateType: 'popup', //Optional
+          showTodayButton: 'true', //Optional
+          modalHeaderColor: 'bar-dark', //Optional
+          modalFooterColor: 'bar-dark', //Optional
+          from: new Date(2012, 8, 2), //Optional
+          to: new Date(2018, 8, 25),  //Optional
+          callback: function (val) {  //Mandatory
+            datePickerCallback(val);
+          },
+          dateFormat: 'dd-MM-yyyy', //Optional
+          closeOnSelect: false, //Optional
+        };
     
     $scope.openModal = function() {
-      $scope.circleMessage = new CircleMessage();      
+      $scope.circleMessage = new CircleMessage();
+      loadData();
       $scope.modal.show();
     }
     $scope.closeModal = function() {
@@ -373,9 +387,14 @@ angular.module('starter')
       else return false;
     }
     $scope.isSelectedMessageType = function(item) {
-      if(item.id == $scope.messageType.id) return true;
-      else return false;
-    }
+       console.log("item: " + item.id)
+      if(item.id === $scope.messageType.id){
+        //console.log("item.id: " + item.id + "| $scope.messageType.id: " + $scope.messageType.id);
+        //console.log("$scope.messageType.name: " + $scope.messageType.name);
+        return true;
+      }
+      else{ return false;}  
+    }    
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
         this.message = "";
@@ -390,7 +409,6 @@ angular.module('starter')
         this.messageType;
         this.zoom = "";
     };
-
     $scope.respPreview;
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
@@ -405,13 +423,17 @@ angular.module('starter')
         $scope.circleMessage.messageType = $scope.messageType.id;
         $scope.circleMessage.priority = $scope.priority.id;
 
+        if (!$scope.datePicker || $scope.datePicker < new Date()) {
+          $scope.datePicker = new Date();
+        }
+
         var dateString = $scope.datePicker.getFullYear()+
                       ($scope.datePicker.getMonth()+1).toString()+
                       $scope.datePicker.getDate().toString()+
                       $scope.datePicker.getHours().toString()+
                       $scope.datePicker.getMinutes().toString()+
                       $scope.datePicker.getSeconds().toString();
-
+        
         $scope.dateToString = $scope.datePicker.getFullYear()+ '-'+
                              ($scope.datePicker.getMonth()+1).toString() +'-'+
                              $scope.datePicker.getDate().toString() +' '+
@@ -430,7 +452,7 @@ angular.module('starter')
         AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           utilMessages.validityResponse(result);
           $scope.respPreview = result.response;
-
+          
           $rootScope.hide();
           //$scope.closeModal();
           $scope.openModalSendSms();
@@ -444,6 +466,12 @@ angular.module('starter')
             $scope.modalConfirm = modal;
     });
     $scope.openModalSendSms = function() {
+      $scope.datePicker = null;
+      
+      $scope.messageType = MessageType.get($scope.messageType.id);
+      $scope.priority = Priority.get($scope.priority.id);
+
+      console.log("open modal send $scope.messageType.name " + $scope.messageType.name);
 
       $scope.modalConfirm.show();
     }
@@ -464,6 +492,27 @@ angular.module('starter')
             $rootScope.notify("Success", "The send request was done");  
           };          
         });
-    };
+    }
+    $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
+        scope: $scope,
+        animation: 'slide-in-left'
+        }).then(function(modal) {
+            $scope.modalDeploymentinfo = modal;
+    });
+    $scope.openModalDeploymentInfo = function(delpoyItemId) {
+      console.log("se abrio la modal " + delpoyItemId);
+      $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
+      Keeper.getDisk(delpoyItemId).then(function(result){
+        $scope.disk = result.response;
+      });
+
+      Keeper.getMemory(delpoyItemId).then(function(result){
+        $scope.memory = result.response;
+      });
+      $scope.modalDeploymentinfo.show();
+    }
+    $scope.closeModalDeploymentInfo = function() {
+      $scope.modalDeploymentinfo.hide();
+    }
 
 }]);

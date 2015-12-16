@@ -71,4 +71,13 @@ body {
 .tagline {
   text-align: center;
   color: #FFF;
-  margin-bottom: 50px; }    
+  margin-bottom: 50px; }  
+
+.error {
+  text-align: center;
+  color: #FF0000; }  
+
+.font-data{
+  color: #202020;
+  font-size: 13px;
+}

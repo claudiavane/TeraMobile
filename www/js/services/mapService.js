@@ -1,5 +1,5 @@
-var pathOrg = 'http://localhost:8080/org';
-var pathKeeper = 'http://localhost:8080/keeper';
+var pathOrg = 'http://192.168.51.61:8080/org';
+var pathKeeper = 'http://192.168.51.61:8080/keeper';
 
 angular.module('starter')
 
@@ -14,15 +14,17 @@ angular.module('starter')
     id: 2,
     name: 'Campaign'
   }];
+  resp = null;
 
   return {
     all: function() {
       return types;
     },
     get: function(typeId) {
-      for (var i = 0; i < types.length; i++) {
-        if (types[i].id === parseInt(typeId)) {
-          return types[i];
+      resp = types;
+      for (var i = 0; i < resp.length; i++) {
+        if (resp[i].id === parseInt(typeId)) {
+          return resp[i];
         }
       }
       return null;
@@ -78,6 +80,20 @@ angular.module('starter')
           }
         }
         return null;
+      },
+      getDisk: function(id){
+        return $http.get(pathKeeper + "/getDisk/", {params:{"id": id}}).then(function(resp){
+               return resp.data;
+          }, function(error){
+              console.log("Request Failed: " + error.data);
+          });
+      },
+      getMemory: function(id){
+        return $http.get(pathKeeper + "/getMemory/", {params:{"id": id}}).then(function(resp){
+               return resp.data;
+          }, function(error){
+              console.log("Request Failed: " + error.data);
+          });
       }
    }
 })
