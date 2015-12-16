@@ -18,6 +18,7 @@ angular.module('starter')
 .controller('MapController',
   [ '$scope',
     '$rootScope',
+    '$state',
     '$cordovaGeolocation',
     '$stateParams',
     '$ionicModal',
@@ -34,6 +35,7 @@ angular.module('starter')
     function(
       $scope,
       $rootScope,
+      $state,
       $cordovaGeolocation,
       $stateParams,
       $ionicModal,
@@ -52,9 +54,12 @@ angular.module('starter')
       /**
        * Once state loaded, get put map on scope.
        */
-      console.log("MapController...");
+    console.log("MapController...");
 
-      $scope.$on("$stateChangeSuccess", function() {
+    $scope.$on("$stateChangeSuccess", function() {
+
+        console.log("stateChangeSuccess...");
+
         var drawnItems;
         var zoom;
         var layerCircle;
@@ -77,9 +82,9 @@ angular.module('starter')
           }
         };
         $scope.goLoadMap();
-      });
+    });
 
-      $scope.goLoadMap = function() {
+    $scope.goLoadMap = function() {
         var j=0;
         drawnItems = new L.FeatureGroup();
         
@@ -166,12 +171,12 @@ angular.module('starter')
                     var singleDeploy='';
                     var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
 
-                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000;"></i></p>';
-                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
-                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000;"></i></p>';
-                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22;"></i></p>';
+                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
+                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
+                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
+                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
+                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 14px;"></i></p>';
+                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -202,7 +207,7 @@ angular.module('starter')
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
-                        '<h4 id="firstHeading" style="color: #4682B4;">'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<h4 id="firstHeading" style="color: #4682B4;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
                         '<div id="bodyContent" >'+ 
                         ngoDeploy +
                         statusAppServer +
@@ -213,9 +218,9 @@ angular.module('starter')
                         statusExtraDBServer +
                         statusExtraScreenServer +
                         queuedMessage +
-                        '<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
-                        'More detail' +
-                        '</button>'+                                                  
+                        //'<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
+                        //'More detail' +
+                        //'</button>'+                                                  
                         '</div>'+
                         '</div>'
                         ;
@@ -293,20 +298,20 @@ angular.module('starter')
                     }
                 };        
             });
-        };     
+        }
+        leafletData.getMap().then(function(map) {
+            leafletData.getLayers().then(function(baselayers) {
+                drawnItems = baselayers.overlays.draw;
+                map.on('draw:created', function (e) {
+                  layerCircle = e.layer;
+                  drawnItems.addLayer(layerCircle);
+                  
+                  $scope.openModal();
+                });
+            });
+        });     
     };
 
-    leafletData.getMap().then(function(map) {
-        leafletData.getLayers().then(function(baselayers) {
-            drawnItems = baselayers.overlays.draw;
-            map.on('draw:created', function (e) {
-              layerCircle = e.layer;
-              drawnItems.addLayer(layerCircle);
-              
-              $scope.openModal();
-            });
-        });
-    }); 
 
     $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
         scope: $scope,
@@ -333,8 +338,8 @@ angular.module('starter')
         };
         
         $scope.priorities = Priority.all();
-        $scope.messageType = {id: 2, name: 'Campaign'};
-        $scope.priority = Priority.get(2);
+        $scope.messageType = {id: 0, name: 'Informative'};
+        $scope.priority =  {id: 2, name: 'Medium'};
         $scope.operators = [];
         Operator.all().then(function(result){
           utilMessages.validityResponse(result);
@@ -383,17 +388,13 @@ angular.module('starter')
       $scope.modal.hide();
     }
     $scope.isSelectedPriority = function(item) {
-      if(item.id == $scope.priority.id) return true;
+      if(item.id === $scope.priority.id) return true;
       else return false;
     }
     $scope.isSelectedMessageType = function(item) {
        console.log("item: " + item.id)
-      if(item.id === $scope.messageType.id){
-        //console.log("item.id: " + item.id + "| $scope.messageType.id: " + $scope.messageType.id);
-        //console.log("$scope.messageType.name: " + $scope.messageType.name);
-        return true;
-      }
-      else{ return false;}  
+      if(item.id === $scope.messageType.id) return true;
+      else return false;        
     }    
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
@@ -513,6 +514,13 @@ angular.module('starter')
     }
     $scope.closeModalDeploymentInfo = function() {
       $scope.modalDeploymentinfo.hide();
+    }
+    $scope.$on('$destroy', function() {
+      $scope.modalDeploymentinfo.remove();
+    });
+    $scope.reloadAll = function(){
+      console.log("reload all");
+      $state.go($state.current, {}, {reload: true});
     }
 
 }]);
