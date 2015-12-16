@@ -309,9 +309,43 @@ angular.module('starter')
                   $scope.openModal();
                 });
             });
-        });     
+        });                    
     };
 
+    var loadData = function() {
+        $scope.messageTypes = [];
+        $scope.priorities = [];
+        $scope.messageTypes = MessageType.all();        
+        $scope.priorities = Priority.all();
+        $scope.messageType = {id: 0, name: 'Informative'};
+        $scope.priority =  {id: 2, name: 'Medium'};
+        
+        Operator.all().then(function(result){
+          utilMessages.validityResponse(result);
+          var ops = result.response;
+          $scope.operators = [];
+          for (var i = 0; i < ops.length; i++) {
+            var item = ops[i];
+            console.log("mi op " + item.name);
+            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
+          };      
+        });
+    }
+
+    $scope.openModal = function() {
+      $scope.circleMessage = new CircleMessage();
+      loadData();
+      $scope.modal.show();
+    }
+    $scope.closeModal = function() {
+      if (layerCircle) {
+        drawnItems.removeLayer(layerCircle);
+      };
+      $scope.modal.hide();
+    }
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
 
     $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
         scope: $scope,
@@ -328,28 +362,6 @@ angular.module('starter')
       }
     };
 
-    var loadData = function() {
-        $scope.messageTypes = [];
-        $scope.priorities = [];
-        $scope.messageTypes = MessageType.all();
-        
-        for (var i = 0; i < $scope.messageTypes.length; i++) {
-          console.log("$scope.messageTypes[i].id " + $scope.messageTypes[i].id);
-        };
-        
-        $scope.priorities = Priority.all();
-        $scope.messageType = {id: 0, name: 'Informative'};
-        $scope.priority =  {id: 2, name: 'Medium'};
-        $scope.operators = [];
-        Operator.all().then(function(result){
-          utilMessages.validityResponse(result);
-          var ops = result.response;
-          for (var i = 0; i < ops.length; i++) {
-            var item = ops[i];
-            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
-          };      
-        });
-    }
     $scope.datepickerObject = {
           titleLabel: 'Date Message Send',  //Optional
           todayLabel: 'Today',  //Optional
@@ -376,17 +388,6 @@ angular.module('starter')
           closeOnSelect: false, //Optional
         };
     
-    $scope.openModal = function() {
-      $scope.circleMessage = new CircleMessage();
-      loadData();
-      $scope.modal.show();
-    }
-    $scope.closeModal = function() {
-      if (layerCircle) {
-        drawnItems.removeLayer(layerCircle);
-      };
-      $scope.modal.hide();
-    }
     $scope.isSelectedPriority = function(item) {
       if(item.id === $scope.priority.id) return true;
       else return false;
