@@ -9,7 +9,7 @@
         <label class="item item-input item-select" >
           <span class="input-label">Subdivision</span>
           <select ng-model="subdivision.id">
-            <option ng-repeat="item in subdivisions" value="{{item.id}}" ng-selected="{{isSelectedSubdivision(item)}}">
+            <option ng-repeat="item in subdivisions" value="{{item.id}}" ng-selected="isSelectedSubdivision(item)">
                {{item.name}}
             </option>
           </select>
@@ -18,7 +18,7 @@
         <label class="item item-input item-select">
           <span class="input-label">Language</span>
           <select ng-model="language.id">
-            <option ng-repeat="item in languages" value="{{item.id}}" ng-selected="{{isSelectedLanguage(item)}}">
+            <option ng-repeat="item in languages" value="{{item.id}}" ng-selected="isSelectedLanguage(item)">
                {{item.name}}
             </option>
           </select>

@@ -1,4 +1,4 @@
-var pathOrg = 'http://192.168.51.61:8080/org';
+var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
 angular.module('starter')
 
 .factory('IncomingRequest', function($http){

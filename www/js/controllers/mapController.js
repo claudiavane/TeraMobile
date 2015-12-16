@@ -18,6 +18,7 @@ angular.module('starter')
 .controller('MapController',
   [ '$scope',
     '$rootScope',
+    '$state',
     '$cordovaGeolocation',
     '$stateParams',
     '$ionicModal',
@@ -34,6 +35,7 @@ angular.module('starter')
     function(
       $scope,
       $rootScope,
+      $state,
       $cordovaGeolocation,
       $stateParams,
       $ionicModal,
@@ -52,9 +54,12 @@ angular.module('starter')
       /**
        * Once state loaded, get put map on scope.
        */
-      console.log("MapController...");
+    console.log("MapController...");
 
-      $scope.$on("$stateChangeSuccess", function() {
+    $scope.$on("$stateChangeSuccess", function() {
+
+        console.log("stateChangeSuccess...");
+
         var drawnItems;
         var zoom;
         var layerCircle;
@@ -77,34 +82,9 @@ angular.module('starter')
           }
         };
         $scope.goLoadMap();
-      });
+    });
 
-      $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
-        scope: $scope,
-        animation: 'slide-in-left'
-        }).then(function(modal) {
-            $scope.modalDeploymentinfo = modal;
-      });
-      $scope.openModalDeploymentInfo = function(delpoyItemId) {
-        console.log("se abrio la modal de deploy " + delpoyItemId);
-        $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
-        Keeper.getDisk(delpoyItemId).then(function(result){
-          $scope.disk = result.response;
-        });
-
-        Keeper.getMemory(delpoyItemId).then(function(result){
-          $scope.memory = result.response;
-        });
-        $scope.modalDeploymentinfo.show();
-      }
-      $scope.closeModalDeploymentInfo = function() {
-        $scope.modalDeploymentinfo.hide();
-      }
-      $scope.$on('$destroy', function() {
-        $scope.modalDeploymentinfo.remove();
-      });
-
-      $scope.goLoadMap = function() {
+    $scope.goLoadMap = function() {
         var j=0;
         drawnItems = new L.FeatureGroup();
         
@@ -191,12 +171,12 @@ angular.module('starter')
                     var singleDeploy='';
                     var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
 
-                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></p>';
-                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 16px;"></i></p>';
-                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></p>';
-                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 16px;"></i></p>';
-                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></p>';
-                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 16px;"></i></p>';
+                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
+                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
+                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
+                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
+                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 14px;"></i></p>';
+                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -238,9 +218,9 @@ angular.module('starter')
                         statusExtraDBServer +
                         statusExtraScreenServer +
                         queuedMessage +
-                        //'<div style="text-align: right;"><button class="button button-clear button-positive icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
-                        //keepers[i].DESCRIPTION +
-                        //'</button></div>'+                                                  
+                        //'<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
+                        //'More detail' +
+                        //'</button>'+                                                  
                         '</div>'+
                         '</div>'
                         ;
@@ -329,10 +309,43 @@ angular.module('starter')
                   $scope.openModal();
                 });
             });
-        });    
+        });                    
     };
 
-     
+    var loadData = function() {
+        $scope.messageTypes = [];
+        $scope.priorities = [];
+        $scope.messageTypes = MessageType.all();        
+        $scope.priorities = Priority.all();
+        $scope.messageType = {id: 0, name: 'Informative'};
+        $scope.priority =  {id: 2, name: 'Medium'};
+        
+        Operator.all().then(function(result){
+          utilMessages.validityResponse(result);
+          var ops = result.response;
+          $scope.operators = [];
+          for (var i = 0; i < ops.length; i++) {
+            var item = ops[i];
+            console.log("mi op " + item.name);
+            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
+          };      
+        });
+    }
+
+    $scope.openModal = function() {
+      $scope.circleMessage = new CircleMessage();
+      loadData();
+      $scope.modal.show();
+    }
+    $scope.closeModal = function() {
+      if (layerCircle) {
+        drawnItems.removeLayer(layerCircle);
+      };
+      $scope.modal.hide();
+    }
+    $scope.$on('$destroy', function() {
+      $scope.modal.remove();
+    });
 
     $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
         scope: $scope,
@@ -349,28 +362,6 @@ angular.module('starter')
       }
     };
 
-    var loadData = function() {
-        $scope.messageTypes = [];
-        $scope.priorities = [];
-        $scope.messageTypes = MessageType.all();
-        
-        for (var i = 0; i < $scope.messageTypes.length; i++) {
-          console.log("$scope.messageTypes[i].id " + $scope.messageTypes[i].id);
-        };
-        
-        $scope.priorities = Priority.all();
-        $scope.messageType = {id: 2, name: 'Campaign'};
-        $scope.priority = Priority.get(2);
-        $scope.operators = [];
-        Operator.all().then(function(result){
-          utilMessages.validityResponse(result);
-          var ops = result.response;
-          for (var i = 0; i < ops.length; i++) {
-            var item = ops[i];
-            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
-          };      
-        });
-    }
     $scope.datepickerObject = {
           titleLabel: 'Date Message Send',  //Optional
           todayLabel: 'Today',  //Optional
@@ -397,30 +388,14 @@ angular.module('starter')
           closeOnSelect: false, //Optional
         };
     
-    $scope.openModal = function() {
-      console.log("se abrio la modal de envio..");
-      $scope.circleMessage = new CircleMessage();
-      loadData();
-      $scope.modal.show();
-    }
-    $scope.closeModal = function() {
-      if (layerCircle) {
-        drawnItems.removeLayer(layerCircle);
-      };
-      $scope.modal.hide();
-    }
     $scope.isSelectedPriority = function(item) {
-      if(item.id == $scope.priority.id) return true;
+      if(item.id === $scope.priority.id) return true;
       else return false;
     }
     $scope.isSelectedMessageType = function(item) {
        console.log("item: " + item.id)
-      if(item.id === $scope.messageType.id){
-        //console.log("item.id: " + item.id + "| $scope.messageType.id: " + $scope.messageType.id);
-        //console.log("$scope.messageType.name: " + $scope.messageType.name);
-        return true;
-      }
-      else{ return false;}  
+      if(item.id === $scope.messageType.id) return true;
+      else return false;        
     }    
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
@@ -519,6 +494,34 @@ angular.module('starter')
             $rootScope.notify("Success", "The send request was done");  
           };          
         });
+    }
+    $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
+        scope: $scope,
+        animation: 'slide-in-left'
+        }).then(function(modal) {
+            $scope.modalDeploymentinfo = modal;
+    });
+    $scope.openModalDeploymentInfo = function(delpoyItemId) {
+      console.log("se abrio la modal " + delpoyItemId);
+      $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
+      Keeper.getDisk(delpoyItemId).then(function(result){
+        $scope.disk = result.response;
+      });
+
+      Keeper.getMemory(delpoyItemId).then(function(result){
+        $scope.memory = result.response;
+      });
+      $scope.modalDeploymentinfo.show();
+    }
+    $scope.closeModalDeploymentInfo = function() {
+      $scope.modalDeploymentinfo.hide();
+    }
+    $scope.$on('$destroy', function() {
+      $scope.modalDeploymentinfo.remove();
+    });
+    $scope.reloadAll = function(){
+      console.log("reload all");
+      $state.go($state.current, {}, {reload: true});
     }
 
 }]);
