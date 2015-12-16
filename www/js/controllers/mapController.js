@@ -8,6 +8,7 @@ angular.module('starter')
     '$ionicHistory',
     '$ionicModal',
     '$ionicPopup',
+    '$translate',
     'Keeper',
     'Cellsite',
     'leafletData',
@@ -24,6 +25,7 @@ angular.module('starter')
       $ionicHistory,
       $ionicModal,
       $ionicPopup,
+      $translate,
       Keeper,
       Cellsite,
       leafletData,
@@ -43,7 +45,6 @@ angular.module('starter')
     //$scope.$on("$stateChangeSuccess", function() {
     $scope.$on('$ionicView.enter', function(){
 
-        console.log("MapController stateChangeSuccess...");
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
 
@@ -157,12 +158,12 @@ angular.module('starter')
                     //var statusExtraScreenServer='';
                     var singleDeploy='';
                     var ngoDeploy = '<div class="item item-divider" style="font-size:12px; background:#eaeaea; padding:3px;">'+keepers[i].NAME+'</div>';
-                    var appServerNOk = '<div class="item item-icon-right"  style="padding:2px;">Application server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
-                    var appServerOk = '<div class="item item-icon-right" style="padding:2px;">Application server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
-                    var dbServerNOk = '<div class="item item-icon-right" style="padding:2px;">Database server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
-                    var dbServerOk = '<div class="item item-icon-right" style="padding:2px;">Database server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
-                    var screenNOk = '<div class="item item-icon-right" style="padding:2px;">Screen server </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></div>';
-                    var screenOk = '<div class="item item-icon-right" style="padding:2px;">Screen server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var appServerNOk = '<div class="item item-icon-right"  style="padding:2px;">{{'APP_SERVER'| translate}} </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var appServerOk = '<div class="item item-icon-right" style="padding:2px;">{{'APP_SERVER'| translate}} </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var dbServerNOk = '<div class="item item-icon-right" style="padding:2px;">{{'DB_SERVER'| translate}} </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var dbServerOk = '<div class="item item-icon-right" style="padding:2px;">{{'DB_SERVER'| translate}} </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var screenNOk = '<div class="item item-icon-right" style="padding:2px;">{{'SCREEN_SERVER'| translate}} </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var screenOk = '<div class="item item-icon-right" style="padding:2px;">{{'SCREEN_SERVER'| translate}} </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -191,7 +192,7 @@ angular.module('starter')
 
                     }
 
-                    var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
+                    var queuedMessage = '<p><span class="left">{{'QUEUED_MESSAGE'| translate}}: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
                         '<h4 id="firstHeading" style="color: #9c1320;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
@@ -284,7 +285,7 @@ angular.module('starter')
                         };
                         j++;
                     }
-                }else $rootScope.notify("Warning", "There are not cellsites");         
+                }else $rootScope.notify($translate('WARNING'), $translate('WARNING_CELLSITE'));         
             });
         }
         leafletData.getMap().then(function(map) {
@@ -300,9 +301,9 @@ angular.module('starter')
     };
 
     var loadData = function() {
-        $scope.messageTypes = MessageType.all();   //$rootScope.settings.messages;//MessageType.all();        
+        $scope.messageTypes = MessageType.all();  
         $scope.priorities = Priority.all();
-        $scope.selectMessageType = MessageType.get(0);//$rootScope.settings.messages[0];//{'id': 0, 'name': 'Informative'};
+        $scope.selectMessageType = MessageType.get(0);
         $scope.selectPriority =  Priority.get(2);
 
         Operator.all().then(function(result){
@@ -401,7 +402,8 @@ angular.module('starter')
     };
     $scope.respPreview;
     $scope.smsPreview = function() {
-        $rootScope.show('Preview...');
+        var txtPreview = $translate('PREVIEW');
+        $rootScope.show(txtPreview);
         
         $scope.circleMessage.userId = $scope.user.user_id;
         $scope.circleMessage.subdivisionId = 1;
@@ -470,18 +472,18 @@ angular.module('starter')
       $scope.modalConfirm.hide();
     }
     $scope.smsSend = function() {
-        $rootScope.show('Sending...');
+        var txtSend = $translate('SENDING');
+        $rootScope.show(txtSend);
         AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
           //utilMessages.validityResponse(result);
 
-          if (result.responseCode === 'OK') $rootScope.notify("Success", "The send request was done");  
+          if (result.responseCode === 'OK') $rootScope.info($translate('SUCCESS'), $translate('SUCCESS_SEND'));  
           else $rootScope.notify(result.responseCode, result.responseMessage);
 
           /*
           if (result.responseCode === 'OK') {            
             $rootScope.notify("Success", "The send request was done");  
-          };*/
-          console.log("enviado...")
+          };*/          
           $rootScope.hide();          
           $scope.closeModalSendSms();
         });
@@ -493,16 +495,13 @@ angular.module('starter')
             $scope.modalDeploymentinfo = modal;
     });
     $scope.openModalDeploymentInfo = function(delpoyItemId) {      
-
       $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;
       });
-
       Keeper.getMemory(delpoyItemId).then(function(result){
         $scope.memory = result.response;
       });
-
       $scope.modalDeploymentinfo.show();
     }
     $scope.closeModalDeploymentInfo = function() {
@@ -514,7 +513,6 @@ angular.module('starter')
     $scope.reloadAll = function(){
       console.log("reload all");
       $state.go('app.mainMap', {}, {reload: true}); 
-      //$state.go($state.current, {}, {reload: true});
       /*$state.go($state.current, $stateParams, {
           reload: true,
           inherit: false,

@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller("LoginController", function($scope, $rootScope, $state, utilMessages, User) {
+.controller("LoginController", function($scope, $rootScope, $state, $translate, utilMessages, User) {
         console.log("LoginController");
 
         $scope.$on("$stateChangeSuccess", function() {
@@ -12,7 +12,8 @@ angular.module('starter')
         });
         
        $scope.login = function (user) {
-          $rootScope.show('Login...');
+          var txtLogin = $translate('LOGIN');
+          $rootScope.show(txtLogin);
 
           if(!user.username || !user.password){
               $rootScope.hide();

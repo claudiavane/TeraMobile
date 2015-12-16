@@ -40,15 +40,16 @@ angular.module('starter')
     };
 
     $rootScope.info = function (title, text) {
-        var alertPopup = $ionicPopup.show({
-            title: title ? title : '',
-            template: text
+        var alertPopup = $ionicPopup.alert({
+            title: title ? title : 'Ok',
+            template: text,
+            okType: 'button-dark ink'
         });
     };
 
     $rootScope.show = function (text) {
         $rootScope.loading = $ionicLoading.show({
-            template: '<i class="icon ion-looping"></i><br>' + text,
+            template: text,
             animation: 'fade-in',
             showBackdrop: true,
             maxWidth: 200,

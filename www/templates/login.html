@@ -44,7 +44,7 @@
             </label>
         </div>
         <div class="padding">
-            <button ng-click="login(formUser)" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
+            <button ng-click="login(formUser)" ng-disabled="!(!!formUser.username && !!formUser.password)" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
         </div>
     </ion-content>
 </ion-view>

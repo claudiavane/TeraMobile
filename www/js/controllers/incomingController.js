@@ -2,8 +2,9 @@ angular.module('starter')
 .controller('IncomingController',
   [ '$scope',
   	'$rootScope',
+  	'$translate',
   	'IncomingRequest',
-    function($scope, $rootScope, IncomingRequest) {
+    function($scope, $rootScope, $translate, IncomingRequest) {
     	$scope.filterUnits = [
 	    	{"value":"HOUR","label":"Last hour"},
 	    	{"value":"DAY","label":"Last day"},
@@ -13,7 +14,8 @@ angular.module('starter')
     	];
     	$scope.selectedItem = {"value":"DAY","label":"Last day"};
         $scope.updateIncomingRequestList = function() {
-        	$rootScope.show('Updating...');
+        	var txtUpdating =  $translate('UPDATING');
+        	$rootScope.show(txtUpdating);
         	console.log($scope.selectedItem.value);
 	    	IncomingRequest.get($scope.selectedItem.value).then(	    		
 	    		function(result) {

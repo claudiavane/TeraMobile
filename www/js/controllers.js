@@ -1,13 +1,9 @@
-angular.module('starter.controllers', [])
+angular.module('starter')
 
 .controller('AppCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
-
   console.log("AppCtrl.. ");
-
-  //$scope.username = User.username();
   //console.log("user.username" + $scope.username);
   $scope.user = User.user();
-  console.log("AppCtrl user.user " + $scope.user.username);
   
   $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
     var alertPopup = $ionicPopup.alert({
@@ -41,8 +37,6 @@ angular.module('starter.controllers', [])
       $ionicHistory.clearHistory();
 
       $state.go('login', {}, {reload: true});
-
     };
 
-})
-;
+});
