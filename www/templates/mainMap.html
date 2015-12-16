@@ -9,6 +9,10 @@
   </ion-nav-buttons>
 
   <ion-content data-tap-disabled="true">
+    <!--<ion-refresher
+	    pulling-text="Pull to refresh..."
+	    on-refresh="doRefresh()">
+	 </ion-refresher>-->
     <leaflet defaults="map.defaults" center="map.center" controls="map.controls" layers="map.layers" markers="map.markers" ng-if="map"></leaflet>
   </ion-content>
 </ion-view>

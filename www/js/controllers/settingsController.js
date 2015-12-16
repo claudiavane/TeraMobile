@@ -7,7 +7,7 @@ angular.module('starter')
         $scope.subdivision = User.getSubdivisionDefault();
         
         $scope.languages = utilConstants.getLanguages();
-        $scope.language = $scope.languages[0];
+        $scope.language = $scope.languages[1];
 
         $scope.isSelectedSubdivision = function(item) {
 			if(item.id == $scope.subdivision.id) return true;
@@ -19,5 +19,6 @@ angular.module('starter')
 		}
 		$scope.saveSettigns = function(){
 			$rootScope.subdivision = $scope.subdivision;
+			$rootScope.languageCode = $scope.language;
 		}
  });
