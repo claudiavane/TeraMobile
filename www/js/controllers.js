@@ -31,6 +31,7 @@ angular.module('starter.controllers', [])
     console.log();
     $scope.logout = function() {
       User.logout("MenuCtrl..");
+      $rootScope.subdivision = undefined;
       $state.go('login');
     };
 

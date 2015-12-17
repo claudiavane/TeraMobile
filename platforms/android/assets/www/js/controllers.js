@@ -26,4 +26,13 @@ angular.module('starter.controllers', [])
     $scope.username = name;
   };
 })
+
+.controller('MenuCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
+    console.log();
+    $scope.logout = function() {
+      User.logout("MenuCtrl..");
+      $state.go('login');
+    };
+
+})
 ;

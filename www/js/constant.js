@@ -1,8 +1,8 @@
 angular.module('starter')
  
 .constant('PATH_WS', {
-	keeper: 'http://localhost:8080/keeper',
-	org: 'http://localhost:8080/org'
+	keeper: 'http://demosys.salamancasolutions.com:8534/keeper',
+	org: 'http://demosys.salamancasolutions.com:8534/org'
 })
 
 .constant('AUTH_EVENTS', {
