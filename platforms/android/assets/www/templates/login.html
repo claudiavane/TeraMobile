@@ -1,25 +1,42 @@
-<ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
-</ion-modal-view>
+<!--ion-view view-title="Login"  hide-nav-bar="true"  class="background-intro">
+    <ion-content>
+        <div class="padding">
+            <a href="#" class="logo"><span>T</span></a>
+            <h1 style="color: #FFF;text-align: center;">TERA</h1>
+            <p class="tagline">CRUZ ROJA ECUATORIANA</p>
+        </div>
+        <div class="list list-inset">
+            <label class="item item-input background-intro ">                
+                <input type="text" ng-model="user.username" placeholder="Username" style="color: #FFF;">
+            </label>
+            <label class="item item-input background-intro">                
+                <input type="password" ng-model="user.password" placeholder="Password" style="color: #FFF;">
+            </label>
+        </div>
+        <div style="text-align:center;">
+            <button class="button button-energized button-theme" ng-click="login(user)" nav-clear >
+                Iniciar Sesion
+            </button>            
+        </div>
+    </ion-content>
+</ion-view-->
+<ion-view view-title="Login" hide-nav-bar="true" align-title="left">
+    <ion-content style="background: url(img/background.jpg) center; background-size: cover;">
+        <div class="hero no-header flat">
+            <div class="content">
+                <div class="app-icon"></div>
+                <h1>TERA</h1>
+                <h5>CRUZ ROJA ECUATORIANA</h5>
+            </div>
+        </div>
+        <div class="list" style="padding-left:5px; padding-right:30px">
+            <ion-md-input ng-model="user.username" placeholder="Username" highlight-color="balanced" type="text">
+            </ion-md-input>
+            <ion-md-input ng-model="user.password" placeholder="Password" highlight-color="energized" type="password">
+            </ion-md-input>
+        </div>
+        <div class="padding">
+            <button ng-click="login(user)" ui-sref="app.profile" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
+        </div>
+    </ion-content>
+</ion-view>

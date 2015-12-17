@@ -50,4 +50,19 @@ angular.module('starter.controllers', [])
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
+})
+
+.controller('BrowseCtrl', function($scope, $stateParams, Keeper) {
+  console.log('Mi BrowseCtrl...');
+
+  Keeper.getKeepers().then(function(result){
+    $scope.keepers = result;
+    console.log("Result.. ");
+      
+  });
+
+})
+
+.controller('PlaylistCtrl', function($scope, $stateParams) {
+  console.log('Mi playlists...');
 });
