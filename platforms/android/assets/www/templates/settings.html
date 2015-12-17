@@ -1,0 +1,33 @@
+<ion-view view-title="Settings" >
+
+  <ion-content class="padding">
+
+    <form name="settingsForm" ng-submit="saveSettigns()">
+
+      <div class="list">
+
+        <label class="item item-input item-select" >
+          <span class="input-label">Subdivision</span>
+          <select ng-model="subdivision.id">
+            <option ng-repeat="item in subdivisions" value="{{item.id}}" ng-selected="isSelectedSubdivision(item)">
+               {{item.name}}
+            </option>
+          </select>
+        </label>
+
+        <label class="item item-input item-select">
+          <span class="input-label">Language</span>
+          <select ng-model="language.id">
+            <option ng-repeat="item in languages" value="{{item.id}}" ng-selected="isSelectedLanguage(item)">
+               {{item.name}}
+            </option>
+          </select>
+        </label>        
+      </div>
+      <div class="padding">
+        <button class="button button-block button-energized" ng-disabled="settingsForm.$invalid">Save</button>
+      </div>
+    </form>
+  </ion-content>
+
+</ion-view>
