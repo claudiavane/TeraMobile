@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var pathOrg = 'http://192.168.51.61:8080/org';
 
 angular.module('starter')
@@ -12,11 +13,92 @@ angular.module('starter')
           return $http.get(pathOrg + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
               result = resp.data;
               console.log("result.responseCode: " + result.responseCode);
+=======
+
+angular.module('starter')
+
+.factory('User', function($http, PATH_WS, USER_ROLES) {
+    var result;
+    var userInfo = [];
+    var subdivisions;
+
+    var LOCAL_TOKEN_KEY = 'yourTokenKey';
+    var username = '';
+    var isAuthenticated = false;
+    var role = '';
+    var authToken;
+
+    function loadUserCredentials() {
+      var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+      if (token) {
+        useCredentials(token);
+      }
+    }
+
+    function storeUserCredentials(token) {
+      window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
+      useCredentials(token);
+    }
+
+    function useCredentials(token) {
+      username = token.split('.')[0];
+      isAuthenticated = true;
+      authToken = token;
+
+      if (username == 'admin') {
+        role = USER_ROLES.admin
+      }
+      if (username == 'user') {
+        role = USER_ROLES.public
+      }
+
+      // Set the token as header for your requests!
+      $http.defaults.headers.common['X-Auth-Token'] = token;
+    }
+
+    function destroyUserCredentials() {
+      console.log("destroyUserCredentials authToken " + authToken);
+      authToken = undefined;
+      username = '';
+      isAuthenticated = false;
+      $http.defaults.headers.common['X-Auth-Token'] = undefined;
+      window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+    }    
+
+    var logout = function() {
+      destroyUserCredentials();
+    }; 
+
+    var isAuthorized = function(authorizedRoles) {
+        if (!angular.isArray(authorizedRoles)) {
+          authorizedRoles = [authorizedRoles];
+        }
+        return (isAuthenticated && authorizedRoles.indexOf(role) !== -1);
+    };
+
+    loadUserCredentials();       
+    
+    return {
+        login: function(user){
+          return $http.get(PATH_WS.org + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
+              result = resp.data;
+              if (result.responseCode === 'OK') {
+                storeUserCredentials(result.response[0].username + '.yourServerToken');
+              };              
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
               return result;
           }, function(error){
               console.log("Request Failed: " + error.data);
           });
         },
+<<<<<<< HEAD
+=======
+        logout: logout,
+        isAuthorized: isAuthorized,
+        isAuthenticated: function() {return isAuthenticated;},
+        username: function() {return username;},
+        role: function() {return role;},
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
         getSubdivisions: function(){
           userInfo = result.response;
           var item;
@@ -33,6 +115,10 @@ angular.module('starter')
                   subdivisions.push(subdivision);                  
               }else{
                   if (item.subdivision_id !== userInfo[i].subdivision_id) {
+<<<<<<< HEAD
+=======
+                      item = userInfo[i];
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
                       subdivision = {
                         id: item.subdivision_id,
                         name: item.subdivision_desc

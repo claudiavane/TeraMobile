@@ -27,6 +27,7 @@ angular.module('starter.controllers', [])
   };
 })
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
@@ -54,5 +55,16 @@ angular.module('starter.controllers', [])
   console.log('Mi playlists...');
 });
 =======
+=======
+
+.controller('MenuCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
+    console.log();
+    $scope.logout = function() {
+      User.logout("MenuCtrl..");
+      $state.go('login');
+    };
+
+})
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
 ;
 >>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664

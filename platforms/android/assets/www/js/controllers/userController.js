@@ -6,7 +6,11 @@ angular.module('starter')
         $scope.user = {
             username: "ssimon",
             password: "ssimon",
+<<<<<<< HEAD
             languageCode: "es"
+=======
+            languageCode: $rootScope.languageCode
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
         };
 
        $scope.login = function (user) {
@@ -34,4 +38,9 @@ angular.module('starter')
           });
 
        };
+<<<<<<< HEAD
+=======
+
+       console.log("LoginController.. fin");
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
  });

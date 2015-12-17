@@ -95,6 +95,7 @@ angular.module('starter')
                   subdivisions.push(subdivision);                  
               }else{
                   if (item.subdivision_id !== userInfo[i].subdivision_id) {
+                      item = userInfo[i];
                       subdivision = {
                         id: item.subdivision_id,
                         name: item.subdivision_desc

@@ -1,19 +1,5 @@
 angular.module('starter')
 
-.controller("DeploymentInfoController", function($scope, $stateParams, Keeper) {
-    console.log("DeploymentInfoController...");
-    $scope.keeperInfo = Keeper.getKeeper($stateParams.id);
-
-    Keeper.getDisk($stateParams.id).then(function(result){
-      $scope.disk = result.response;
-    });
-
-    Keeper.getMemory($stateParams.id).then(function(result){
-      $scope.memory = result.response;
-    });
-    
-})
-
 
 .controller('MapController',
   [ '$scope',
@@ -144,7 +130,7 @@ angular.module('starter')
                   type: 'group',
                   name: 'DEPLOYMENT',
                   visible: true 
-                },
+                }/*,
                 draw: {
                     name: 'draw',
                     type: 'group',
@@ -152,7 +138,7 @@ angular.module('starter')
                     layerParams: {
                         showOnSelector: false
                     }
-                }
+                }*/
             }
         };
 
@@ -301,7 +287,7 @@ angular.module('starter')
         }
         leafletData.getMap().then(function(map) {
             leafletData.getLayers().then(function(baselayers) {
-                drawnItems = baselayers.overlays.draw;
+                //drawnItems = baselayers.overlays.draw;                
                 map.on('draw:created', function (e) {
                   layerCircle = e.layer;
                   drawnItems.addLayer(layerCircle);
@@ -326,7 +312,6 @@ angular.module('starter')
           $scope.operators = [];
           for (var i = 0; i < ops.length; i++) {
             var item = ops[i];
-            console.log("mi op " + item.name);
             $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
           };      
         });
@@ -338,8 +323,10 @@ angular.module('starter')
       $scope.modal.show();
     }
     $scope.closeModal = function() {
+      
       if (layerCircle) {
         drawnItems.removeLayer(layerCircle);
+        console.log("se removio el layer");
       };
       $scope.modal.hide();
     }
@@ -502,7 +489,8 @@ angular.module('starter')
             $scope.modalDeploymentinfo = modal;
     });
     $scope.openModalDeploymentInfo = function(delpoyItemId) {
-      console.log("se abrio la modal " + delpoyItemId);
+      //$rootScope.show('Show...');
+
       $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;
@@ -511,6 +499,7 @@ angular.module('starter')
       Keeper.getMemory(delpoyItemId).then(function(result){
         $scope.memory = result.response;
       });
+
       $scope.modalDeploymentinfo.show();
     }
     $scope.closeModalDeploymentInfo = function() {
