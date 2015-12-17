@@ -2,10 +2,10 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
 
+  $scope.username = User.username();
   console.log("AppCtrl.. ");
 
-  $scope.username = User.username();
-
+  
   $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
     var alertPopup = $ionicPopup.alert({
       title: 'Unauthorized!',
@@ -26,18 +26,4 @@ angular.module('starter.controllers', [])
     $scope.username = name;
   };
 })
-
-.controller('BrowseCtrl', function($scope, $stateParams, Keeper) {
-  console.log('Mi BrowseCtrl...');
-
-  Keeper.getKeepers().then(function(result){
-    $scope.keepers = result;
-    console.log("Result.. ");
-      
-  });
-
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-  console.log('Mi playlists...');
-});
+;

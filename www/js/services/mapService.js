@@ -1,5 +1,5 @@
-var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
-var pathKeeper = 'http://demosys.salamancasolutions.com:8534/keeper';
+//var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
+//var pathKeeper = 'http://demosys.salamancasolutions.com:8534/keeper';
 
 angular.module('starter')
 
@@ -59,13 +59,13 @@ angular.module('starter')
   };
 })
 
-.factory('Keeper', function($http){
+.factory('Keeper', function($http, PATH_WS){
     var keepers;
     var keeper;
     var items;
     return {
       all: function(){
-          return $http.get(pathKeeper+"/search/").then(function(resp){
+          return $http.get(PATH_WS.keeper+"/search/").then(function(resp){
               keepers = resp.data; 
               return keepers;             
           }, function(error){
@@ -82,14 +82,14 @@ angular.module('starter')
         return null;
       },
       getDisk: function(id){
-        return $http.get(pathKeeper + "/getDisk/", {params:{"id": id}}).then(function(resp){
+        return $http.get(PATH_WS.keeper + "/getDisk/", {params:{"id": id}}).then(function(resp){
                return resp.data;
           }, function(error){
               console.log("Request Failed: " + error.data);
           });
       },
       getMemory: function(id){
-        return $http.get(pathKeeper + "/getMemory/", {params:{"id": id}}).then(function(resp){
+        return $http.get(PATH_WS.keeper + "/getMemory/", {params:{"id": id}}).then(function(resp){
                return resp.data;
           }, function(error){
               console.log("Request Failed: " + error.data);
@@ -98,11 +98,11 @@ angular.module('starter')
    }
 })
 
-.factory('Cellsite', function($http){
+.factory('Cellsite', function($http, PATH_WS){
    
    return {
        getCellsites: function(status, zoom, userId){
-          return $http.get(pathOrg + "/cellsite/searchCellsiteZoom/", {params:{"status": status, "zoom":zoom,"userId":userId}}).then(function(resp){
+          return $http.get(PATH_WS.org + "/cellsite/searchCellsiteZoom/", {params:{"status": status, "zoom":zoom,"userId":userId}}).then(function(resp){
                return resp.data;
           }, function(error){
               console.log("Request Failed: " + error.data);
@@ -111,10 +111,10 @@ angular.module('starter')
    }
 })
 
-.factory('AlertMessage', function($http){
+.factory('AlertMessage', function($http, PATH_WS){
    return {
       previewSmsCircle: function(circleMessage){
-          return $http.get(pathOrg + "/previewsms/circle/", 
+          return $http.get(PATH_WS.org + "/previewsms/circle/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,
             "longitude": circleMessage.lng,
@@ -150,7 +150,7 @@ angular.module('starter')
           console.log("zoom: " + circleMessage.zoom);
           console.log("endDeliveryDateTime: " + circleMessage.endDeliveryDateTime);
           
-          return $http.get(pathOrg + "/sendsms/circle/", 
+          return $http.get(PATH_WS.org + "/sendsms/circle/", 
             {params:{"message": circleMessage.message, 
             "latitude": circleMessage.lat,
             "longitude": circleMessage.lng,
@@ -175,11 +175,11 @@ angular.module('starter')
 })
 
 
-.factory('Operator', function($http){
+.factory('Operator', function($http, PATH_WS){
    var result;
    return {
       all: function(){
-          return $http.get(pathOrg + "/operation/search/").then(function(resp){
+          return $http.get(PATH_WS.org + "/operation/search/").then(function(resp){
                return resp.data;
           }, function(error){
                console.log("Request Failed: " + error.data);

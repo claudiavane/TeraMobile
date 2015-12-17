@@ -1,8 +1,7 @@
-var pathOrg = 'http://demosys.salamancasolutions.com:8534/org';
 
 angular.module('starter')
 
-.factory('User', function($http) {
+.factory('User', function($http, PATH_WS, USER_ROLES) {
     var result;
     var userInfo = [];
     var subdivisions;
@@ -42,6 +41,7 @@ angular.module('starter')
     }
 
     function destroyUserCredentials() {
+      console.log("destroyUserCredentials authToken " + authToken);
       authToken = undefined;
       username = '';
       isAuthenticated = false;
@@ -64,7 +64,7 @@ angular.module('starter')
     
     return {
         login: function(user){
-          return $http.get(pathOrg + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
+          return $http.get(PATH_WS.org + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
               result = resp.data;
               if (result.responseCode === 'OK') {
                 storeUserCredentials(result.response[0].username + '.yourServerToken');
