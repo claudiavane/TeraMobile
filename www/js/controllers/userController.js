@@ -4,8 +4,8 @@ angular.module('starter')
         console.log("LoginController");
         
         $scope.user = {
-            username: "ssimon",
-            password: "ssimon",
+            username: "",
+            password: "",
             languageCode: $rootScope.languageCode
         };
 
@@ -26,6 +26,7 @@ angular.module('starter')
               if (result.responseCode === 'OK') {
                   // fix session data
                   $rootScope.user = result.response[0];
+                  $scope.user = $rootScope.user;
 
                   console.log("$rootScope.user.user_id " + $rootScope.user.user_id);
                   $rootScope.subdivision = User.getSubdivisionDefault();

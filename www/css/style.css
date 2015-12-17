@@ -119,12 +119,6 @@ p {
     background-color: #222;
 }
 
-.menu h2 {
-    bottom: 0;
-    font-size: 18px;
-    left: 16px;
-    position: absolute;
-}
 
 .menu .avatar {
     height: 88px;
@@ -137,8 +131,8 @@ p {
 
 .menu-open .ion-navicon {
     transform: rotate(-360deg);
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 .menu-open .ion-navicon:before {
@@ -153,6 +147,15 @@ p {
     height: 125px;
     margin: 0 auto;
     width: 125px;
+}
+
+.app-icon-menu {  
+    background: url('../img/logo.png') center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 60px;
+    margin: 0 auto;
+    width: 60px;
 }
 
 .social-login {
