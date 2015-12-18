@@ -13,10 +13,11 @@
 		</div>
 		<list>
 			<div class="item" ng-repeat="item in items | filter:searchQuery">
-				<div class="card stable-bg ink ink-dark">	
+				<div class="card ink ink-dark" style="background:#f6f6f6">	
 				  <div class="item item-text-wrap">
-				  	<i class="icon ion-android-person"></i>
-					<h3>{{item.src_phone_number}}</h3>				
+				  	<div class="card-footer" style="font-size:16px; color:#000;">
+						<i class="icon ion-android-person"></i>&nbsp;{{item.src_phone_number}}
+                    </div>								
 					<p>{{item.incoming_message}}</p>
 					<div class="card-footer">
 						<i class="icon ion-clock"></i> {{item.stringIncomingDate}}
@@ -28,8 +29,9 @@
 				</div>
 				<div class="card stable-bg ink ink-dark">	
 				  <div class="item item-text-wrap" style="text-align:right">
-				  	<i class="icon ion-android-chat"></i>
-					<h3>{{item.operatorName}} {{item.tgt_phone_number}}</h3>				
+				  	<div class="card-footer" style="font-size:16px; color:#000;">
+						{{item.operatorName}} {{item.tgt_phone_number}} <i class="icon ion-android-phone-portrait"></i>
+                    </div>
 					<p>{{item.outgoing_message}}</p>				
 					<div class="card-footer">
 						<i class="icon ion-clock"></i> {{item.stringResponseDate}}
