@@ -193,7 +193,7 @@ angular.module('starter')
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
-                        '<h4 id="firstHeading" style="color: #4682B4;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<h5 id="firstHeading" style="color: #9c1320;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h5>'+
                         '<div id="bodyContent" >'+ 
                         ngoDeploy +
                         statusAppServer +
