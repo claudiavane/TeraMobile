@@ -34,7 +34,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'MenuCtrl'
     
   })
 
