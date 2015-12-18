@@ -350,13 +350,13 @@ angular.module('starter')
     };
 
     $scope.datepickerObject = {
-          titleLabel: 'Date Message Send',  //Optional
-          todayLabel: 'Today',  //Optional
-          closeLabel: 'Close',  //Optional
-          setLabel: 'Save',  //Optional
-          setButtonType : 'button-small button-energized',  //Optional
-          todayButtonType : 'button-small button-dark',  //Optional
-          closeButtonType : 'button-small button-stable',  //Optional
+          titleLabel: 'Delivery date',  //Optional
+          todayLabel: ' ',  //Optional
+          closeLabel: ' ',  //Optional
+          setLabel: ' ',  //Optional
+          setButtonType : 'button icon ion-checkmark tera-ok',  //Optional
+          todayButtonType : 'button icon ion-android-calendar',  //Optional
+          closeButtonType : 'button icon ion-close',  //Optional
           inputDate: new Date(),  //Optional
           mondayFirst: true,  //Optional
           //disabledDates: disabledDates, //Optional
