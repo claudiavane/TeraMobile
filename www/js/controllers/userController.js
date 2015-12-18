@@ -11,16 +11,9 @@ angular.module('starter')
 
         });
         
-        $scope.user = {
-            username: "",
-            password: "",
-            languageCode: $rootScope.languageCode
-        };
-
        $scope.login = function (user) {
           $rootScope.show('Login...');
 
-          /* Check user fields*/
           if(!user.username || !user.password){
               $rootScope.hide();
               $rootScope.notify('Error','Username or Password is incorrect!');
@@ -34,9 +27,7 @@ angular.module('starter')
               if (result.responseCode === 'OK') {
                   // fix session data
                   $rootScope.user = result.response[0];
-                  $scope.user = $rootScope.user;
-
-                  console.log("$rootScope.user.user_id " + $rootScope.user.user_id);
+                  //$scope.user = $rootScope.user;
                   $rootScope.subdivision = User.getSubdivisionDefault();
                   $state.go('app.mainMap');
               };          

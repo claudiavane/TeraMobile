@@ -20,9 +20,9 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       StatusBar.styleDefault();
     }
 
-    $rootScope.user = 12;
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
+    $rootScope.user = [];
 
   });
 })
@@ -34,7 +34,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'MenuCtrl'
     
   })
 
@@ -95,5 +95,34 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
   })
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/login');
-});
+  //$urlRouterProvider.otherwise('/login');
+   $urlRouterProvider.otherwise(function ($injector, $location) {
+    var $state = $injector.get("$state");
+    $state.go("app.mainMap");
+  });
+
+})
+
+ .run(function ($rootScope, $state, User, AUTH_EVENTS) {
+    $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+   
+        if ('data' in next && 'authorizedRoles' in next.data) {
+            var authorizedRoles = next.data.authorizedRoles;
+            if (!User.isAuthorized(authorizedRoles)) {
+              //console.log("El usuario no esta autorizado...");
+              event.preventDefault();
+              $state.go($state.current, {}, {reload: true});
+              $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+            }
+        }
+     
+        if (!User.isAuthenticated()) {
+            if (next.name !== 'login') {
+              event.preventDefault();
+              console.log("El usuario no esta authenticado..");
+              $state.go('login');
+            }
+        }
+     });
+ })
+;

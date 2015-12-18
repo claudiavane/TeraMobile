@@ -1,0 +1,39 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-assertive">
+    <h1 class="title">Confirm Send Alert Message</h1>
+
+    <div class="buttons">
+      <button class="button button-clear" ng-click="closeModalSendSms()">Cancel</button>
+    </div>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <form name="messageForm" ng-submit="smsSend()">
+      <div class="list">
+        <div class="item item-divider item-icon-left">
+          <i class="icon ion-email custom-icon-list"></i>
+          Message Detail
+        </div>
+
+        <div class="item" >
+            <h2>{{circleMessage.message}}</h2>
+            <p>{{messageType.name}}</p>
+            <p>{{priority.name}}</p>
+            <p>{{dateToString}}</p>
+        </div>
+
+        <div class="item item-divider item-icon-left">
+          <span class="right">Total</span><span class="left"><i class="icon ion-android-wifi custom-icon-list"></i>Operators</span>
+        </div>
+
+        <div class="item" ng-repeat="item in respPreview" >
+            <span class="right; badge badge-dark">{{item.quantity}}</span><span class="left">{{item.operator_name}}</span>​
+        </div>
+        <button class="button button-block button-energized" ng-disabled="messageForm.$invalid">Send</button>        
+      </div>
+      
+    </form>
+
+  </ion-content>
+
+</ion-modal-view>
