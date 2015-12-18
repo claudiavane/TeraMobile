@@ -13,14 +13,18 @@
 
   <ion-side-menu side="left">
     <ion-header-bar class="dark-bg expanded" style="background: url(img/background.jpg) center; background-size: cover;">  
-        <div class="hero flat">
+        <div class="hero">
             <h4>&nbsp;</h4>   
             <div class="app-icon-menu"></div>
-            <h4>{{user.name}}&nbsp;</h4>   
+            <h6 style="padding-top:10px;">CRUZ ROJA ECUATORIANA</h6>   
         </div>        
     </ion-header-bar>
     <ion-content class="stable-bg has-expanded-header">
       <ion-list>
+        <ion-item menu-close class="item item-icon-left">
+          <i class="icon ion-android-person"></i>
+          {{user.name}}
+        </ion-item>
         <ion-item menu-close href="#/app/mainMap" class="item item-icon-left">
           <i class="icon ion-home"></i>
           Alert Message
@@ -37,7 +41,7 @@
           <i class="icon ion-settings"></i>
           Settings
         </ion-item>
-         <ion-item menu-close ng-click="logout()" ui-sref="login" class="item item-icon-left" >
+         <ion-item menu-close ng-click="logout()" class="item item-icon-left" >
           <i class="icon ion-log-out"></i>
           Logout
         </ion-item>         
