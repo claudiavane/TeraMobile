@@ -26,23 +26,18 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MenuCtrl', function($scope, $state, $rootScope, $ionicPopup, User, AUTH_EVENTS) {
+.controller('MenuCtrl', function($scope, $state, $rootScope, $ionicPopup, $ionicHistory, User, AUTH_EVENTS) {
     console.log("MenuCtrl..");
     $scope.logout = function() {
       User.logout();
       $rootScope.subdivision = undefined;
-      //$rootScope.user = [];
 
-      /*$rootScope.user = {
-            username: "",
-            password: "",
-            languageCode: $rootScope.languageCode
-        };*/
       //$state.go('login');
-      console.log("yendo a login..");
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+
       $state.go('login', {}, {reload: true});
 
-      //$state.go('login', {}, {reload: true});
     };
 
 
