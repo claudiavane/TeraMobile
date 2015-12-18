@@ -258,7 +258,7 @@ angular.module('starter')
                         if (cellsites[i].operatorId === 1) {
                            iconMarker[i] = {
                             type: 'div',
-                            html: '<i class="ion-ios-location" style="color:#73bf43;"></i>',
+                            html: '<i class="ion-ios-location" style="color:#73bf43; font-size:18px;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                
                         }
@@ -266,7 +266,7 @@ angular.module('starter')
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
                             type: 'div',
-                            html: '<i class="ion-ios-location" style="color:#ff0000;"></i>',
+                            html: '<i class="ion-ios-location" style="color:#ff0000; font-size:18px;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }
