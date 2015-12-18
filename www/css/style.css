@@ -144,18 +144,18 @@ p {
     background: url('../img/logo.png') center;
     background-size: cover;
     border-radius: 50%;
-    height: 125px;
+    height: 90px;
     margin: 0 auto;
-    width: 125px;
+    width: 90px;
 }
 
 .app-icon-menu {  
     background: url('../img/logo.png') center;
     background-size: cover;
     border-radius: 50%;
-    height: 60px;
+    height: 50px;
     margin: 0 auto;
-    width: 60px;
+    width: 50px;
 }
 
 .social-login {
