@@ -162,3 +162,34 @@ p {
     position: fixed;
     bottom: 0;
 }
+
+
+.my-checkbox-class .checkbox input:before, 
+.my-checkbox-class .checkbox-icon:before {
+  background: #fff;    
+  border-color: #074d61;
+}
+
+.my-checkbox-class .checkbox input:checked:before, 
+.my-checkbox-class .checkbox input:checked + .checkbox-icon:before {
+  background: #074d61;    
+  border-color: #074d61;
+}
+
+.tera-danger {
+  color: #fff;
+  background: #9c1320;
+}
+.tera-danger:hover {
+  color: #fff;
+}
+
+.tera-ok {
+  background: #074d61;    
+  color: #fff;
+  font-size: 2.6rem;
+}
+.tera-ok:hover {
+  color: #fff;
+  font-size: 2.6rem;
+}

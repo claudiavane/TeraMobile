@@ -65,7 +65,7 @@
   background: #ffc900; }
 
 .item-md-label .highlight-assertive {
-  background: #ef473a; }
+  background: #b82130; }
 
 .item-md-label .highlight-royal {
   background: #886aea; }
@@ -998,15 +998,7 @@
 .list .item.item-gallery img {
   width: 100%; }
 
-.item.item-divider {
-  border-top: solid 1px rgba(0, 0, 0, 0.12);
-  font-size: 14px;
-  font-weight: bold;
-  height: 48px;
-  line-height: 48px;
-  color: rgba(0, 0, 0, 0.54); }
-  .item.item-divider:first-child {
-    border: none; }
+
 
 .item-avatar, .item-avatar .item-content, .item-avatar-left, .item-avatar-left .item-content, .card > .item-avatar {
   padding-left: 72px; }
@@ -2544,7 +2536,7 @@ a {
 .button-bar-assertive-900.activated,
 .bar-assertive-900.activated,
 .assertive-900-border.activated {
-  background-color: #B71C1C;
+  background-color: #9c1320;
   color: #fff; }
 
 .assertive-100-bg,
