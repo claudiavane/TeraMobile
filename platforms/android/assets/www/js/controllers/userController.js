@@ -2,7 +2,17 @@ angular.module('starter')
 
 .controller("LoginController", function($scope, $rootScope, $state, utilMessages, User) {
         console.log("LoginController");
+
+        $scope.$on("$stateChangeSuccess", function() {
+          $scope.formUser = {
+              username: "",
+              password: ""
+          };
+
+        });
         
+<<<<<<< HEAD
+=======
         $scope.user = {
             username: "ssimon",
             password: "ssimon",
@@ -12,6 +22,7 @@ angular.module('starter')
             languageCode: $rootScope.languageCode
 >>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
         };
+>>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
 
        $scope.login = function (user) {
           $rootScope.show('Login...');
@@ -23,15 +34,13 @@ angular.module('starter')
               return;
           }
 
-          User.login($scope.user).then(function(result){
+          User.login(user).then(function(result){
               utilMessages.validityResponse(result);
               $rootScope.hide();
 
               if (result.responseCode === 'OK') {
                   // fix session data
-                  $rootScope.user = result.response[0];
-
-                  console.log("$rootScope.user.user_id " + $rootScope.user.user_id);
+                  $rootScope.user = result.response[0];                  
                   $rootScope.subdivision = User.getSubdivisionDefault();
                   $state.go('app.mainMap');
               };          
@@ -39,8 +48,12 @@ angular.module('starter')
 
        };
 <<<<<<< HEAD
+       
+=======
+<<<<<<< HEAD
 =======
 
        console.log("LoginController.. fin");
 >>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
+>>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
  });

@@ -2,9 +2,8 @@ angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
 
-  $scope.username = User.username();
   console.log("AppCtrl.. ");
-
+  $scope.username = User.username();
   
   $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
     var alertPopup = $ionicPopup.alert({
@@ -27,18 +26,21 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MenuCtrl', function($scope, $state, $ionicPopup, User, AUTH_EVENTS) {
-    console.log();
+.controller('MenuCtrl', function($scope, $state, $rootScope, $ionicPopup, $ionicHistory, User, AUTH_EVENTS) {
+    console.log("MenuCtrl..");
     $scope.logout = function() {
-      User.logout("MenuCtrl..");
-      $scope.user = {
-            username: "",
-            password: "",
-            languageCode: $rootScope.languageCode
-        };
+      User.logout();
       $rootScope.subdivision = undefined;
-      $state.go('login');
+
+      //$state.go('login');
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+
+      $state.go('login', {}, {reload: true});
+
     };
+
+
 
 })
 ;

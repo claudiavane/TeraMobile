@@ -25,6 +25,12 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       StatusBar.styleDefault();
     }
 <<<<<<< HEAD
+    
+    $rootScope.subdivision;
+    $rootScope.languageCode = 'en';
+    $rootScope.user = [];
+=======
+<<<<<<< HEAD
 
     $rootScope.user = 12;
     $rootScope.subdivision;
@@ -35,6 +41,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
 >>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
+>>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
   });
 })
 

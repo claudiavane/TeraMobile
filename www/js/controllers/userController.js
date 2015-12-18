@@ -2,6 +2,14 @@ angular.module('starter')
 
 .controller("LoginController", function($scope, $rootScope, $state, utilMessages, User) {
         console.log("LoginController");
+
+        $scope.$on("$stateChangeSuccess", function() {
+          $scope.formUser = {
+              username: "",
+              password: ""
+          };
+
+        });
         
         $scope.user = {
             username: "",
@@ -19,7 +27,7 @@ angular.module('starter')
               return;
           }
 
-          User.login($scope.user).then(function(result){
+          User.login(user).then(function(result){
               utilMessages.validityResponse(result);
               $rootScope.hide();
 
@@ -35,6 +43,5 @@ angular.module('starter')
           });
 
        };
-
-       console.log("LoginController.. fin");
+       
  });
