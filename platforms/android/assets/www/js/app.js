@@ -4,9 +4,15 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
+<<<<<<< HEAD
+angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker', 'ionMdInput'])
+
+.run(function($ionicPlatform, $rootScope, utilMessages) {
+=======
 angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker'])
 
 .run(function($ionicPlatform, $rootScope) {
+>>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,10 +24,24 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+<<<<<<< HEAD
     
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
     $rootScope.user = [];
+=======
+<<<<<<< HEAD
+
+    $rootScope.user = 12;
+    $rootScope.subdivision;
+    $rootScope.languageCode = 'en';
+
+=======
+    $rootScope.user = 12;
+    $rootScope.subdivision;
+    $rootScope.languageCode = 'en';
+>>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
+>>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
   });
 })
 
@@ -31,8 +51,18 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     .state('app', {
     url: '/app',
     abstract: true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
+    
+=======
+    templateUrl: 'templates/menu.html'    
+>>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
+=======
     templateUrl: 'templates/menu.html',
     controller: "MenuCtrl"    
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
   })
 
   .state('app.outgoing', {
@@ -41,6 +71,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       'menuContent': {
         templateUrl: 'templates/outgoing.html',
         controller: 'OutgoingController'
+<<<<<<< HEAD
       }
     }
   })
@@ -51,9 +82,33 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       'menuContent': {
         templateUrl: 'templates/incoming.html',
         controller: 'IncomingController'
+=======
+>>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
       }
     }
   })
+
+<<<<<<< HEAD
+  .state('app.browse', {
+      url: '/browse',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/browse.html',
+          controller: 'ControlsDrawController'
+        }
+      }
+    })
+=======
+  .state('app.incoming', {
+    url: '/incoming',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/incoming.html',
+        controller: 'IncomingController'
+      }
+    }
+  })
+>>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
 
   .state('app.mainMap', {
     url: '/mainMap',
@@ -82,6 +137,10 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
   })
 
   // if none of the above states are matched, use this as the fallback
+<<<<<<< HEAD
+  $urlRouterProvider.otherwise('/login');
+});
+=======
   //$urlRouterProvider.otherwise('/app/mainMap');
   //$urlRouterProvider.otherwise('/login');
   $urlRouterProvider.otherwise(function ($injector, $location) {
@@ -119,3 +178,4 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
 })
 
 ;
+>>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664

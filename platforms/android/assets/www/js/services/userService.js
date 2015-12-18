@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+var pathOrg = 'http://192.168.51.61:8080/org';
+
+angular.module('starter')
+
+.factory('User', function($http) {
+    var result;
+    var userInfo = [];
+    var subdivisions;
+    
+    return {
+        login: function(user){
+          return $http.get(pathOrg + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
+              result = resp.data;
+              console.log("result.responseCode: " + result.responseCode);
+=======
 
 angular.module('starter')
 
@@ -69,16 +85,20 @@ angular.module('starter')
               if (result.responseCode === 'OK') {
                 storeUserCredentials(result.response[0].username + '.yourServerToken');
               };              
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
               return result;
           }, function(error){
               console.log("Request Failed: " + error.data);
           });
         },
+<<<<<<< HEAD
+=======
         logout: logout,
         isAuthorized: isAuthorized,
         isAuthenticated: function() {return isAuthenticated;},
         username: function() {return username;},
         role: function() {return role;},
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
         getSubdivisions: function(){
           userInfo = result.response;
           var item;
@@ -95,7 +115,10 @@ angular.module('starter')
                   subdivisions.push(subdivision);                  
               }else{
                   if (item.subdivision_id !== userInfo[i].subdivision_id) {
+<<<<<<< HEAD
+=======
                       item = userInfo[i];
+>>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
                       subdivision = {
                         id: item.subdivision_id,
                         name: item.subdivision_desc

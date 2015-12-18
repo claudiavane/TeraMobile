@@ -11,6 +11,11 @@ angular.module('starter')
 
         });
         
+        $scope.user = {
+            username: "",
+            password: "",
+            languageCode: $rootScope.languageCode
+        };
 
        $scope.login = function (user) {
           $rootScope.show('Login...');
@@ -28,7 +33,10 @@ angular.module('starter')
 
               if (result.responseCode === 'OK') {
                   // fix session data
-                  $rootScope.user = result.response[0];                  
+                  $rootScope.user = result.response[0];
+                  $scope.user = $rootScope.user;
+
+                  console.log("$rootScope.user.user_id " + $rootScope.user.user_id);
                   $rootScope.subdivision = User.getSubdivisionDefault();
                   $state.go('app.mainMap');
               };          
