@@ -23,7 +23,6 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
     $rootScope.user = [];
-
   });
 })
 

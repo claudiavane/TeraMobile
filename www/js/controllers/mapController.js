@@ -150,10 +150,10 @@ angular.module('starter')
                 for (var i = 0; i < keepers.length; i++) {
                     var statusAppServer='';
                     var statusDBServer='';
-                    var statusScreenServer='';
+                    //var statusScreenServer='';
                     var statusExtraAppServer='';
                     var statusExtraDBServer='';
-                    var statusExtraScreenServer='';
+                    //var statusExtraScreenServer='';
                     var singleDeploy='';
                     var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
 
@@ -170,8 +170,8 @@ angular.module('starter')
                     if (keepers[i].DATABASE_WORKING === 0) statusDBServer = dbServerNOk;
                     else statusDBServer = dbServerOk;
                     
-                    if (keepers[i].SCREEN_WORKING === 0) statusScreenServer = screenNOk;
-                    else statusScreenServer = screenOk;
+                    //if (keepers[i].SCREEN_WORKING === 0) statusScreenServer = screenNOk;
+                    //else statusScreenServer = screenOk;
                     
                     if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
                       singleDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].EXTRA_NAME+' </span>​</p>';
@@ -184,10 +184,10 @@ angular.module('starter')
                         else statusExtraDBServer = dbServerOk;                        
                       }
 
-                      if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
+                      /*if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
                         if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) statusExtraScreenServer = screenNOk;
                         else statusExtraScreenServer = screenOk;                        
-                      }
+                      }*/
                     }
 
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
@@ -198,11 +198,11 @@ angular.module('starter')
                         ngoDeploy +
                         statusAppServer +
                         statusDBServer +
-                        statusScreenServer +
+                        //statusScreenServer +
                         singleDeploy+
                         statusExtraAppServer +
                         statusExtraDBServer +
-                        statusExtraScreenServer +
+                        //statusExtraScreenServer +
                         queuedMessage +
                         //'<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
                         //'More detail' +
@@ -290,7 +290,7 @@ angular.module('starter')
                 //drawnItems = baselayers.overlays.draw;                
                 map.on('draw:created', function (e) {
                   layerCircle = e.layer;
-                  drawnItems.addLayer(layerCircle);
+                  //drawnItems.addLayer(layerCircle);
                   
                   $scope.openModal();
                 });
@@ -316,18 +316,16 @@ angular.module('starter')
           };      
         });
     }
-
     $scope.openModal = function() {
       $scope.circleMessage = new CircleMessage();
       loadData();
       $scope.modal.show();
     }
-    $scope.closeModal = function() {
-      
-      if (layerCircle) {
+    $scope.closeModal = function() {      
+      /*if (layerCircle) {
         drawnItems.removeLayer(layerCircle);
         console.log("se removio el layer");
-      };
+      };*/
       $scope.modal.hide();
     }
     $scope.$on('$destroy', function() {
@@ -347,33 +345,32 @@ angular.module('starter')
         console.log('Selected date is : ', val);
         $scope.datePicker = val;
       }
-    };
-
+    }
     $scope.datepickerObject = {
-          titleLabel: 'Delivery date',  //Optional
-          todayLabel: ' ',  //Optional
-          closeLabel: ' ',  //Optional
-          setLabel: ' ',  //Optional
-          setButtonType : 'button icon ion-checkmark tera-ok',  //Optional
-          todayButtonType : 'button icon ion-android-calendar',  //Optional
-          closeButtonType : 'button icon ion-close',  //Optional
-          inputDate: new Date(),  //Optional
-          mondayFirst: true,  //Optional
-          //disabledDates: disabledDates, //Optional
-          //weekDaysList: weekDaysList, //Optional
-          //monthList: monthList, //Optional
-          templateType: 'popup', //Optional
-          showTodayButton: 'true', //Optional
-          modalHeaderColor: 'bar-dark', //Optional
-          modalFooterColor: 'bar-dark', //Optional
-          from: new Date(2012, 8, 2), //Optional
-          to: new Date(2018, 8, 25),  //Optional
-          callback: function (val) {  //Mandatory
-            datePickerCallback(val);
-          },
-          dateFormat: 'dd-MM-yyyy', //Optional
-          closeOnSelect: false, //Optional
-        };
+        titleLabel: 'Delivery date',  //Optional
+        todayLabel: ' ',  //Optional
+        closeLabel: ' ',  //Optional
+        setLabel: ' ',  //Optional
+        setButtonType : 'button icon ion-checkmark tera-ok',  //Optional
+        todayButtonType : 'button icon ion-android-calendar',  //Optional
+        closeButtonType : 'button icon ion-close',  //Optional
+        inputDate: new Date(),  //Optional
+        mondayFirst: true,  //Optional
+        //disabledDates: disabledDates, //Optional
+        //weekDaysList: weekDaysList, //Optional
+        //monthList: monthList, //Optional
+        templateType: 'popup', //Optional
+        showTodayButton: 'true', //Optional
+        modalHeaderColor: 'bar-dark', //Optional
+        modalFooterColor: 'bar-dark', //Optional
+        from: new Date(2012, 8, 2), //Optional
+        to: new Date(2018, 8, 25),  //Optional
+        callback: function (val) {  //Mandatory
+          datePickerCallback(val);
+        },
+        dateFormat: 'dd-MM-yyyy', //Optional
+        closeOnSelect: false, //Optional
+    };
     
     $scope.isSelectedPriority = function(item) {
       if(item.id === $scope.priority.id) return true;
@@ -488,9 +485,7 @@ angular.module('starter')
         }).then(function(modal) {
             $scope.modalDeploymentinfo = modal;
     });
-    $scope.openModalDeploymentInfo = function(delpoyItemId) {
-      //$rootScope.show('Show...');
-
+    $scope.openModalDeploymentInfo = function(delpoyItemId) {      
       $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;
