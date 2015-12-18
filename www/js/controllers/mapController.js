@@ -155,14 +155,13 @@ angular.module('starter')
                     var statusExtraDBServer='';
                     //var statusExtraScreenServer='';
                     var singleDeploy='';
-                    var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
-
-                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
-                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
-                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
-                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
-                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 14px;"></i></p>';
-                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
+                    var ngoDeploy = '<div class="item item-divider" style="font-size:12px; background:#eaeaea; padding:3px;">'+keepers[i].NAME+'</div>';
+                    var appServerNOk = '<div class="item item-icon-right"  style="padding:2px;">Application server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var appServerOk = '<div class="item item-icon-right" style="padding:2px;">Application server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var dbServerNOk = '<div class="item item-icon-right" style="padding:2px;">Database server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var dbServerOk = '<div class="item item-icon-right" style="padding:2px;">Database server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var screenNOk = '<div class="item item-icon-right" style="padding:2px;">Screen server </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var screenOk = '<div class="item item-icon-right" style="padding:2px;">Screen server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -174,7 +173,7 @@ angular.module('starter')
                     //else statusScreenServer = screenOk;
                     
                     if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
-                      singleDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].EXTRA_NAME+' </span>​</p>';
+                      singleDeploy = '<div class="item item-divider" style="font-size:12px; background:#eaeaea; padding:3px;">'+keepers[i].EXTRA_NAME+'</div>';
                       
                       if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) statusExtraAppServer = appServerNOk;
                       else statusExtraAppServer = appServerOk;
@@ -193,7 +192,7 @@ angular.module('starter')
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
-                        '<h4 id="firstHeading" style="color: #4682B4;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<h4 id="firstHeading" style="color: #9c1320;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
                         '<div id="bodyContent" >'+ 
                         ngoDeploy +
                         statusAppServer +
@@ -210,6 +209,7 @@ angular.module('starter')
                         '</div>'+
                         '</div>'
                         ;
+
 
                     $scope.map.markers[j] = {
                         layer: 'INIT',
