@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker', 'ionic-material', 'ionMdInput'])
+angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker', 'ionic-material', 'ionMdInput', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, utilMessages) {
   $ionicPlatform.ready(function() {
@@ -26,7 +26,35 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+
+            $translateProvider.translations('en', {
+                SETTINGS: "Settings",
+                SUBDIVISION: "Subdivision",
+                LANGUAGE: "Language",
+                SAVE: "Save",
+                ALERT_MESSAGE: "Alert Message",
+                OUTGOING: "Outgoing",
+                INCOMING: "Incoming",
+                LOGOUT: "Logout",
+                WRITE_MESSAGE: "Write Message",
+                MESSAGE_DETAIL: "Message Detail",
+                
+            });
+            $translateProvider.translations('es', {
+                SETTINGS: "Configuraciones",
+                SUBDIVISION: "Subdivision",
+                LANGUAGE: "Lenguaje",
+                SAVE: "Guardar",
+                ALERT_MESSAGE: "Mensaje de Alerta",
+                OUTGOING: "Salientes",
+                INCOMING: "Entrantes",
+                LOGOUT: "Salir"
+            });
+           
+            $translateProvider.preferredLanguage("en");
+            $translateProvider.fallbackLanguage("en");
+
   $stateProvider
 
     .state('app', {

@@ -34,7 +34,8 @@ angular.module('starter')
     $rootScope.notify = function (title, text) {
         var alertPopup = $ionicPopup.alert({
             title: title ? title : 'Error',
-            template: text
+            template: text,
+            okType: 'button-assertive'
         });
     };
 

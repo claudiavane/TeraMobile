@@ -9,10 +9,6 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         },
@@ -56,9 +52,6 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.teramobile422685"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.teramobile422685"
         },
@@ -80,22 +73,6 @@
     },
     "dependent_plugins": {},
     "modules": [
-        {
-            "file": "plugins/cordova-plugin-console/www/console-via-logger.js",
-            "id": "cordova-plugin-console.console",
-            "pluginId": "cordova-plugin-console",
-            "clobbers": [
-                "console"
-            ]
-        },
-        {
-            "file": "plugins/cordova-plugin-console/www/logger.js",
-            "id": "cordova-plugin-console.logger",
-            "pluginId": "cordova-plugin-console",
-            "clobbers": [
-                "cordova.logger"
-            ]
-        },
         {
             "file": "plugins/cordova-plugin-device/www/device.js",
             "id": "cordova-plugin-device.device",
@@ -163,7 +140,6 @@
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-console": "1.0.2",
         "cordova-plugin-device": "1.1.0",
         "cordova-plugin-geolocation": "2.0.1-dev",
         "cordova-plugin-splashscreen": "3.0.0",

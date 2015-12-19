@@ -25,59 +25,22 @@ angular.module('starter.controllers', [])
     $scope.username = name;
   };
 })
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('BrowseCtrl', function($scope, $stateParams, Keeper) {
-  console.log('Mi BrowseCtrl...');
-
-  Keeper.getKeepers().then(function(result){
-    $scope.keepers = result;
-    console.log("Result.. ");
-      
-  });
-
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-  console.log('Mi playlists...');
-});
-=======
-=======
-
-.controller('MenuCtrl', function($scope, $state, $rootScope, $ionicPopup, User, AUTH_EVENTS) {
+.controller('MenuCtrl', function($scope, $state, $rootScope, $ionicPopup, $ionicHistory, User, AUTH_EVENTS) {
     console.log("MenuCtrl..");
     $scope.logout = function() {
       User.logout();
       $rootScope.subdivision = undefined;
-      //$rootScope.user = [];
 
-      /*$rootScope.user = {
-            username: "",
-            password: "",
-            languageCode: $rootScope.languageCode
-        };*/
       //$state.go('login');
-      console.log("yendo a login..");
+      $ionicHistory.clearHistory();
+      $ionicHistory.clearCache();
+
       $state.go('login', {}, {reload: true});
 
-      //$state.go('login', {}, {reload: true});
     };
 
 
 
 })
->>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
 ;
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664

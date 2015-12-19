@@ -1,4 +1,4 @@
-<ion-view view-title="Login"  hide-nav-bar="true"  class="background-intro">
+<!--ion-view view-title="Login"  hide-nav-bar="true"  class="background-intro">
     <ion-content>
         <div class="padding">
             <a href="#" class="logo"><span>T</span></a>
@@ -17,6 +17,26 @@
             <button class="button button-energized button-theme" ng-click="login(formUser)" nav-clear >
                 Iniciar Sesion
             </button>            
+        </div>
+    </ion-content>
+</ion-view>-->
+<ion-view view-title="Login" hide-nav-bar="true" align-title="left">
+    <ion-content style="background: url(img/background.jpg) center; background-size: cover;">
+        <div class="hero no-header flat">
+            <div class="content">
+                <div class="app-icon"></div>
+                <h1>TERA</h1>
+                <h5>CRUZ ROJA ECUATORIANA</h5>
+            </div>
+        </div>
+        <div class="list" style="padding-left:5px; padding-right:30px">
+            <ion-md-input ng-model="formUser.username" placeholder="Username" highlight-color="balanced" type="text">
+            </ion-md-input>
+            <ion-md-input ng-model="formUser.password" placeholder="Password" highlight-color="energized" type="password">
+            </ion-md-input>
+        </div>
+        <div class="padding">
+            <button ng-click="login(formUser)" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
         </div>
     </ion-content>
 </ion-view>

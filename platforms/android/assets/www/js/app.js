@@ -4,65 +4,65 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-<<<<<<< HEAD
-angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker', 'ionMdInput'])
+angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker', 'ionic-material', 'ionMdInput', 'pascalprecht.translate'])
 
 .run(function($ionicPlatform, $rootScope, utilMessages) {
-=======
-angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.controllers', 'ngResource', 'ionic-datepicker'])
-
-.run(function($ionicPlatform, $rootScope) {
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
+
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
-<<<<<<< HEAD
-    
+
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
     $rootScope.user = [];
-=======
-<<<<<<< HEAD
-
-    $rootScope.user = 12;
-    $rootScope.subdivision;
-    $rootScope.languageCode = 'en';
-
-=======
-    $rootScope.user = 12;
-    $rootScope.subdivision;
-    $rootScope.languageCode = 'en';
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
->>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $translateProvider) {
+
+            $translateProvider.translations('en', {
+                SETTINGS: "Settings",
+                SUBDIVISION: "Subdivision",
+                LANGUAGE: "Language",
+                SAVE: "Save",
+                ALERT_MESSAGE: "Alert Message",
+                OUTGOING: "Outgoing",
+                INCOMING: "Incoming",
+                LOGOUT: "Logout",
+                WRITE_MESSAGE: "Write Message",
+                MESSAGE_DETAIL: "Message Detail",
+                
+            });
+            $translateProvider.translations('es', {
+                SETTINGS: "Configuraciones",
+                SUBDIVISION: "Subdivision",
+                LANGUAGE: "Lenguaje",
+                SAVE: "Guardar",
+                ALERT_MESSAGE: "Mensaje de Alerta",
+                OUTGOING: "Salientes",
+                INCOMING: "Entrantes",
+                LOGOUT: "Salir"
+            });
+           
+            $translateProvider.preferredLanguage("en");
+            $translateProvider.fallbackLanguage("en");
+
   $stateProvider
 
     .state('app', {
     url: '/app',
     abstract: true,
-<<<<<<< HEAD
-<<<<<<< HEAD
     templateUrl: 'templates/menu.html',
-    controller: 'AppCtrl'
+    controller: 'MenuCtrl'
     
-=======
-    templateUrl: 'templates/menu.html'    
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
-=======
-    templateUrl: 'templates/menu.html',
-    controller: "MenuCtrl"    
->>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
   })
 
   .state('app.outgoing', {
@@ -71,7 +71,6 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       'menuContent': {
         templateUrl: 'templates/outgoing.html',
         controller: 'OutgoingController'
-<<<<<<< HEAD
       }
     }
   })
@@ -82,13 +81,10 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       'menuContent': {
         templateUrl: 'templates/incoming.html',
         controller: 'IncomingController'
-=======
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
       }
     }
   })
 
-<<<<<<< HEAD
   .state('app.browse', {
       url: '/browse',
       views: {
@@ -98,17 +94,6 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
         }
       }
     })
-=======
-  .state('app.incoming', {
-    url: '/incoming',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/incoming.html',
-        controller: 'IncomingController'
-      }
-    }
-  })
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664
 
   .state('app.mainMap', {
     url: '/mainMap',
@@ -137,45 +122,34 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
   })
 
   // if none of the above states are matched, use this as the fallback
-<<<<<<< HEAD
-  $urlRouterProvider.otherwise('/login');
-});
-=======
-  //$urlRouterProvider.otherwise('/app/mainMap');
   //$urlRouterProvider.otherwise('/login');
-  $urlRouterProvider.otherwise(function ($injector, $location) {
+   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");
     $state.go("app.mainMap");
   });
 
 })
 
-
-.run(function ($rootScope, $state, User, AUTH_EVENTS) {
-  $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
-
-    if ('data' in next && 'authorizedRoles' in next.data) {
-      console.log("El usuario no esta autorizado...");
-
-      var authorizedRoles = next.data.authorizedRoles;
-      if (!User.isAuthorized(authorizedRoles)) {
-        //console.log("El usuario no esta autorizado...");
-        event.preventDefault();
-        $state.go($state.current, {}, {reload: true});
-        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-      }
-    }
-
-    if (!User.isAuthenticated()) {
-      console.log("El usuario no esta autenticado...");
-      if (next.name !== 'login') {
-        console.log("next.name..." + next.name);
-        event.preventDefault();
-        $state.go('login');
-      }
-    }
-  });
-})
-
+ .run(function ($rootScope, $state, User, AUTH_EVENTS) {
+    $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+   
+        if ('data' in next && 'authorizedRoles' in next.data) {
+            var authorizedRoles = next.data.authorizedRoles;
+            if (!User.isAuthorized(authorizedRoles)) {
+              //console.log("El usuario no esta autorizado...");
+              event.preventDefault();
+              $state.go($state.current, {}, {reload: true});
+              $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+            }
+        }
+     
+        if (!User.isAuthenticated()) {
+            if (next.name !== 'login') {
+              event.preventDefault();
+              console.log("El usuario no esta authenticado..");
+              $state.go('login');
+            }
+        }
+     });
+ })
 ;
->>>>>>> 2510628cc604afda0f4be608fdb320ef3cf9f664

@@ -34,9 +34,6 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "com.ionicframework.teramobile422685"
-        },
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.teramobile422685"
         },
@@ -96,7 +93,6 @@
         }
     ],
     "plugin_metadata": {
-        "cordova-plugin-console": "1.0.2",
         "cordova-plugin-device": "1.1.0",
         "cordova-plugin-splashscreen": "3.0.0",
         "cordova-plugin-statusbar": "2.0.0",

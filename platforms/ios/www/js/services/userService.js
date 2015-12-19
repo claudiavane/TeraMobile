@@ -49,10 +49,6 @@ angular.module('starter')
       window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }    
 
-    var logout = function() {
-      destroyUserCredentials();
-    }; 
-
     var isAuthorized = function(authorizedRoles) {
         if (!angular.isArray(authorizedRoles)) {
           authorizedRoles = [authorizedRoles];
@@ -74,7 +70,10 @@ angular.module('starter')
               console.log("Request Failed: " + error.data);
           });
         },
-        logout: logout,
+        logout: function() {
+                  console.log("logout...");
+                  destroyUserCredentials();
+                },
         isAuthorized: isAuthorized,
         isAuthenticated: function() {return isAuthenticated;},
         username: function() {return username;},

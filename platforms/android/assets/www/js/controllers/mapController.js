@@ -150,19 +150,18 @@ angular.module('starter')
                 for (var i = 0; i < keepers.length; i++) {
                     var statusAppServer='';
                     var statusDBServer='';
-                    var statusScreenServer='';
+                    //var statusScreenServer='';
                     var statusExtraAppServer='';
                     var statusExtraDBServer='';
-                    var statusExtraScreenServer='';
+                    //var statusExtraScreenServer='';
                     var singleDeploy='';
-                    var ngoDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].NAME+' </span>​</p>';
-
-                    var appServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
-                    var appServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Application server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
-                    var dbServerNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 14px;"></i></p>';
-                    var dbServerOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Database server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
-                    var screenNOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 14px;"></i></p>';
-                    var screenOk = '<p style="padding-left:10px;"><span style="padding-right:5px;">Screen server: </span>​<i class="icon ion-ios-checkmark" style="color: #228B22; font-size: 14px;"></i></p>';
+                    var ngoDeploy = '<div class="item item-divider" style="font-size:12px; background:#eaeaea; padding:3px;">'+keepers[i].NAME+'</div>';
+                    var appServerNOk = '<div class="item item-icon-right"  style="padding:2px;">Application server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var appServerOk = '<div class="item item-icon-right" style="padding:2px;">Application server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var dbServerNOk = '<div class="item item-icon-right" style="padding:2px;">Database server </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var dbServerOk = '<div class="item item-icon-right" style="padding:2px;">Database server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var screenNOk = '<div class="item item-icon-right" style="padding:2px;">Screen server </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var screenOk = '<div class="item item-icon-right" style="padding:2px;">Screen server </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -170,11 +169,11 @@ angular.module('starter')
                     if (keepers[i].DATABASE_WORKING === 0) statusDBServer = dbServerNOk;
                     else statusDBServer = dbServerOk;
                     
-                    if (keepers[i].SCREEN_WORKING === 0) statusScreenServer = screenNOk;
-                    else statusScreenServer = screenOk;
+                    //if (keepers[i].SCREEN_WORKING === 0) statusScreenServer = screenNOk;
+                    //else statusScreenServer = screenOk;
                     
                     if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING){
-                      singleDeploy = '<p style="color: #4682B4;"><span class="left" style="padding-right:5px;">'+keepers[i].EXTRA_NAME+' </span>​</p>';
+                      singleDeploy = '<div class="item item-divider" style="font-size:12px; background:#eaeaea; padding:3px;">'+keepers[i].EXTRA_NAME+'</div>';
                       
                       if (keepers[i].EXTRA_TELCO_APPSERVER_WORKING === 0) statusExtraAppServer = appServerNOk;
                       else statusExtraAppServer = appServerOk;
@@ -184,25 +183,25 @@ angular.module('starter')
                         else statusExtraDBServer = dbServerOk;                        
                       }
 
-                      if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
+                      /*if (keepers[i].EXTRA_TELCO_SCREEN_WORKING) {
                         if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) statusExtraScreenServer = screenNOk;
                         else statusExtraScreenServer = screenOk;                        
-                      }
+                      }*/
                     }
 
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
-                        '<h4 id="firstHeading" style="color: #4682B4;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
+                        '<h4 id="firstHeading" style="color: #9c1320;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+
                         '<div id="bodyContent" >'+ 
                         ngoDeploy +
                         statusAppServer +
                         statusDBServer +
-                        statusScreenServer +
+                        //statusScreenServer +
                         singleDeploy+
                         statusExtraAppServer +
                         statusExtraDBServer +
-                        statusExtraScreenServer +
+                        //statusExtraScreenServer +
                         queuedMessage +
                         //'<button class="button button-small button-balanced icon-right ion-chevron-right" ng-click="openModalDeploymentInfo('+keepers[i].ID+')" >'+
                         //'More detail' +
@@ -210,6 +209,7 @@ angular.module('starter')
                         '</div>'+
                         '</div>'
                         ;
+
 
                     $scope.map.markers[j] = {
                         layer: 'INIT',
@@ -258,7 +258,7 @@ angular.module('starter')
                         if (cellsites[i].operatorId === 1) {
                            iconMarker[i] = {
                             type: 'div',
-                            html: '<i class="ion-ios-location" style="color:#20cc38;"></i>',
+                            html: '<i class="ion-ios-location" style="color:#73bf43; font-size:18px;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                
                         }
@@ -266,7 +266,7 @@ angular.module('starter')
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
                             type: 'div',
-                            html: '<i class="ion-ios-location" style="color:#000099;"></i>',
+                            html: '<i class="ion-ios-location" style="color:#ff0000; font-size:18px;"></i>',
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }
@@ -290,7 +290,7 @@ angular.module('starter')
                 //drawnItems = baselayers.overlays.draw;                
                 map.on('draw:created', function (e) {
                   layerCircle = e.layer;
-                  drawnItems.addLayer(layerCircle);
+                  //drawnItems.addLayer(layerCircle);
                   
                   $scope.openModal();
                 });
@@ -316,18 +316,16 @@ angular.module('starter')
           };      
         });
     }
-
     $scope.openModal = function() {
       $scope.circleMessage = new CircleMessage();
       loadData();
       $scope.modal.show();
     }
-    $scope.closeModal = function() {
-      
-      if (layerCircle) {
+    $scope.closeModal = function() {      
+      /*if (layerCircle) {
         drawnItems.removeLayer(layerCircle);
         console.log("se removio el layer");
-      };
+      };*/
       $scope.modal.hide();
     }
     $scope.$on('$destroy', function() {
@@ -347,33 +345,32 @@ angular.module('starter')
         console.log('Selected date is : ', val);
         $scope.datePicker = val;
       }
-    };
-
+    }
     $scope.datepickerObject = {
-          titleLabel: 'Date Message Send',  //Optional
-          todayLabel: 'Today',  //Optional
-          closeLabel: 'Close',  //Optional
-          setLabel: 'Save',  //Optional
-          setButtonType : 'button-small button-energized',  //Optional
-          todayButtonType : 'button-small button-dark',  //Optional
-          closeButtonType : 'button-small button-stable',  //Optional
-          inputDate: new Date(),  //Optional
-          mondayFirst: true,  //Optional
-          //disabledDates: disabledDates, //Optional
-          //weekDaysList: weekDaysList, //Optional
-          //monthList: monthList, //Optional
-          templateType: 'popup', //Optional
-          showTodayButton: 'true', //Optional
-          modalHeaderColor: 'bar-dark', //Optional
-          modalFooterColor: 'bar-dark', //Optional
-          from: new Date(2012, 8, 2), //Optional
-          to: new Date(2018, 8, 25),  //Optional
-          callback: function (val) {  //Mandatory
-            datePickerCallback(val);
-          },
-          dateFormat: 'dd-MM-yyyy', //Optional
-          closeOnSelect: false, //Optional
-        };
+        titleLabel: 'Delivery date',  //Optional
+        todayLabel: ' ',  //Optional
+        closeLabel: ' ',  //Optional
+        setLabel: ' ',  //Optional
+        setButtonType : 'button icon ion-checkmark tera-ok',  //Optional
+        todayButtonType : 'button icon ion-android-calendar',  //Optional
+        closeButtonType : 'button icon ion-close',  //Optional
+        inputDate: new Date(),  //Optional
+        mondayFirst: true,  //Optional
+        //disabledDates: disabledDates, //Optional
+        //weekDaysList: weekDaysList, //Optional
+        //monthList: monthList, //Optional
+        templateType: 'popup', //Optional
+        showTodayButton: 'true', //Optional
+        modalHeaderColor: 'bar-dark', //Optional
+        modalFooterColor: 'bar-dark', //Optional
+        from: new Date(2012, 8, 2), //Optional
+        to: new Date(2018, 8, 25),  //Optional
+        callback: function (val) {  //Mandatory
+          datePickerCallback(val);
+        },
+        dateFormat: 'dd-MM-yyyy', //Optional
+        closeOnSelect: false, //Optional
+    };
     
     $scope.isSelectedPriority = function(item) {
       if(item.id === $scope.priority.id) return true;
@@ -488,9 +485,7 @@ angular.module('starter')
         }).then(function(modal) {
             $scope.modalDeploymentinfo = modal;
     });
-    $scope.openModalDeploymentInfo = function(delpoyItemId) {
-      //$rootScope.show('Show...');
-
+    $scope.openModalDeploymentInfo = function(delpoyItemId) {      
       $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;

@@ -1,12 +1,7 @@
-<ion-view title="Alert Message">
+<ion-view title="{{'ALERT_MESSAGE'| translate}}">
   
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-
-  <ion-nav-buttons side="right">
-    <button ng-click="reloadAll()" class="button button-icon ion-loop"></button>
-  </ion-nav-buttons>
+  <button ng-click="reloadAll()" class="button button-fab button-balanced icon ion-loop" 
+  style="background: #a21522; position: fixed; bottom: 20px; right: 10px;"></button>
 
   <ion-content data-tap-disabled="true">
     <!--<ion-refresher

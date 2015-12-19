@@ -1,6 +1,6 @@
 angular.module('starter')
 
-.controller("SettingsController", function($scope, $rootScope, $state, utilMessages, utilConstants, User) {
+.controller("SettingsController", function($scope, $rootScope, $state, $translate, utilMessages, utilConstants, User) {
         console.log("SettingsController");
         
         $scope.subdivisions = User.getSubdivisions();
@@ -20,5 +20,13 @@ angular.module('starter')
 		$scope.saveSettigns = function(){
 			$rootScope.subdivision = $scope.subdivision;
 			$rootScope.languageCode = $scope.language;
+			
+            $translate.use($scope.language.id);
+        	 
 		}
+
+		/* SETTINGS LANGUAGES */
+            //$scope.languages = $rootScope.settings.languages;
+            //$scope.selectLanguage = $rootScope.settings.languages[0];
+         
  });

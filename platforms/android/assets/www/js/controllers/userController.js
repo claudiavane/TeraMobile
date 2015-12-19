@@ -11,23 +11,9 @@ angular.module('starter')
 
         });
         
-<<<<<<< HEAD
-=======
-        $scope.user = {
-            username: "ssimon",
-            password: "ssimon",
-<<<<<<< HEAD
-            languageCode: "es"
-=======
-            languageCode: $rootScope.languageCode
->>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
-        };
->>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
-
        $scope.login = function (user) {
           $rootScope.show('Login...');
 
-          /* Check user fields*/
           if(!user.username || !user.password){
               $rootScope.hide();
               $rootScope.notify('Error','Username or Password is incorrect!');
@@ -40,20 +26,13 @@ angular.module('starter')
 
               if (result.responseCode === 'OK') {
                   // fix session data
-                  $rootScope.user = result.response[0];                  
+                  $rootScope.user = result.response[0];
+                  //$scope.user = $rootScope.user;
                   $rootScope.subdivision = User.getSubdivisionDefault();
                   $state.go('app.mainMap');
               };          
           });
 
        };
-<<<<<<< HEAD
        
-=======
-<<<<<<< HEAD
-=======
-
-       console.log("LoginController.. fin");
->>>>>>> 122b6acccc668b1b7483961ad0b8d749ad9aa66d
->>>>>>> c25c4a0b1beed33a714321a59ea6848c42a3ebac
  });

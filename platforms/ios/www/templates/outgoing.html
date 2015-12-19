@@ -12,15 +12,20 @@
 	        </select>
 		</div>
 		<list>
-			<a class="item" href="#" ng-repeat="item in items | filter:searchQuery">				
-				<span class="badge badge-assertive">{{item.total_sent}}</span>				
-				<h3>{{item.username}}: {{item.campaignTypeDescription}}</h3>				
-				<p>{{item.text_message}}</p>				
-				<p style="font-size: 17px; ">
-					<i class="icon {{getImage(item.ca_status)}}" style="color: {{getColor(item.ca_status)}};"></i>
-					<span style="font-size:11px;vertical-align:middle;padding-bottom:5px;">{{item.stringRequestedDate}}</span>
-				</p>
-			</a>
+			<div class="item card-item" ng-repeat="item in items | filter:searchQuery">
+				<div class="card stable-bg ink ink-dark">			
+					<div class="item item-avatar">	
+						<img src="img/banderas/{{item.country_code}}.png">
+						<h3>{{item.username}}: {{item.campaignTypeDescription}}</h3>				
+						<p>{{item.text_message}}</p>				
+						<div class="card-footer">
+							<i class="icon ion-clock"></i> {{item.stringRequestedDate}}
+	                        <i class="icon ion-android-mail"></i> {{item.total_sent}}
+	                        <i class="icon {{getImage(item.ca_status)}}" style="color: {{getColor(item.ca_status)}};"></i>
+	                    </div>
+					<div>
+				</div>
+			</div>
 		</list>
 	</ion-content>
 </ion-view>
