@@ -29,11 +29,19 @@
                 <h5>CRUZ ROJA ECUATORIANA</h5>
             </div>
         </div>
-        <div class="list" style="padding-left:5px; padding-right:30px">
-            <ion-md-input ng-model="formUser.username" placeholder="Username" highlight-color="balanced" type="text">
+        <div class="list" style="padding-right:15px">
+            <!--ion-md-input ng-model="formUser.username" placeholder="Username" highlight-color="balanced" type="text">
             </ion-md-input>
             <ion-md-input ng-model="formUser.password" placeholder="Password" highlight-color="energized" type="password">
-            </ion-md-input>
+            </ion-md-input-->
+            <label class="item item-input background-intro ">                
+                <input type="text" ng-model="formUser.username" placeholder="Username" 
+                style="color: #FFF; background:rgba(0,0,0,0.7); font-size:16px; padding-left:10px;">
+            </label>
+            <label class="item item-input background-intro">                
+                <input type="password" ng-model="formUser.password" placeholder="Password" 
+                style="color: #FFF; background:rgba(0,0,0,0.7); font-size:16px; padding-left:10px;">
+            </label>
         </div>
         <div class="padding">
             <button ng-click="login(formUser)" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
