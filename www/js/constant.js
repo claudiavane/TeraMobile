@@ -1,7 +1,7 @@
 angular.module('starter')
  
 .constant('PATH_WS', {
-	keeper: 'http://demosys.salamancasolutions.com:8534/keeper',//'http://demosys.salamancasolutions.com:8534/keeper',
+	keeper: 'http://demosys.salamancasolutions.com:8534/keeper',
 	org: 'http://demosys.salamancasolutions.com:8534/org'
 })
 
@@ -12,5 +12,5 @@ angular.module('starter')
  
 .constant('USER_ROLES', {
   admin: 'admin_role',
-  public: 'public_role'
+  nornal: 'normal_role'
 });
