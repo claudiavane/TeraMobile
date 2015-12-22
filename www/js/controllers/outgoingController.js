@@ -4,6 +4,11 @@ angular.module('starter')
   	'$rootScope',
   	'OutgoingRequest',
     function($scope, $rootScope, OutgoingRequest) {
+
+    	/*$scope.$on('$ionicView.enter', function(){
+
+    	});*/
+        
     	$scope.filterUnits = [
 	    	{"value":"HOUR","label":"Last hour"},
 	    	{"value":"DAY","label":"Last day"},
@@ -13,6 +18,7 @@ angular.module('starter')
     	];
     	$scope.selectedItem = {"value":"DAY","label":"Last day"};
         $scope.updateOutgoingRequestList = function() {
+        	$rootScope.show('Updating...');
         	console.log($scope.selectedItem.value);
 	    	OutgoingRequest.get($scope.selectedItem.value).then(	    		
 	    		function(result) {
@@ -21,6 +27,7 @@ angular.module('starter')
 	                } else {
 	                	$rootScope.notify(result.responseCode, "Este es un error raro..");		
 	                }
+	                $rootScope.hide();
 	        	}
 	        );		   
 		}

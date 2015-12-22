@@ -5,8 +5,7 @@ angular.module('starter')
   [ '$scope',
     '$rootScope',
     '$state',
-    '$cordovaGeolocation',
-    '$stateParams',
+    '$ionicHistory',
     '$ionicModal',
     '$ionicPopup',
     'Keeper',
@@ -22,8 +21,7 @@ angular.module('starter')
       $scope,
       $rootScope,
       $state,
-      $cordovaGeolocation,
-      $stateParams,
+      $ionicHistory,
       $ionicModal,
       $ionicPopup,
       Keeper,
@@ -42,11 +40,12 @@ angular.module('starter')
        */
     console.log("MapController...");
 
-    $scope.$on("$stateChangeSuccess", function() {
+    //$scope.$on("$stateChangeSuccess", function() {
+    $scope.$on('$ionicView.enter', function(){
 
-
-        console.log("stateChangeSuccess...");
-        //console.log("$scope.user.username... " + $scope.user.username);
+        console.log("MapController stateChangeSuccess...");
+        $ionicHistory.clearCache();
+        $ionicHistory.clearHistory();
 
         var drawnItems;
         var zoom;
@@ -189,6 +188,7 @@ angular.module('starter')
                         if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) statusExtraScreenServer = screenNOk;
                         else statusExtraScreenServer = screenOk;                        
                       }*/
+
                     }
 
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
@@ -239,6 +239,7 @@ angular.module('starter')
         });
 
         $scope.loadCellsite = function() {            
+
             Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, $scope.user.user_id).then(function(result){
                 utilMessages.validityResponse(result);
                 var cellsites = result.response;
@@ -247,6 +248,7 @@ angular.module('starter')
 
                         var lat = parseFloat(cellsites[i].latitude);
                         var lng = parseFloat(cellsites[i].longitude);        
+
                         var message = '<div id="content">' +
                             '<h4 id="firstHeading" >'+ cellsites[i].name +'</h4>'+
                             '<div id="bodyContent">'+                               
@@ -261,6 +263,7 @@ angular.module('starter')
                           };
                           layerMarker = cellsites[i].operatorName;                
                         }
+
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
                             type: 'div',
@@ -268,6 +271,7 @@ angular.module('starter')
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }
+
                         $scope.map.markers[j] = {
                             layer: cellsites[i].operatorName,
                             lat: lat,
@@ -287,55 +291,53 @@ angular.module('starter')
                 //drawnItems = baselayers.overlays.draw;                
                 map.on('draw:created', function (e) {
                   layerCircle = e.layer;
-                  //drawnItems.addLayer(layerCircle);                 
-                  console.log("layerCircle.getLatLng().lat " + layerCircle.getLatLng().lat); 
+                  drawnItems.addLayer(layerCircle); 
                   $scope.openModal();
                 });
             });
-        });                    
-                    
+        });                 
     };
 
+    var loadData = function() {
+        $scope.messageTypes = MessageType.all();   //$rootScope.settings.messages;//MessageType.all();        
+        $scope.priorities = Priority.all();
+        $scope.selectMessageType = MessageType.get(0);//$rootScope.settings.messages[0];//{'id': 0, 'name': 'Informative'};
+        $scope.selectPriority =  Priority.get(2);
+
+        Operator.all().then(function(result){
+            utilMessages.validityResponse(result);
+            var ops = result.response;
+            $scope.operators = [];            
+            for (var i = 0; i < ops.length; i++) {
+                var item = ops[i];
+                $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
+            };      
+        });
+    }
     $scope.openModal = function() {
         $scope.circleMessage = new CircleMessage();
         loadData();
         $scope.modal.show();
     }
     $scope.closeModal = function() {      
-        /*if (layerCircle) {
+        if (layerCircle) {
           drawnItems.removeLayer(layerCircle);            
-        };*/
+        };
         $scope.modal.hide();
     }
     $scope.$on('$destroy', function() {
         $scope.modal.remove();
-    });
-    var loadData = function() {
-        $scope.messageTypes = [];
-        $scope.priorities = [];
-        $scope.messageTypes = MessageType.all();        
-        $scope.priorities = Priority.all();
-        $scope.messageType = {id: 0, name: 'Informative'};
-        $scope.priority =  {id: 2, name: 'Medium'};
-        
-        Operator.all().then(function(result){
-          utilMessages.validityResponse(result);
-          var ops = result.response;
-          $scope.operators = [];
-          for (var i = 0; i < ops.length; i++) {
-            var item = ops[i];
-            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
-          };      
-        });
-    }
+    }); 
+
     $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
         scope: $scope,
         animation: 'slide-in-up'
         }).then(function(modal) {
             $scope.modal = modal;
-    });
+    });       
+
     $scope.datePicker;
-    var datePickerCallback = function (val) {
+    /*var datePickerCallback = function (val) {
       if (typeof(val) !== 'undefined') {
         console.log('Selected date is : ', val);
         $scope.datePicker = val;
@@ -365,8 +367,8 @@ angular.module('starter')
         },
         dateFormat: 'dd-MM-yyyy', //Optional
         closeOnSelect: false, //Optional
-    };
-    
+    };*/
+    /*
     $scope.isSelectedPriority = function(item) {
         if(item.id === $scope.priority.id) return true;
         else return false;
@@ -375,8 +377,7 @@ angular.module('starter')
         console.log("item: " + item.id)
         if(item.id === $scope.messageType.id) return true;
         else return false;        
-    }
-    
+    } */   
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
         this.message = "";
@@ -391,10 +392,19 @@ angular.module('starter')
         this.messageType;
         this.zoom = "";
     };
+    $scope.changeMessageType = function (messageType) {
+        console.log("messageType " + messageType.id);
+        $scope.selectMessageType = messageType;
+    };
+    $scope.changePriority = function (priority) {
+        console.log("priority " + priority.id);
+        $scope.selectPriority = priority;
+    };
     $scope.respPreview;
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
         
+        //console.log("preview $scope.messageType.id " + $scope.messageType.id);
         $scope.circleMessage.userId = $scope.user.user_id;
         $scope.circleMessage.subdivisionId = 1;
         $scope.circleMessage.orgId = $scope.user.org_id;
@@ -402,8 +412,8 @@ angular.module('starter')
         $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
         $scope.circleMessage.ratio = layerCircle.getRadius()/1000; 
         $scope.circleMessage.zoom = zoom;
-        $scope.circleMessage.messageType = $scope.messageType.id;
-        $scope.circleMessage.priority = $scope.priority.id;
+        $scope.circleMessage.messageType = $scope.selectMessageType.id;
+        $scope.circleMessage.priority = $scope.selectPriority.id;
 
         if (!$scope.datePicker || $scope.datePicker < new Date()) {
           $scope.datePicker = new Date();
@@ -433,14 +443,15 @@ angular.module('starter')
 
         AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           utilMessages.validityResponse(result);
-          $scope.respPreview = result.response;
-          
-          $rootScope.hide();
-          //$scope.closeModal();
-          $scope.openModalSendSms();
+
+          if (result.responseCode === 'OK') {  
+              $scope.respPreview = result.response;
+              $scope.openModalSendSms();
+          }                   
+          $rootScope.hide();          
         });           
     }
-
+    
     $ionicModal.fromTemplateUrl('templates/confirmSendMessage.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -448,12 +459,9 @@ angular.module('starter')
             $scope.modalConfirm = modal;
     });
     $scope.openModalSendSms = function() {
-      $scope.datePicker = null;
-      
-      $scope.messageType = MessageType.get($scope.messageType.id);
-      $scope.priority = Priority.get($scope.priority.id);
-
-      console.log("open modal send $scope.messageType.name " + $scope.messageType.name);
+      $scope.datePicker = null;      
+      $scope.selectMessageType = MessageType.get($scope.selectMessageType.id);
+      $scope.selectPriority = Priority.get($scope.selectPriority.id);
 
       $scope.modalConfirm.show();
     }
@@ -466,13 +474,18 @@ angular.module('starter')
     $scope.smsSend = function() {
         $rootScope.show('Sending...');
         AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
-          utilMessages.validityResponse(result);
-          
-          $rootScope.hide();
-          $scope.closeModalSendSms();
-          if (result.responseCode === 'OK') {
+          //utilMessages.validityResponse(result);
+
+          if (result.responseCode === 'OK') $rootScope.notify("Success", "The send request was done");  
+          else $rootScope.notify(result.responseCode, result.responseMessage);
+
+          /*
+          if (result.responseCode === 'OK') {            
             $rootScope.notify("Success", "The send request was done");  
-          };          
+          };*/
+          console.log("enviado...")
+          $rootScope.hide();          
+          $scope.closeModalSendSms();
         });
     }
     $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
@@ -482,10 +495,12 @@ angular.module('starter')
             $scope.modalDeploymentinfo = modal;
     });
     $scope.openModalDeploymentInfo = function(delpoyItemId) {      
+
       $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;
       });
+
       Keeper.getMemory(delpoyItemId).then(function(result){
         $scope.memory = result.response;
       });
@@ -500,7 +515,13 @@ angular.module('starter')
     });
     $scope.reloadAll = function(){
       console.log("reload all");
-      $state.go($state.current, {}, {reload: true});
+      $state.go('app.mainMap', {}, {reload: true}); 
+      //$state.go($state.current, {}, {reload: true});
+      /*$state.go($state.current, $stateParams, {
+          reload: true,
+          inherit: false,
+          notify:true
+      });*/
     }
 
 }]);

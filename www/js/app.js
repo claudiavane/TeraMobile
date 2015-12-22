@@ -20,6 +20,19 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       StatusBar.styleDefault();
     }
 
+    $rootScope.settings = {
+                    'messages' : [{
+                          'id': 0,
+                          'name': 'Informative'
+                        }, {
+                          'id': 1,
+                          'name': 'Keyword answer'
+                        },{
+                          'id': 2,
+                          'name': 'Campaign'
+                        }]
+                };
+
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
     //$rootScope.user = [];
@@ -148,16 +161,6 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
       }
     }
   })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html',
-          controller: 'ControlsDrawController'
-        }
-      }
-    })
 
   .state('app.mainMap', {
     url: '/mainMap',

@@ -13,14 +13,16 @@ angular.module('starter')
     	];
     	$scope.selectedItem = {"value":"DAY","label":"Last day"};
         $scope.updateIncomingRequestList = function() {
+        	$rootScope.show('Updating...');
         	console.log($scope.selectedItem.value);
 	    	IncomingRequest.get($scope.selectedItem.value).then(	    		
 	    		function(result) {
 	                if (result.responseCode == 'OK') {
 	                	$scope.items = result.response;
 	                } else {
-	                	$rootScope.notify(result.responseCode, "Este es un error raro..");		
+	                	$rootScope.notify(result.responseCode, "Este es un error raro..");		                	
 	                }
+	                $rootScope.hide();
 	        	}
 	        );		   
 		}

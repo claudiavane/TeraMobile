@@ -33,29 +33,30 @@
 
         <label class="item item-input item-select" >
           <span class="input-label">{{'TYPE'| translate}}</span>
-          <select ng-model="messageType.id">
-            <option ng-repeat="item in messageTypes" value="{{item.id}}" >
+          <select ng-options="item.name for item in messageTypes" ng-model="selectMessageType" ng-change="changeMessageType(selectMessageType)">
+            <!--option ng-repeat="item in messageTypes" value="{{item.id}}" >
                {{item.name}}
-            </option>
+            </option-->
           </select>
         </label>
 
         <label class="item item-input item-select">
           <span class="input-label">{{'PRIORITY'| translate}}</span>
-          <select ng-model="priority.id">
-            <option ng-repeat="item in priorities" value="{{item.id}}" >
-               {{item.name}}
-            </option>
+          <select ng-options="item.name for item in priorities" ng-model="selectPriority" ng-change="changePriority(selectPriority)">
           </select>
         </label>
 
-        <label class="item item-input"> 
+        <!--label class="item item-input"> 
           <span class="input-label left">{{'DELIVERY'| translate}}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <ionic-datepicker input-obj="datepickerObject" >
               <!--<button class="button button-clear button-dark" > {{datepickerObject.inputDate | date:'dd-MMMM-yyyy'}}</button>-->
-              <button style="float:right;" class="button button-icon icon ion-android-calendar"></button>
-            </ionic-datepicker>
-          
+              <!--<button style="float:right;" class="button button-icon icon ion-android-calendar"></button>
+            </ionic-datepicker>          
+        </label-->
+
+        <label class="item item-input">
+          <span class="input-label">{{'DELIVERY'| translate}}</span>
+          <input type="date" ng-model="datePicker">
         </label>
 
         <div class="item item-divider item-icon-left" style="line-height:30px; font-size:16px; background:#eaeaea;">
@@ -71,7 +72,7 @@
         </ion-checkbox>
 
         <div class="padding">
-            <button ng-click="smsPreview()" ng-disabled="messageForm.$invalid"
+            <button ng-click="smsPreview()" ng-disabled="messageForm.$invalid && !isExistOperators"
              class="button button-full button-assertive ink" style="background: #074d61;">{{'PREVIEW'| translate}}</button>
         </div>
       </div>

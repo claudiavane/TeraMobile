@@ -5,14 +5,14 @@ angular.module('starter')
 
 .factory('MessageType', function() {
   var types = [{
-    id: 0,
-    name: 'Informative'
+    'id': 0,
+    'name': 'Informative'
   }, {
-    id: 1,
-    name: 'Keyword answer'
+    'id': 1,
+    'name': 'Keyword answer'
   },{
-    id: 2,
-    name: 'Campaign'
+    'id': 2,
+    'name': 'Campaign'
   }];
   resp = null;
 

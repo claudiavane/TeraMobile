@@ -56,7 +56,7 @@ angular.module('starter')
         });
     };
 
-    $rootScope.hide = function (text) {
+    $rootScope.hide = function () {
         $ionicLoading.hide();
     };
 

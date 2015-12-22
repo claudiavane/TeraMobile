@@ -37,8 +37,8 @@ angular.module('starter.controllers', [])
       $rootScope.subdivision = undefined;
 
       //$state.go('login');
-      $ionicHistory.clearHistory();
       $ionicHistory.clearCache();
+      $ionicHistory.clearHistory();
 
       $state.go('login', {}, {reload: true});
 
