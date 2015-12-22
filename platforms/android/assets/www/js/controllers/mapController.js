@@ -44,7 +44,9 @@ angular.module('starter')
 
     $scope.$on("$stateChangeSuccess", function() {
 
+
         console.log("stateChangeSuccess...");
+        //console.log("$scope.user.username... " + $scope.user.username);
 
         var drawnItems;
         var zoom;
@@ -210,7 +212,6 @@ angular.module('starter')
                         '</div>'
                         ;
 
-
                     $scope.map.markers[j] = {
                         layer: 'INIT',
                         lat: keepers[i].LATITUDE,
@@ -237,17 +238,15 @@ angular.module('starter')
             $scope.loadCellsite();
         });
 
-        $scope.loadCellsite = function() {
-            
-            Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, $rootScope.user.user_id).then(function(result){
+        $scope.loadCellsite = function() {            
+            Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, $scope.user.user_id).then(function(result){
                 utilMessages.validityResponse(result);
                 var cellsites = result.response;
                 if (cellsites) {
                     for (var i = 0; i < cellsites.length; i++) {
 
                         var lat = parseFloat(cellsites[i].latitude);
-                        var lng = parseFloat(cellsites[i].longitude);
-              
+                        var lng = parseFloat(cellsites[i].longitude);        
                         var message = '<div id="content">' +
                             '<h4 id="firstHeading" >'+ cellsites[i].name +'</h4>'+
                             '<div id="bodyContent">'+                               
@@ -262,7 +261,6 @@ angular.module('starter')
                           };
                           layerMarker = cellsites[i].operatorName;                
                         }
-
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
                             type: 'div',
@@ -270,7 +268,6 @@ angular.module('starter')
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }
-
                         $scope.map.markers[j] = {
                             layer: cellsites[i].operatorName,
                             lat: lat,
@@ -290,14 +287,29 @@ angular.module('starter')
                 //drawnItems = baselayers.overlays.draw;                
                 map.on('draw:created', function (e) {
                   layerCircle = e.layer;
-                  //drawnItems.addLayer(layerCircle);
-                  
+                  //drawnItems.addLayer(layerCircle);                 
+                  console.log("layerCircle.getLatLng().lat " + layerCircle.getLatLng().lat); 
                   $scope.openModal();
                 });
             });
         });                    
+                    
     };
 
+    $scope.openModal = function() {
+        $scope.circleMessage = new CircleMessage();
+        loadData();
+        $scope.modal.show();
+    }
+    $scope.closeModal = function() {      
+        /*if (layerCircle) {
+          drawnItems.removeLayer(layerCircle);            
+        };*/
+        $scope.modal.hide();
+    }
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    });
     var loadData = function() {
         $scope.messageTypes = [];
         $scope.priorities = [];
@@ -316,29 +328,12 @@ angular.module('starter')
           };      
         });
     }
-    $scope.openModal = function() {
-      $scope.circleMessage = new CircleMessage();
-      loadData();
-      $scope.modal.show();
-    }
-    $scope.closeModal = function() {      
-      /*if (layerCircle) {
-        drawnItems.removeLayer(layerCircle);
-        console.log("se removio el layer");
-      };*/
-      $scope.modal.hide();
-    }
-    $scope.$on('$destroy', function() {
-      $scope.modal.remove();
-    });
-
     $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
         scope: $scope,
         animation: 'slide-in-up'
         }).then(function(modal) {
             $scope.modal = modal;
     });
-
     $scope.datePicker;
     var datePickerCallback = function (val) {
       if (typeof(val) !== 'undefined') {
@@ -373,14 +368,15 @@ angular.module('starter')
     };
     
     $scope.isSelectedPriority = function(item) {
-      if(item.id === $scope.priority.id) return true;
-      else return false;
+        if(item.id === $scope.priority.id) return true;
+        else return false;
     }
     $scope.isSelectedMessageType = function(item) {
-       console.log("item: " + item.id)
-      if(item.id === $scope.messageType.id) return true;
-      else return false;        
-    }    
+        console.log("item: " + item.id)
+        if(item.id === $scope.messageType.id) return true;
+        else return false;        
+    }
+    
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
         this.message = "";
@@ -399,9 +395,9 @@ angular.module('starter')
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
         
-        $scope.circleMessage.userId = $rootScope.user.user_id;
-        $scope.circleMessage.subdivisionId = $rootScope.subdivision.id;
-        $scope.circleMessage.orgId = $rootScope.user.org_id;
+        $scope.circleMessage.userId = $scope.user.user_id;
+        $scope.circleMessage.subdivisionId = 1;
+        $scope.circleMessage.orgId = $scope.user.org_id;
         $scope.circleMessage.lat = layerCircle.getLatLng().lat;
         $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
         $scope.circleMessage.ratio = layerCircle.getRadius()/1000; 
@@ -490,7 +486,6 @@ angular.module('starter')
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;
       });
-
       Keeper.getMemory(delpoyItemId).then(function(result){
         $scope.memory = result.response;
       });

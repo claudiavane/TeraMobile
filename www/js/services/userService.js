@@ -15,24 +15,25 @@ angular.module('starter')
 
     function loadUserCredentials() {
       var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
-      console.log("loadUserCredentials..." + token);
+      
       if (token) {
         useCredentials(token);
       }
     }
     function storeUserCredentials(userData) {
-      var token = userData.user_id + '.yourServerToken';
+      var token = JSON.stringify(userData);
+      //var token = userData.user_id + '.yourServerToken';
       window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
       useCredentials(token);
       user = userData;
 
-      console.log("storeUserCredentials..." + user.username);
     }
     function useCredentials(token) {
-      userId = token.split('.')[0];      
+
+      var user_saved = JSON.parse(token);
+      user = user_saved;
       isAuthenticated = true;
       authToken = token;
-      user = getUser(userId);
       
       if (username == 'ssimon') role = USER_ROLES.admin
       else role = USER_ROLES.normal
@@ -41,6 +42,7 @@ angular.module('starter')
       $http.defaults.headers.common['X-Auth-Token'] = token;
     }
     function getUser(userId){
+        console.log("$rootScope.languageCode " + $rootScope.languageCode);
         return $http.get(PATH_WS.org + "/user/getUser/", {params:{
             "userId": userId, 
             "userLanguageCode": $rootScope.languageCode}}).then(function(resp){

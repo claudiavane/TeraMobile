@@ -1,54 +1,69 @@
 
 angular.module('starter')
 
-.factory('User', function($http, PATH_WS, USER_ROLES) {
+.factory('User', function($http, $rootScope, PATH_WS, USER_ROLES, utilMessages) {
     var result;
     var userInfo = [];
     var subdivisions;
 
     var LOCAL_TOKEN_KEY = 'yourTokenKey';
     var username = '';
+    var user = '';
     var isAuthenticated = false;
     var role = '';
     var authToken;
 
     function loadUserCredentials() {
       var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+      
       if (token) {
         useCredentials(token);
       }
     }
-
-    function storeUserCredentials(token) {
+    function storeUserCredentials(userData) {
+      var token = JSON.stringify(userData);
+      //var token = userData.user_id + '.yourServerToken';
       window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
       useCredentials(token);
-    }
+      user = userData;
 
+    }
     function useCredentials(token) {
-      username = token.split('.')[0];
+
+      var user_saved = JSON.parse(token);
+      user = user_saved;
       isAuthenticated = true;
       authToken = token;
-
-      if (username == 'admin') {
-        role = USER_ROLES.admin
-      }
-      if (username == 'user') {
-        role = USER_ROLES.public
-      }
-
+      
+      if (username == 'ssimon') role = USER_ROLES.admin
+      else role = USER_ROLES.normal
+      
       // Set the token as header for your requests!
       $http.defaults.headers.common['X-Auth-Token'] = token;
     }
-
+    function getUser(userId){
+        console.log("$rootScope.languageCode " + $rootScope.languageCode);
+        return $http.get(PATH_WS.org + "/user/getUser/", {params:{
+            "userId": userId, 
+            "userLanguageCode": $rootScope.languageCode}}).then(function(resp){
+                result = resp.data;
+                utilMessages.validityResponse(result);
+                if (result.responseCode === 'OK') {
+                    user = result.response;
+                }
+                return user;
+        }, function(error){
+            console.log("getUser Failed: " + error.data);
+        });
+    }
     function destroyUserCredentials() {
-      console.log("destroyUserCredentials authToken " + authToken);
       authToken = undefined;
       username = '';
+      user = undefined;
       isAuthenticated = false;
       $http.defaults.headers.common['X-Auth-Token'] = undefined;
       window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }    
-
     var isAuthorized = function(authorizedRoles) {
         if (!angular.isArray(authorizedRoles)) {
           authorizedRoles = [authorizedRoles];
@@ -60,15 +75,18 @@ angular.module('starter')
     
     return {
         login: function(user){
-          return $http.get(PATH_WS.org + "/user/login/", {params:{"username": user.username, "password": user.password, "userLanguageCode": user.languageCode}}).then(function(resp){
-              result = resp.data;
-              if (result.responseCode === 'OK') {
-                storeUserCredentials(result.response[0].username + '.yourServerToken');
-              };              
-              return result;
-          }, function(error){
-              console.log("Request Failed: " + error.data);
-          });
+            return $http.get(PATH_WS.org + "/user/login/", {params:{
+              "username": user.username,
+              "password": user.password, 
+              "userLanguageCode": user.languageCode}}).then(function(resp){
+                  result = resp.data;
+                  if (result.responseCode === 'OK') {
+                    storeUserCredentials(result.response[0]);
+                  };              
+                  return result;
+            }, function(error){
+                console.log("Login Failed: " + error.data);
+            });
         },
         logout: function() {
                   console.log("logout...");
@@ -78,6 +96,7 @@ angular.module('starter')
         isAuthenticated: function() {return isAuthenticated;},
         username: function() {return username;},
         role: function() {return role;},
+        user: function() {return user;},
         getSubdivisions: function(){
           userInfo = result.response;
           var item;
@@ -102,8 +121,7 @@ angular.module('starter')
                       subdivisions.push(subdivision);
                   }
               }
-          };
-        
+          };        
           return subdivisions;         
         },
         getSubdivisionDefault: function(){
@@ -112,8 +130,7 @@ angular.module('starter')
             return subdivision = {
                     id: item.subdivision_id,
                     name: item.subdivision_desc
-                  };
-            
+            };            
         }
     }
     

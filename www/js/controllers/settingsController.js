@@ -7,22 +7,28 @@ angular.module('starter')
         $scope.subdivision = User.getSubdivisionDefault();
         
         $scope.languages = utilConstants.getLanguages();
-        $scope.language = $scope.languages[1];
+        $scope.language = {
+					        id: 'en',
+					        name: 'English'
+					      }; 
+                         //$scope.languages[1];
 
         $scope.isSelectedSubdivision = function(item) {
-			if(item.id == $scope.subdivision.id) return true;
+			if(item.id === $scope.subdivision.id) return true;
 			else return false;
 		}
 		$scope.isSelectedLanguage = function(item) {
-			if(item.id == $scope.language.id) return true;
+			console.log("$scope.language.id " + $scope.language.id);
+			if(item.id === $scope.language.id) return true;
 			else return false;
 		}
 		$scope.saveSettigns = function(){
 			$rootScope.subdivision = $scope.subdivision;
-			$rootScope.languageCode = $scope.language;
+			$rootScope.languageCode = $scope.language.id;
+
+			console.log("$rootScope.languageCode " + $rootScope.languageCode);
 			
-            $translate.use($scope.language.id);
-        	 
+            $translate.use($scope.language.id);        	 
 		}
 
 		/* SETTINGS LANGUAGES */

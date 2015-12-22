@@ -22,7 +22,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
 
     $rootScope.subdivision;
     $rootScope.languageCode = 'en';
-    $rootScope.user = [];
+    //$rootScope.user = [];
   });
 })
 
@@ -39,6 +39,36 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
                 LOGOUT: "Logout",
                 WRITE_MESSAGE: "Write Message",
                 MESSAGE_DETAIL: "Message Detail",
+                DEPLOY_INFORMATION: "Deployment Information",
+                GENERAL_INFORMATION: "General Information",
+                NAME: "Name",
+                COUNTRY: "Country",
+                MODULE: "Module",
+                SUBMODULES: "Submodules",
+                ENTITY: "Entity",
+                DATE_GENERATION: "Date Generation",
+                MOUNTED: "Mounted",
+                FILESYSTEM: "Filesystem",
+                USED: "Used",
+                USED_PERCENTAJE: "Used percentage",
+                AVAILABLE: "Available",
+                DISK_INFORMATION: "Disk information",
+                MEMORY_INFORMATION: "Memory information",
+                ITEM: "Item",
+                MEM_USED: "Used",
+                MEM_FREE: "Free",
+                MEM_CACHED: "Cached",
+                MEM_BUFFERS: "Buffers",
+                MEM_SHARED: "Shared",
+                TOTAL: "Total",
+                MSG_LONG_VALIDATION: "The message is too long",
+                TYPE: "Type",
+                PRIORITY: "Priority",
+                DELIVERY: "Delivery",
+                OPERATORS: "Operators",
+                PREVIEW: "Preview",
+                SEND_MESSAGE: "Send Message",
+                SEND: "Send"
                 
             });
             $translateProvider.translations('es', {
@@ -49,7 +79,39 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
                 ALERT_MESSAGE: "Mensaje de Alerta",
                 OUTGOING: "Salientes",
                 INCOMING: "Entrantes",
-                LOGOUT: "Salir"
+                LOGOUT: "Salir",
+                WRITE_MESSAGE: "Escribe un mensaje",
+                MESSAGE_DETAIL: "Detalle del mensaje",
+                DEPLOY_INFORMATION: "Información del Despliegue",
+                GENERAL_INFORMATION: "Información General",
+                NAME: "Nombre",
+                COUNTRY: "País",
+                MODULE: "Modulo",
+                SUBMODULES: "Submodulos",
+                ENTITY: "Entidad",
+                DATE_GENERATION: "Fecha de creación",
+                MOUNTED: "Montado",
+                FILESYSTEM: "Sistema de archivos",
+                USED: "Uso",
+                USED_PERCENTAJE: "Porcentaje de uso",
+                AVAILABLE: "Disponible",
+                DISK_INFORMATION: "Información de disco",
+                MEMORY_INFORMATION: "Información de memoria",
+                ITEM: "Item",
+                MEM_USED: "Uso",
+                MEM_FREE: "Libre",
+                MEM_CACHED: "Cached",
+                MEM_BUFFERS: "Buffers",
+                MEM_SHARED: "Shared",
+                TOTAL: "Total",
+                MSG_LONG_VALIDATION: "El mensaje es demasiado largo",
+                TYPE: "Tipo",
+                PRIORITY: "Prioridad",
+                DELIVERY: "Entrega",
+                OPERATORS: "Operadoras",
+                PREVIEW: "Vista Previa",
+                SEND_MESSAGE: "Envío de mensaje",
+                SEND: "Envío"
             });
            
             $translateProvider.preferredLanguage("en");
@@ -67,6 +129,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
 
   .state('app.outgoing', {
     url: '/outgoing',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/outgoing.html',
@@ -77,6 +140,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
 
   .state('app.incoming', {
     url: '/incoming',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/incoming.html',
@@ -97,6 +161,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'starter.co
 
   .state('app.mainMap', {
     url: '/mainMap',
+    cache: false,
     views: {
       'menuContent': {
         templateUrl: 'templates/mainMap.html',

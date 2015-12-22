@@ -44,9 +44,7 @@ angular.module('starter')
 
     $scope.$on("$stateChangeSuccess", function() {
 
-
-        console.log("stateChangeSuccess...");
-        //console.log("$scope.user.username... " + $scope.user.username);
+        console.log("MapController stateChangeSuccess...");
 
         var drawnItems;
         var zoom;
@@ -73,6 +71,7 @@ angular.module('starter')
     });
 
     $scope.goLoadMap = function() {
+        console.log("goLoadMap...$scope.user.user_id " +$scope.user.user_id);
         var j=0;
         drawnItems = new L.FeatureGroup();
         
@@ -189,6 +188,7 @@ angular.module('starter')
                         if (keepers[i].EXTRA_TELCO_SCREEN_WORKING === 0) statusExtraScreenServer = screenNOk;
                         else statusExtraScreenServer = screenOk;                        
                       }*/
+
                     }
 
                     var queuedMessage = '<p><span class="left">Queued Messages: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
@@ -238,8 +238,8 @@ angular.module('starter')
             $scope.loadCellsite();
         });
 
-        $scope.loadCellsite = function() {
-            
+        $scope.loadCellsite = function() {            
+
             Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, $scope.user.user_id).then(function(result){
                 utilMessages.validityResponse(result);
                 var cellsites = result.response;
@@ -248,6 +248,7 @@ angular.module('starter')
 
                         var lat = parseFloat(cellsites[i].latitude);
                         var lng = parseFloat(cellsites[i].longitude);        
+
                         var message = '<div id="content">' +
                             '<h4 id="firstHeading" >'+ cellsites[i].name +'</h4>'+
                             '<div id="bodyContent">'+                               
@@ -262,6 +263,7 @@ angular.module('starter')
                           };
                           layerMarker = cellsites[i].operatorName;                
                         }
+
                         if(cellsites[i].operatorId === 2){
                           iconMarker[i] = {
                             type: 'div',
@@ -269,6 +271,7 @@ angular.module('starter')
                           };
                           layerMarker = cellsites[i].operatorName;                  
                         }
+
                         $scope.map.markers[j] = {
                             layer: cellsites[i].operatorName,
                             lat: lat,
@@ -284,102 +287,105 @@ angular.module('starter')
             });
         }
         leafletData.getMap().then(function(map) {
+            console.log("map " + typeof map); 
             leafletData.getLayers().then(function(baselayers) {
+                console.log("baselayers.overlays " + baselayers.overlays.CLARO.name); 
                 //drawnItems = baselayers.overlays.draw;                
                 map.on('draw:created', function (e) {
                   layerCircle = e.layer;
-                  //drawnItems.addLayer(layerCircle);
-                  console.log("pruebaaaa...");
+                  drawnItems.addLayer(layerCircle); 
+
+                  //console.log("layerCircle.getLatLng().lat " + layerCircle.getLatLng().lat); 
                   $scope.openModal();
                 });
             });
-        });                    
-        $scope.openModal = function() {
-          $scope.circleMessage = new CircleMessage();
-          loadData();
-          $scope.modal.show();
-        }
-        $scope.closeModal = function() {      
-          /*if (layerCircle) {
-            drawnItems.removeLayer(layerCircle);
-            console.log("se removio el layer");
-          };*/
-          $scope.modal.hide();
-        }
-        $scope.$on('$destroy', function() {
-          $scope.modal.remove();
-        });
-        var loadData = function() {
-            $scope.messageTypes = [];
-            $scope.priorities = [];
-            $scope.messageTypes = MessageType.all();        
-            $scope.priorities = Priority.all();
-            $scope.messageType = {id: 0, name: 'Informative'};
-            $scope.priority =  {id: 2, name: 'Medium'};
-            
-            Operator.all().then(function(result){
-              utilMessages.validityResponse(result);
-              var ops = result.response;
-              $scope.operators = [];
-              for (var i = 0; i < ops.length; i++) {
-                var item = ops[i];
-                $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
-              };      
-            });
-        }
-        $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
-            scope: $scope,
-            animation: 'slide-in-up'
-            }).then(function(modal) {
-                $scope.modal = modal;
-        });
-        $scope.datePicker;
-        var datePickerCallback = function (val) {
-          if (typeof(val) !== 'undefined') {
-            console.log('Selected date is : ', val);
-            $scope.datePicker = val;
-          }
-        }
-        $scope.datepickerObject = {
-            titleLabel: 'Delivery date',  //Optional
-            todayLabel: ' ',  //Optional
-            closeLabel: ' ',  //Optional
-            setLabel: ' ',  //Optional
-            setButtonType : 'button icon ion-checkmark tera-ok',  //Optional
-            todayButtonType : 'button icon ion-android-calendar',  //Optional
-            closeButtonType : 'button icon ion-close',  //Optional
-            inputDate: new Date(),  //Optional
-            mondayFirst: true,  //Optional
-            //disabledDates: disabledDates, //Optional
-            //weekDaysList: weekDaysList, //Optional
-            //monthList: monthList, //Optional
-            templateType: 'popup', //Optional
-            showTodayButton: 'true', //Optional
-            modalHeaderColor: 'bar-dark', //Optional
-            modalFooterColor: 'bar-dark', //Optional
-            from: new Date(2012, 8, 2), //Optional
-            to: new Date(2018, 8, 25),  //Optional
-            callback: function (val) {  //Mandatory
-              datePickerCallback(val);
-            },
-            dateFormat: 'dd-MM-yyyy', //Optional
-            closeOnSelect: false, //Optional
-        };
-        
-        $scope.isSelectedPriority = function(item) {
-            if(item.id === $scope.priority.id) return true;
-            else return false;
-        }
-        $scope.isSelectedMessageType = function(item) {
-            console.log("item: " + item.id)
-            if(item.id === $scope.messageType.id) return true;
-            else return false;        
-        }    
-        
+        });                 
 
     };
 
+    var loadData = function() {
+        $scope.messageTypes = [];
+        $scope.priorities = [];
+        $scope.messageTypes = MessageType.all();        
+        $scope.priorities = Priority.all();
+        $scope.messageType = {id: 0, name: 'Informative'};
+        $scope.priority =  {id: 2, name: 'Medium'};
+        
+        Operator.all().then(function(result){
+          utilMessages.validityResponse(result);
+          var ops = result.response;
+          $scope.operators = [];
+          for (var i = 0; i < ops.length; i++) {
+            var item = ops[i];
+            $scope.operators.push({"id": item.id, "name": item.name, "checked": true});
+          };      
+        });
+    }
+
+    $scope.openModal = function() {
+        $scope.circleMessage = new CircleMessage();
+        loadData();
+        $scope.modal.show();
+    }
+    $scope.closeModal = function() {      
+        if (layerCircle) {
+          drawnItems.removeLayer(layerCircle);            
+        };
+        $scope.modal.hide();
+    }
+    $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+    }); 
+
+    $ionicModal.fromTemplateUrl('templates/sendMessage.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+        }).then(function(modal) {
+            $scope.modal = modal;
+    });       
+
+    $scope.datePicker;
+    var datePickerCallback = function (val) {
+      if (typeof(val) !== 'undefined') {
+        console.log('Selected date is : ', val);
+        $scope.datePicker = val;
+      }
+    }
+    $scope.datepickerObject = {
+        titleLabel: 'Delivery date',  //Optional
+        todayLabel: ' ',  //Optional
+        closeLabel: ' ',  //Optional
+        setLabel: ' ',  //Optional
+        setButtonType : 'button icon ion-checkmark tera-ok',  //Optional
+        todayButtonType : 'button icon ion-android-calendar',  //Optional
+        closeButtonType : 'button icon ion-close',  //Optional
+        inputDate: new Date(),  //Optional
+        mondayFirst: true,  //Optional
+        //disabledDates: disabledDates, //Optional
+        //weekDaysList: weekDaysList, //Optional
+        //monthList: monthList, //Optional
+        templateType: 'popup', //Optional
+        showTodayButton: 'true', //Optional
+        modalHeaderColor: 'bar-dark', //Optional
+        modalFooterColor: 'bar-dark', //Optional
+        from: new Date(2012, 8, 2), //Optional
+        to: new Date(2018, 8, 25),  //Optional
+        callback: function (val) {  //Mandatory
+          datePickerCallback(val);
+        },
+        dateFormat: 'dd-MM-yyyy', //Optional
+        closeOnSelect: false, //Optional
+    };
     
+    $scope.isSelectedPriority = function(item) {
+        if(item.id === $scope.priority.id) return true;
+        else return false;
+    }
+    $scope.isSelectedMessageType = function(item) {
+        console.log("item: " + item.id)
+        if(item.id === $scope.messageType.id) return true;
+        else return false;        
+    }    
     var CircleMessage = function() {
         if ( !(this instanceof CircleMessage) ) return new CircleMessage();
         this.message = "";
@@ -398,9 +404,9 @@ angular.module('starter')
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
         
-        $scope.circleMessage.userId = $rootScope.user.user_id;
-        $scope.circleMessage.subdivisionId = $rootScope.subdivision.id;
-        $scope.circleMessage.orgId = $rootScope.user.org_id;
+        $scope.circleMessage.userId = $scope.user.user_id;
+        $scope.circleMessage.subdivisionId = 1;
+        $scope.circleMessage.orgId = $scope.user.org_id;
         $scope.circleMessage.lat = layerCircle.getLatLng().lat;
         $scope.circleMessage.lng = layerCircle.getLatLng().lng;  
         $scope.circleMessage.ratio = layerCircle.getRadius()/1000; 
@@ -436,14 +442,14 @@ angular.module('starter')
 
         AlertMessage.previewSmsCircle($scope.circleMessage).then(function(result){
           utilMessages.validityResponse(result);
-          $scope.respPreview = result.response;
-          
+
+          $scope.respPreview = result.response;          
           $rootScope.hide();
           //$scope.closeModal();
           $scope.openModalSendSms();
         });           
     }
-
+    
     $ionicModal.fromTemplateUrl('templates/confirmSendMessage.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -455,8 +461,6 @@ angular.module('starter')
       
       $scope.messageType = MessageType.get($scope.messageType.id);
       $scope.priority = Priority.get($scope.priority.id);
-
-      console.log("open modal send $scope.messageType.name " + $scope.messageType.name);
 
       $scope.modalConfirm.show();
     }
@@ -485,6 +489,7 @@ angular.module('starter')
             $scope.modalDeploymentinfo = modal;
     });
     $scope.openModalDeploymentInfo = function(delpoyItemId) {      
+
       $scope.keeperInfo = Keeper.getKeeper(delpoyItemId);      
       Keeper.getDisk(delpoyItemId).then(function(result){
         $scope.disk = result.response;
@@ -505,6 +510,11 @@ angular.module('starter')
     $scope.reloadAll = function(){
       console.log("reload all");
       $state.go($state.current, {}, {reload: true});
+      /*$state.go($state.current, $stateParams, {
+          reload: true,
+          inherit: false,
+          notify:true
+      });*/
     }
 
 }]);

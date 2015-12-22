@@ -25,11 +25,10 @@ angular.module('starter')
               $rootScope.hide();
 
               if (result.responseCode === 'OK') {
-                  // fix session data
-                  $rootScope.user = result.response[0];
-                  //$scope.user = $rootScope.user;
-                  $rootScope.subdivision = User.getSubdivisionDefault();
-                  $state.go('app.mainMap');
+                  $rootScope.subdivision = User.getSubdivisionDefault();                  
+                  $state.go('app.mainMap', {}, {reload: true});                  
+                  $scope.setCurrentUser(result.response[0]);
+                  
               };          
           });
 
