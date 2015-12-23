@@ -243,6 +243,7 @@ angular.module('starter')
             Cellsite.getCellsites(utilConstants.getStatusActive(), zoom, $scope.user.user_id).then(function(result){
                 utilMessages.validityResponse(result);
                 var cellsites = result.response;
+                
                 if (cellsites) {
                     for (var i = 0; i < cellsites.length; i++) {
 
@@ -283,7 +284,7 @@ angular.module('starter')
                         };
                         j++;
                     }
-                };        
+                }else $rootScope.notify("Warning", "There are not cellsites");         
             });
         }
         leafletData.getMap().then(function(map) {
@@ -393,18 +394,15 @@ angular.module('starter')
         this.zoom = "";
     };
     $scope.changeMessageType = function (messageType) {
-        console.log("messageType " + messageType.id);
         $scope.selectMessageType = messageType;
     };
     $scope.changePriority = function (priority) {
-        console.log("priority " + priority.id);
         $scope.selectPriority = priority;
     };
     $scope.respPreview;
     $scope.smsPreview = function() {
         $rootScope.show('Preview...');
         
-        //console.log("preview $scope.messageType.id " + $scope.messageType.id);
         $scope.circleMessage.userId = $scope.user.user_id;
         $scope.circleMessage.subdivisionId = 1;
         $scope.circleMessage.orgId = $scope.user.org_id;
