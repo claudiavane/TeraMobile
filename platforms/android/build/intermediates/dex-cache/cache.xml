@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="G:\tera_mobile\TeraMobile\platforms\android\build\intermediates\exploded-aar\android\CordovaLib\unspecified\release\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="af4a1b153710f43beb01d22cd3dca9e39e2590f4">
+        <dex dex="G:\tera_mobile\TeraMobile\platforms\android\build\intermediates\pre-dexed\release\classes-ff8229dde9d3af38d2f8cf9136688ca5b3eac054.jar" />
+    </item>
+    <item
+        jar="G:\tera_mobile\TeraMobile\platforms\android\build\intermediates\exploded-aar\android\CordovaLib\unspecified\debug\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="e6c5078c84cf2a3a24ce3488eaa536c95078db1f">
+        <dex dex="G:\tera_mobile\TeraMobile\platforms\android\build\intermediates\pre-dexed\debug\classes-6830604da02f10ba5360c5868af25528afb825ae.jar" />
+    </item>
+
+</items>

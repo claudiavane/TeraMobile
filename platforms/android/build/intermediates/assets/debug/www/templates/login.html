@@ -1,0 +1,50 @@
+<!--ion-view view-title="Login"  hide-nav-bar="true"  class="background-intro">
+    <ion-content>
+        <div class="padding">
+            <a href="#" class="logo"><span>T</span></a>
+            <h1 style="color: #FFF;text-align: center;">TERA</h1>
+            <p class="tagline">CRUZ ROJA ECUATORIANA</p>
+        </div>
+        <div class="list list-inset">
+            <label class="item item-input background-intro ">                
+                <input type="text" ng-model="formUser.username" placeholder="Username" style="color: #FFF;">
+            </label>
+            <label class="item item-input background-intro">                
+                <input type="password" ng-model="formUser.password" placeholder="Password" style="color: #FFF;">
+            </label>
+        </div>
+        <div style="text-align:center;">
+            <button class="button button-energized button-theme" ng-click="login(formUser)" nav-clear >
+                Iniciar Sesion
+            </button>            
+        </div>
+    </ion-content>
+</ion-view>-->
+<ion-view view-title="Login" hide-nav-bar="true" align-title="left">
+    <ion-content style="background: url(img/background.jpg) center; background-size: cover;">
+        <div class="hero no-header flat">
+            <div class="content">
+                <div class="app-icon"></div>
+                <h1>TERA</h1>
+                <h5>CRUZ ROJA ECUATORIANA</h5>
+            </div>
+        </div>
+        <div class="list" style="padding-right:15px">
+            <!--ion-md-input ng-model="formUser.username" placeholder="Username" highlight-color="balanced" type="text">
+            </ion-md-input>
+            <ion-md-input ng-model="formUser.password" placeholder="Password" highlight-color="energized" type="password">
+            </ion-md-input-->
+            <label class="item item-input background-intro ">                
+                <input type="text" ng-model="formUser.username" placeholder="Username" 
+                style="color: #FFF; background:rgba(0,0,0,0.7); font-size:16px; padding-left:10px;">
+            </label>
+            <label class="item item-input background-intro">                
+                <input type="password" ng-model="formUser.password" placeholder="Password" 
+                style="color: #FFF; background:rgba(0,0,0,0.7); font-size:16px; padding-left:10px;">
+            </label>
+        </div>
+        <div class="padding">
+            <button ng-click="login(formUser)" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
+        </div>
+    </ion-content>
+</ion-view>

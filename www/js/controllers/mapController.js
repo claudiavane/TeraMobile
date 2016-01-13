@@ -158,12 +158,12 @@ angular.module('starter')
                     //var statusExtraScreenServer='';
                     var singleDeploy='';
                     var ngoDeploy = '<div class="item item-divider" style="font-size:12px; background:#eaeaea; padding:3px;">'+keepers[i].NAME+'</div>';
-                    var appServerNOk = '<div class="item item-icon-right"  style="padding:2px;">{{'APP_SERVER'| translate}} </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
-                    var appServerOk = '<div class="item item-icon-right" style="padding:2px;">{{'APP_SERVER'| translate}} </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
-                    var dbServerNOk = '<div class="item item-icon-right" style="padding:2px;">{{'DB_SERVER'| translate}} </span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
-                    var dbServerOk = '<div class="item item-icon-right" style="padding:2px;">{{'DB_SERVER'| translate}} </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
-                    var screenNOk = '<div class="item item-icon-right" style="padding:2px;">{{'SCREEN_SERVER'| translate}} </span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></div>';
-                    var screenOk = '<div class="item item-icon-right" style="padding:2px;">{{'SCREEN_SERVER'| translate}} </span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var appServerNOk = '<div class="item item-icon-right"  style="padding:2px;">' + $translate('APP_SERVER') + '</span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var appServerOk = '<div class="item item-icon-right" style="padding:2px;">' + $translate('APP_SERVER') + '</span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var dbServerNOk = '<div class="item item-icon-right" style="padding:2px;">' + $translate('DB_SERVER') + '</span>​<i class="icon ion-ios-close-outline" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var dbServerOk = '<div class="item item-icon-right" style="padding:2px;">' + $translate('DB_SERVER') + '</span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
+                    var screenNOk = '<div class="item item-icon-right" style="padding:2px;">' + $translate('SCREEN_SERVER') + '</span>​<i class="icon ion-close-circled" style="color: #FF0000; font-size: 16px;"></i></div>';
+                    var screenOk = '<div class="item item-icon-right" style="padding:2px;">' + $translate('SCREEN_SERVER') + '</span>​<i class="icon ion-ios-checkmark" style="color: #074d61; font-size: 16px;"></i></div>';
 
                     if (keepers[i].APPSERVER_WORKING === 0) statusAppServer = appServerNOk;
                     else statusAppServer = appServerOk;
@@ -192,7 +192,7 @@ angular.module('starter')
 
                     }
 
-                    var queuedMessage = '<p><span class="left">{{'QUEUED_MESSAGE'| translate}}: </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
+                    var queuedMessage = '<p><span class="left">' + $translate('QUEUED_MESSAGE') + ': </span>​<span style="float:right; font-size: 12px;" class="badge badge-dark">'+ keepers[i].QUANTITY_SUBSCRIBER_QUEUED + '</span></p>';
                     
                     var message = '<div id="content" ng-app="starter" ng-controller="MapController">' +
                         '<h4 id="firstHeading" style="color: #9c1320;" ng-click="openModalDeploymentInfo('+keepers[i].ID+')">'+ keepers[i].DESCRIPTION +'</h4>'+

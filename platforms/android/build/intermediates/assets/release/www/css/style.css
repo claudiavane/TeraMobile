@@ -1,0 +1,195 @@
+body {
+  height: auto;
+  min-height: 100%;
+}
+
+.scroll, .angular-leaflet-map {
+  height: 100%;
+}
+
+.leaflet-bottom {
+  bottom : 10px;
+}
+
+.item.item-body p {
+  margin-top: 0;
+}
+
+.tabs.border-top {
+  border-top: 1px solid #ddd !important;
+}
+
+.right{
+    float:right;
+}
+
+.left{
+    float:left;
+}
+
+.custom-icon-list:before{
+  font-size: 24px;
+  color : rgb(88,88,88);
+}
+
+.background-intro {
+  background-color: #808080;
+  background-size: cover;
+  background-position: center; }
+
+.logo {
+  position: relative;
+  display: block;
+  margin: 20px auto;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  background: #404040;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #404040 0%, #505050 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #404040), color-stop(100%, #505050));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #404040 0%, #505050 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #404040 0%, #505050 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #404040 0%, #505050 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #404040 0%, #505050 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#404040', endColorstr='#505050',GradientType=0 );
+  /* IE6-9 */ }
+  .logo span {
+    font-size: 40px;
+    color: #212121;
+    position: absolute;
+    top: 40%;
+    left: 40%; }
+
+
+.tagline {
+  text-align: center;
+  color: #FFF;
+  margin-bottom: 50px; }  
+
+.error {
+  text-align: center;
+  color: #FF0000; }  
+
+.font-data{
+  color: #202020;
+  font-size: 13px;
+}
+
+
+
+/*  VALEX */
+
+/* General ==================================*/
+h1 {
+    color: #fff;
+    text-shadow: 0 1px 0px #000;
+    font-size: 42px;
+}
+
+
+/* Utilities ==================================*/
+.title-bordered {
+    border-top: solid 2px #bbb;
+    padding-top: 30px;
+}
+
+p {
+    color: #555;
+    margin: 0 0 25px;
+}
+
+.scroll {
+    height: 100%;
+}
+
+
+/* Menu ==================================*/
+.menu .bar.bar-header.expanded {
+    transition: all .5s ease-in-out;
+}
+
+.menu-open .bar.bar-header.expanded {
+    background-color: #222;
+}
+
+
+.menu .avatar {
+    height: 88px;
+    width: 88px;
+}
+
+.menu.menu-left * {
+    font-weight: bold;
+}
+
+.menu-open .ion-navicon {
+    transform: rotate(-360deg);
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
+.menu-open .ion-navicon:before {
+    content: "\f2ca";
+}
+/* Login ==================================*/
+.app-icon {
+    background-color: #fff;
+    background: url('../img/logo.png') center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 90px;
+    margin: 0 auto;
+    width: 90px;
+}
+
+.app-icon-menu {  
+    background: url('../img/logo.png') center;
+    background-size: cover;
+    border-radius: 50%;
+    height: 50px;
+    margin: 0 auto;
+    width: 50px;
+}
+
+.social-login {
+    position: fixed;
+    bottom: 0;
+}
+
+
+.my-checkbox-class .checkbox input:before, 
+.my-checkbox-class .checkbox-icon:before {
+  background: #fff;    
+  border-color: #074d61;
+}
+
+.my-checkbox-class .checkbox input:checked:before, 
+.my-checkbox-class .checkbox input:checked + .checkbox-icon:before {
+  background: #074d61;    
+  border-color: #074d61;
+}
+
+.tera-danger {
+  color: #fff;
+  background: #9c1320;
+}
+.tera-danger:hover {
+  color: #fff;
+}
+
+.tera-ok {
+  background: #074d61;    
+  color: #fff;
+  font-size: 2.6rem;
+}
+.tera-ok:hover {
+  color: #fff;
+  font-size: 2.6rem;
+}
