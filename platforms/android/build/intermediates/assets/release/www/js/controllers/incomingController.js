@@ -2,8 +2,10 @@ angular.module('starter')
 .controller('IncomingController',
   [ '$scope',
   	'$rootScope',
+  	'$translate',
+  	'$filter',
   	'IncomingRequest',
-    function($scope, $rootScope, IncomingRequest) {
+    function($scope, $rootScope, $translate, $filter, IncomingRequest) {
     	$scope.filterUnits = [
 	    	{"value":"HOUR","label":"Last hour"},
 	    	{"value":"DAY","label":"Last day"},
@@ -13,14 +15,17 @@ angular.module('starter')
     	];
     	$scope.selectedItem = {"value":"DAY","label":"Last day"};
         $scope.updateIncomingRequestList = function() {
+        	var txtUpdating =  $filter('translate')('UPDATING');//$translate('UPDATING');
+        	$rootScope.show(txtUpdating);
         	console.log($scope.selectedItem.value);
 	    	IncomingRequest.get($scope.selectedItem.value).then(	    		
 	    		function(result) {
 	                if (result.responseCode == 'OK') {
 	                	$scope.items = result.response;
 	                } else {
-	                	$rootScope.notify(result.responseCode, "Este es un error raro..");		
+	                	$rootScope.notify(result.responseCode, "Este es un error raro..");		                	
 	                }
+	                $rootScope.hide();
 	        	}
 	        );		   
 		}

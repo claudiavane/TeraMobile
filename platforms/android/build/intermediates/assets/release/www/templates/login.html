@@ -35,16 +35,16 @@
             <ion-md-input ng-model="formUser.password" placeholder="Password" highlight-color="energized" type="password">
             </ion-md-input-->
             <label class="item item-input background-intro ">                
-                <input type="text" ng-model="formUser.username" placeholder="Username" 
+                <input type="text" ng-model="formUser.username" placeholder="{{'USERNAME'| translate}}" 
                 style="color: #FFF; background:rgba(0,0,0,0.7); font-size:16px; padding-left:10px;">
             </label>
             <label class="item item-input background-intro">                
-                <input type="password" ng-model="formUser.password" placeholder="Password" 
+                <input type="password" ng-model="formUser.password" placeholder="{{'PASSWORD'| translate}}" 
                 style="color: #FFF; background:rgba(0,0,0,0.7); font-size:16px; padding-left:10px;">
             </label>
         </div>
         <div class="padding">
-            <button ng-click="login(formUser)" class="button button-full button-assertive ink" style="background: #a21522;">Login</button>
+            <button ng-click="login(formUser)" ng-disabled="!(!!formUser.username && !!formUser.password)" class="button button-full button-assertive ink" style="background: #a21522;">{{'LOGIN'| translate}}</button>
         </div>
     </ion-content>
 </ion-view>

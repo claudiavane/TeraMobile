@@ -74,11 +74,11 @@ angular.module('starter')
     loadUserCredentials();       
     
     return {
-        login: function(user){
+        login: function(user, languageCode){
             return $http.get(PATH_WS.org + "/user/login/", {params:{
               "username": user.username,
               "password": user.password, 
-              "userLanguageCode": user.languageCode}}).then(function(resp){
+              "userLanguageCode": languageCode}}).then(function(resp){
                   result = resp.data;
                   if (result.responseCode === 'OK') {
                     storeUserCredentials(result.response[0]);

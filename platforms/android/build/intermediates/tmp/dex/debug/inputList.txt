@@ -1,2 +1,0 @@
-G:\tera_mobile\TeraMobile\platforms\android\build\intermediates\classes\debug
-G:\tera_mobile\TeraMobile\platforms\android\build\intermediates\pre-dexed\debug\classes-6830604da02f10ba5360c5868af25528afb825ae.jar

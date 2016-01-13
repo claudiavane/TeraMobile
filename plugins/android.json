@@ -10,6 +10,9 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.teramobile422685"
         },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.ionicframework.teramobile422685"
+        },
         "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.teramobile422685"
         },
@@ -20,9 +23,6 @@
             "PACKAGE_NAME": "com.ionicframework.teramobile422685"
         },
         "ionic-plugin-keyboard": {
-            "PACKAGE_NAME": "com.ionicframework.teramobile422685"
-        },
-        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.ionicframework.teramobile422685"
         }
     },
