@@ -440,16 +440,26 @@ angular.module('starter')
                 return retval.toString();
             }
         }
+
+        Date.prototype.getMonthTwoDigits = function(){
+            var retval = this.getMonth()+1;
+            if (retval < 10){
+                return ("0" + retval.toString());
+            }
+            else{
+                return retval.toString();
+            }
+        }
         
         var dateString = $scope.datePicker.getFullYear()+
-                      ($scope.datePicker.getMonth()+1).toString()+
+                      $scope.datePicker.getMonthTwoDigits()+
                       $scope.datePicker.getDate().toString()+
                       $scope.datePicker.getHours().toString()+
                       $scope.datePicker.getMinutesTwoDigits()+
                       $scope.datePicker.getSecondsTwoDigits();
         
         $scope.dateToString = $scope.datePicker.getFullYear()+ '-'+
-                             ($scope.datePicker.getMonth()+1).toString() +'-'+
+                             $scope.datePicker.getMonthTwoDigits() +'-'+
                              $scope.datePicker.getDate().toString() +' '+
                              $scope.datePicker.getHours().toString() +':'+
                              $scope.datePicker.getMinutesTwoDigits() +':'+
