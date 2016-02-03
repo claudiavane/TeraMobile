@@ -430,7 +430,6 @@ angular.module('starter')
                 return retval.toString();
             }
         }
-
         Date.prototype.getMinutesTwoDigits = function(){
             var retval = this.getMinutes();
             if (retval < 10){
@@ -440,7 +439,24 @@ angular.module('starter')
                 return retval.toString();
             }
         }
-
+        Date.prototype.getHoursTwoDigits = function(){
+            var retval = this.getHours();
+            if (retval < 10){
+                return ("0" + retval.toString());
+            }
+            else{
+                return retval.toString();
+            }
+        }
+        Date.prototype.getDateTwoDigits = function(){
+            var retval = this.getDate();
+            if (retval < 10){
+                return ("0" + retval.toString());
+            }
+            else{
+                return retval.toString();
+            }
+        }        
         Date.prototype.getMonthTwoDigits = function(){
             var retval = this.getMonth()+1;
             if (retval < 10){
@@ -453,15 +469,15 @@ angular.module('starter')
         
         var dateString = $scope.datePicker.getFullYear()+
                       $scope.datePicker.getMonthTwoDigits()+
-                      $scope.datePicker.getDate().toString()+
-                      $scope.datePicker.getHours().toString()+
+                      $scope.datePicker.getDateTwoDigits()+
+                      $scope.datePicker.getHoursTwoDigits()+
                       $scope.datePicker.getMinutesTwoDigits()+
                       $scope.datePicker.getSecondsTwoDigits();
         
         $scope.dateToString = $scope.datePicker.getFullYear()+ '-'+
                              $scope.datePicker.getMonthTwoDigits() +'-'+
                              $scope.datePicker.getDate().toString() +' '+
-                             $scope.datePicker.getHours().toString() +':'+
+                             $scope.datePicker.getHoursTwoDigits() +':'+
                              $scope.datePicker.getMinutesTwoDigits() +':'+
                              $scope.datePicker.getSecondsTwoDigits();
         
