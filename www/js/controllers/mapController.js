@@ -403,6 +403,7 @@ angular.module('starter')
         $scope.selectPriority = priority;
     };
     $scope.respPreview;
+    $scope.currentDate = new Date();
     $scope.smsPreview = function() {
         var txtPreview = $filter('translate')('PREVIEWING');//$translate('PREVIEWING');
         $rootScope.show(txtPreview);
@@ -417,8 +418,8 @@ angular.module('starter')
         $scope.circleMessage.messageType = $scope.selectMessageType.id;
         $scope.circleMessage.priority = $scope.selectPriority.id;
 
-        if (!$scope.datePicker || $scope.datePicker < new Date()) {
-          $scope.datePicker = new Date();
+        if (!$scope.datePicker) {
+          $scope.datePicker = $scope.currentDate;
         }
 
         Date.prototype.getSecondsTwoDigits = function(){
@@ -520,22 +521,32 @@ angular.module('starter')
       $scope.modalConfirm.hide();
     }
     $scope.smsSend = function() {
+        var isError= true;
         var txtSend = $filter('translate')('SENDING');
-        $rootScope.show(txtSend);
-        AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
-          //utilMessages.validityResponse(result);
-          var titleInfo = $filter('translate')('SUCCESS');
-          var msgInfo = $filter('translate')('SUCCESS_SEND');
-          if (result.responseCode === 'OK') $rootScope.info(titleInfo, msgInfo);  
-          else $rootScope.notify(result.responseCode, result.responseMessage);
 
-          /*
-          if (result.responseCode === 'OK') {            
-            $rootScope.notify("Success", "The send request was done");  
-          };*/          
-          $rootScope.hide();          
-          $scope.closeModalSendSms();
-        });
+        if($scope.respPreview){
+            for (var i = 0; i < $scope.respPreview.length; i++) {
+              if ($scope.respPreview.quantity > 0) {
+                isError = false;
+                break;
+              }
+            }
+            if(isError) {
+                $rootScope.notify("ERROR", "There are not suscribers to send the message.");
+            }else{
+                $rootScope.show(txtSend);
+                AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
+                  //utilMessages.validityResponse(result);
+                  var titleInfo = $filter('translate')('SUCCESS');
+                  var msgInfo = $filter('translate')('SUCCESS_SEND');
+                  if (result.responseCode === 'OK') $rootScope.info(titleInfo, msgInfo);  
+                  else $rootScope.notify(result.responseCode, result.responseMessage);
+
+                  $rootScope.hide();          
+                  $scope.closeModalSendSms();
+                });
+            }
+        }
     }
     $ionicModal.fromTemplateUrl('templates/deploymentInformation.html', {
         scope: $scope,

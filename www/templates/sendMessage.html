@@ -59,6 +59,11 @@
           <input type="date" ng-model="datePicker">
         </label>
 
+         <div role="alert">
+          <span class="error" ng-show="datePicker && datePicker < currentDate">
+            {{'MSG_DATE_VALIDITY'| translate}}</span>
+        </div>
+
         <div class="item item-divider item-icon-left" style="line-height:30px; font-size:16px; background:#eaeaea;">
           <i class="icon ion-android-wifi custom-icon-list"></i>
           {{'OPERATORS'| translate}}

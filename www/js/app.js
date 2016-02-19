@@ -76,7 +76,7 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'ngResource
         MEM_BUFFERS: "Buffers",
         MEM_SHARED: "Shared",
         TOTAL: "Total",
-        MSG_LONG_VALIDATION: "The message is too long",
+        MSG_LONG_VALIDATION: "The message is too long.",
         TYPE: "Type",
         PRIORITY: "Priority",
         DELIVERY: "Delivery",
@@ -98,7 +98,8 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'ngResource
         WARNING_CELLSITE: "There are not cellsites",
         USERNAME: "Username",
         PASSWORD: "Password",
-        LOGIN: "Login"
+        LOGIN: "Login",
+        MSG_DATE_VALIDITY: "The date should be greater than the current date."
     });
     $translateProvider.translations('es', {
         SETTINGS: "Configuraciones",
@@ -155,7 +156,8 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'ngResource
         WARNING_CELLSITE: "No existe celdas",
         USERNAME: "Nombre de usuario",
         PASSWORD: "Contraseña",
-        LOGIN: "Iniciar sesión"
+        LOGIN: "Iniciar sesión",
+        MSG_DATE_VALIDITY: "La fecha debe ser mayor a la fecha actual."
     });
    
     $translateProvider.preferredLanguage("en");
