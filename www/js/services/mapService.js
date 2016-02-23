@@ -134,7 +134,7 @@ angular.module('starter')
           });
       },
       sendSmsCircle: function(circleMessage){
-          console.log("message: " + circleMessage.message);
+          /*console.log("message: " + circleMessage.message);
           console.log("lat: " + circleMessage.lat);
           console.log("lng: " + circleMessage.lng);
           console.log("ratio: " + circleMessage.ratio);
@@ -148,7 +148,7 @@ angular.module('starter')
           console.log("orgId: " + circleMessage.orgId);
           console.log("messageType: " + circleMessage.messageType);
           console.log("zoom: " + circleMessage.zoom);
-          console.log("endDeliveryDateTime: " + circleMessage.endDeliveryDateTime);
+          console.log("endDeliveryDateTime: " + circleMessage.endDeliveryDateTime);*/
           
           return $http.get(PATH_WS.org + "/sendsms/circle/", 
             {params:{"message": circleMessage.message, 

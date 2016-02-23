@@ -497,7 +497,7 @@ angular.module('starter')
               $scope.respPreview = result.response;
               $scope.openModalSendSms();
           }                   
-          $rootScope.hide();          
+          $rootScope.hide();
         });           
     }
     
@@ -521,24 +521,30 @@ angular.module('starter')
       $scope.modalConfirm.hide();
     }
     $scope.smsSend = function() {
+        $rootScope.hide();
         var isError= true;
-        var txtSend = $filter('translate')('SENDING');
-
+        var titleInfo;
+        var msgInfo;
+        var txtSend;
+        
         if($scope.respPreview){
             for (var i = 0; i < $scope.respPreview.length; i++) {
-              if ($scope.respPreview.quantity > 0) {
+              if ($scope.respPreview[i].quantity > 0) {
                 isError = false;
                 break;
               }
             }
             if(isError) {
-                $rootScope.notify("ERROR", "There are not suscribers to send the message.");
+                titleInfo = $filter('translate')('WARNING');
+                msgInfo = $filter('translate')('MSG_QTTY_VALIDITY');
+                $rootScope.notify(titleInfo, msgInfo);                
             }else{
+                txtSend = $filter('translate')('SENDING');
                 $rootScope.show(txtSend);
                 AlertMessage.sendSmsCircle($scope.circleMessage).then(function(result){
                   //utilMessages.validityResponse(result);
-                  var titleInfo = $filter('translate')('SUCCESS');
-                  var msgInfo = $filter('translate')('SUCCESS_SEND');
+                  titleInfo = $filter('translate')('SUCCESS');
+                  msgInfo = $filter('translate')('SUCCESS_SEND');
                   if (result.responseCode === 'OK') $rootScope.info(titleInfo, msgInfo);  
                   else $rootScope.notify(result.responseCode, result.responseMessage);
 

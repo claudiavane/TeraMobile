@@ -52,8 +52,7 @@ angular.module('starter')
             template: text,
             animation: 'fade-in',
             showBackdrop: true,
-            maxWidth: 200,
-            showDelay: 0
+            maxWidth: 200            
         });
     };
 

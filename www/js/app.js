@@ -99,7 +99,8 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'ngResource
         USERNAME: "Username",
         PASSWORD: "Password",
         LOGIN: "Login",
-        MSG_DATE_VALIDITY: "The date should be greater than the current date."
+        MSG_DATE_VALIDITY: "The date should be greater than the current date.",
+        MSG_QTTY_VALIDITY: "There are not suscribers to send the message."
     });
     $translateProvider.translations('es', {
         SETTINGS: "Configuraciones",
@@ -157,7 +158,8 @@ angular.module('starter', ['ionic','leaflet-directive', 'ngCordova', 'ngResource
         USERNAME: "Nombre de usuario",
         PASSWORD: "Contraseña",
         LOGIN: "Iniciar sesión",
-        MSG_DATE_VALIDITY: "La fecha debe ser mayor a la fecha actual."
+        MSG_DATE_VALIDITY: "La fecha debe ser mayor a la fecha actual.",
+        MSG_QTTY_VALIDITY: "No existe suscriptores para el envío del mensaje."
     });
    
     $translateProvider.preferredLanguage("en");
